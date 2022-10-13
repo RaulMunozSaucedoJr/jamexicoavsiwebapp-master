@@ -104,7 +104,6 @@ const Login = () => {
     if (user != null) {
       navigate("/Home");
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 

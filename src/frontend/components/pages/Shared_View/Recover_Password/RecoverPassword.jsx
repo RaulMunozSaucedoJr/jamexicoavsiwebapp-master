@@ -31,24 +31,44 @@ const RecoverPassword = () => {
   const auth = getAuth();
   const triggerResetEmail = async () => {
     try {
-      console.log(form.email);
-      await sendPasswordResetEmail(auth, form.email);
-      Swal.fire({
-        title: "¡Éxito!",
-        icon: "success",
-        text: "Se ha enviado el link a su correo electrónico para reestablecer la contraseña",
-        showCancelButton: false,
-        showConfirmButton: false,
-        timer: 5000,
-      });
-      console.log("Password reset email sent");
-      console.clear();
+      if (!form.email) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "Ningún campo debe de estar vacio. Favor de verificarlos",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 5000,
+        });
+      } else {
+        console.log(form.email);
+        await sendPasswordResetEmail(auth, form.email);
+        Swal.fire({
+          title: "¡Éxito!",
+          icon: "success",
+          text: "Se ha enviado el link a su correo electrónico para reestablecer la contraseña",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 5000,
+        });
+        console.log("Password reset email sent");
+        console.clear();
+      }
     } catch (err) {
       if (err.code === "auth/user-not-found") {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
           text: "Este correo electrónico NO se encuentra registrado, por lo que no se podrá reestablecer la contraseña.",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 5000,
+        });
+      } else if (err.code === "auth/invalid-email") {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "warning",
+          text: "El formato del correo electrónico es incorrecto. Favor de verificarlo",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
