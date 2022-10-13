@@ -1,0 +1,77 @@
+@use '../Utilities/Font_Properties/Fonts'as font;
+@use '../Utilities/Font_Properties/Font_Sizes'as font_size;
+@use '../Utilities/Font_Properties/Font_Properties'as font_properties;
+@use '../Utilities/Common/Colors'as color;
+@use '../Utilities/Mixins/Mixins'as *;
+
+.center {
+    display: grid;
+    place-content: center;
+}
+
+.flexSB {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mt-8 {
+    margin-top: 6em;
+}
+
+#map {
+    width: 50%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.img-thumbnail {
+    width: 17em;
+    width: 17em;
+    border-radius: 0;
+}
+
+.important {
+    color: color.$Inmersive_Red;
+}
+
+.text-error {
+    @include text(font.$Montserrat, font_size.$Medium, red);
+    letter-spacing: 0;
+    font-weight: bold;
+    text-align: left;
+}
+
+.valido {
+    border: color.$Inmersive_Red solid 0.2rem;
+}
+
+.invalido {
+    border: color.$Inmersive_Blue_Black solid 0.2rem;
+}
+
+textarea+p,
+input+p {
+    color: color.$Inmersive_Red;
+    text-decoration: none;
+    text-align: center;
+    opacity: 0;
+    height: 0;
+}
+
+textarea.invalido+p,
+input.invalido+p {
+    opacity: 1;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .text-error {
+        @include text(font.$Montserrat, font_size.$Extra_Small, red);
+        letter-spacing: 0;
+        font-weight: bold;
+        text-align: left;
+    }
+}

@@ -1,0 +1,274 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Margin/Margin'as margin;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+
+.header-home-left {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-color: color.$Boundles_Blue;
+    @include padding(padding.$Padding1);
+    overflow-x: hidden;
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$Extra_Large, color.$White);
+        font-weight: bold;
+        text-align: center;
+    }
+
+    p {
+        @include text(font.$Montserrat, font_size.$General, color.$White);
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+.header-home-right {
+    @include width_height(width_height.$w50, width_height.$vh100);
+
+    &-1 {
+        @include width_height(width_height.$w50, width_height.$vh50);
+        background-image: url("/src/frontend/assets/images/jpg/AVSI.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    &-2 {
+        @include width_height(width_height.$w50, width_height.$vh50);
+        background-image: url("/src/frontend/assets/images/jpg/JAMEXICO.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-right-color: color.$Inmersive_Blue_Black;
+    }
+
+    &-3 {
+        @include width_height(width_height.$w50, width_height.$vh50);
+        background-image: url("/src/frontend/assets/images/jpg/UE.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    &-4 {
+        @include width_height(width_height.$w50, width_height.$vh50);
+        background-color: color.$Empowered_Orange;
+    }
+}
+
+.mision-left {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-color: color.$Empowered_Yellow;
+    @include padding(padding.$Padding2);
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$Extra_Large, color.$Inmersive_Blue_Black);
+        font-weight: bold;
+        text-align: center;
+    }
+
+    p {
+        @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+.mision-right {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-image: url('/src/frontend/assets/images/jpg/Mision.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.tools-left {
+    @include width_height(width_height.$w50, width_height.$vh50);
+    background-image: url('/src/frontend/assets/images/jpg/Tools.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.tools-right {
+    @include width_height(width_height.$w50, width_height.$vh50);
+    background-color: color.$Empowered_Yellow;
+    @include padding(padding.$Padding1);
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$Extra_Large, color.$Inmersive_Blue_Black);
+        font-weight: bold;
+        text-align: center;
+    }
+
+    p {
+        @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+.tools-bottom {
+    @include width_height(width_height.$w100, width_height.$vh50);
+    background-color: color.$Inmersive_Blue_Black;
+}
+
+
+.faqs-home-left {
+    @include width_height(width_height.$w30, width_height.$vh100);
+    background-color: color.$Empowered_Yellow;
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$Extra_Large, color.$Inmersive_Blue_Black);
+        font-weight: bold;
+        text-align: center;
+
+    }
+}
+
+.faqs-home-right {
+    @include width_height(width_height.$w70, width_height.$vh80);
+    background-color: color.$Resilent_Turquoise;
+    margin-bottom: 50px;
+    display: grid;
+    place-content: center;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+
+    .header-home-left {
+        @include width_height(width_height.$w100, width_height.$vh100);
+        background-color: color.$Inmersive_Blue_Black;
+        @include padding(padding.$Padding2);
+        overflow-x: hidden;
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$General, color.$White);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        p {
+            @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            text-align: left;
+            font-weight: bold;
+            line-height: 2em;
+        }
+    }
+
+    .header-home-right {
+        @include width_height(width_height.$w100, width_height.$vh50);
+
+        &-1 {
+            @include width_height(width_height.$w50, width_height.$vh50);
+            background-image: url("/src/frontend/assets/images/jpg/AVSI.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        &-2 {
+            @include width_height(width_height.$w50, width_height.$vh50);
+            background-image: url("/src/frontend/assets/images/jpg/JAMEXICO.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            border-right-color: color.$Inmersive_Blue_Black;
+        }
+
+        &-3 {
+            display: none;
+        }
+
+        &-4 {
+            display: none;
+        }
+    }
+
+    .mision-left {
+        @include width_height(width_height.$w100, width_height.$vh50);
+        background-color: color.$Empowered_Yellow;
+        @include padding(padding.$Padding1);
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+            text-align: left;
+            font-weight: bold;
+            letter-spacing: 0;
+        }
+
+        p {
+            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+            text-align: left;
+            font-weight: bold;
+            line-height: 2em;
+        }
+    }
+
+    .mision-right {
+        @include width_height(width_height.$w100, width_height.$vh70);
+        background-image: url('/src/frontend/assets/images/jpg/Mision.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .tools-left {
+        display: none;
+    }
+
+    .tools-right {
+        @include width_height(width_height.$w100, width_height.$vh100);
+        background-color: color.$Empowered_Orange;
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+            text-align: left;
+            font-weight: bold;
+            letter-spacing: 0;
+        }
+
+        p {
+            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+            text-align: left;
+            font-weight: bold;
+            line-height: 2em;
+        }
+    }
+
+    .tools-bottom {
+        @include width_height(width_height.$w100, width_height.$vh100);
+        background-color: color.$Inmersive_Blue_Black;
+        margin-bottom: 700px;
+    }
+
+    .faqs-home-left {
+        @include width_height(width_height.$w100, width_height.$vh30);
+        background-color: color.$Empowered_Yellow;
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 0;
+        }
+    }
+
+    .faqs-home-right {
+        @include width_height(width_height.$w100, width_height.$vh100);
+        background-color: color.$Resilent_Turquoise;
+        margin-bottom: 50px;
+     
+    }
+
+}

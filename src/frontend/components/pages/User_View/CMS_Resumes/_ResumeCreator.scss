@@ -1,0 +1,78 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Margin/Margin'as margin;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+.create-resume-left {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-color: color.$Inmersive_Blue_Black;
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$Large, color.$White);
+        text-align: center;
+        letter-spacing: 0;
+        padding: 0;
+    }
+}
+
+.create-resume-right {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-image: url('/src/frontend/assets/images/jpg/creadorcv.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.create-resume-bottom {
+    @include width_height(width_height.$w100, width_height.$vh100);
+    background-color: color.$White;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .create-resume-left {
+        @include width_height(width_height.$w100, width_height.$vh30);
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            text-align: center;
+            letter-spacing: 0;
+            padding: 0
+        }
+    }
+
+    .create-resume-right {
+        @include width_height(width_height.$w100, width_height.$vh30);
+        background-image: url('/src/frontend/assets/images/jpg/creadorcv.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .create-resume-bottom {
+        @include width_height(width_height.$w100, width_height.$vh100);
+        margin-bottom: 700px;
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+            text-align: center;
+            font-weight: bolder;
+            letter-spacing: 0;
+            padding: 0
+        }
+
+        small {
+            @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Red);
+            text-align: justify;
+            letter-spacing: 0;
+            font-weight: bold;
+        }
+    }
+}

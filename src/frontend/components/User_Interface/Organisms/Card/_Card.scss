@@ -1,0 +1,85 @@
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Properties'as font_properties;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+
+.card {
+    @include width_height(width_height.$w100, width_height.$h100);
+    background-color: color.$White;
+    border: color.$Inmersive_Blue_Black solid .2em;
+    border-radius: .5em;
+
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: .5em;
+    }
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+        text-align: left;
+        font-weight: bold;
+    }
+
+    &-body {
+        @include width_height(width_height.$w100, width_height.$h100);
+        border-radius: 0;
+        border-left-color: color.$Inmersive_Blue_Black;
+
+        p {
+            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+            text-align: left;
+            font-weight: bold;
+        }
+
+        small {
+            @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
+            text-align: left;
+            font-weight: bold;
+        }
+    }
+
+    @media only screen and (max-width: 600px) {
+        .card {
+            @include width_height(width_height.$w100, width_height.$h50);
+
+            img {
+                width: 50%;
+                height: 50%;
+                object-fit: contain;
+                border-radius: .5em;
+            }
+
+            h3 {
+                @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+                text-align: left;
+                font-weight: bold;
+            }
+
+            &-body {
+                @include width_height(width_height.$w100, width_height.$h100);
+                border-left-color: color.$Inmersive_Blue_Black;
+                border-radius: 0;
+
+                p {
+                    @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+                    text-align: left;
+                    font-weight: bold;
+                }
+
+                small {
+                    @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
+                    text-align: left;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+export {default as Jobs} from '../pages/Public_View/Jobs/Jobs';
+export {default as Posts} from '../pages/Public_View/Posts/Posts';
+export {default as Profile} from '../pages/Public_View/Profile/Profile';
+export {default as Tips} from '../pages/Public_View/Tips/Tips';
+export {default as Error404} from '../pages/Shared_View/Error_404/Error404';
+export {default as Home} from '../pages/Shared_View/Home/Home';
+export {default as Login} from '../pages/Shared_View/Login/Login';
+export {default as Register} from '../pages/Shared_View/Register/Register';
+export {default as RecoverPassword} from '../pages/Shared_View/Recover_Password/RecoverPassword';
+export {default as CmsBlog} from '../pages/User_View/CMS_blog/CmsBlog';
+export {default as CmsEmployments} from '../pages/User_View/CMS_employments/CmsEmployments';
+export {default as CmsFaqs} from '../pages/User_View/CMS_faqs/CmsFaqs';
+export {default as CmsUserProfile} from '../pages/User_View/CMS_profile_user/CmsUserProfile';
+export {default as CmsTips} from '../pages/User_View/CMS_tips/CmsTips';
+export {default as CmsResume} from '../pages/User_View/CMS_Resumes/CmsResume';
+export {default as CmsUsers} from '../pages/User_View/CMS_Users/CmsUsers';
+export {default as PantallaChat} from '../pages/User_View/Chat/PantallaChat';

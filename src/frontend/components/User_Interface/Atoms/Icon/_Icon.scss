@@ -1,0 +1,33 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+.icon {
+    width: 4em;
+    height: 4em;
+
+    &-white {
+        background-color: transparent;
+        color: color.$White;
+    }
+
+    &-white-inmersive {
+        background-color: transparent;
+        color: color.$White;
+    }
+
+    &-resilent-turquoise {
+        background-color: color.$Resilent_Turquoise;
+    }
+
+    &-sustainable-green {
+        background-color: color.$Sustainable_Green;
+    }
+
+    &-boundless-blue {
+        background-color: color.$Boundles_Blue;
+    }
+
+    &-inmersive-blue {
+        background-color: color.$Inmersive_Blue_Black;
+    }
+
+}

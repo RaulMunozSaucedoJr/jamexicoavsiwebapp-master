@@ -1,0 +1,29 @@
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+@use '../../../../assets/Scss/Utilities/Font_Properties/_Font_Properties.scss'as font_properties;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+.footer {
+    @include width_height(width_height.$vw100, width_height.$hauto);
+    background-color: color.$Empowered_Yellow;
+    z-index: 2;
+
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+        text-align: center;
+        text-decoration: none;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .footer {
+            display: none;
+        }
+    }
+}

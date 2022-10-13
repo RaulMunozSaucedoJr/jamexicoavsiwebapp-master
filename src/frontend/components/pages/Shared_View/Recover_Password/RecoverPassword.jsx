@@ -1,0 +1,116 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Button, Input } from "../../../Indexes/AtomsIndexes.jsx";
+import { useForm } from "../../../../assets/javascript/hooks/useForm.js";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+
+const initialForm = {
+  email: "",
+};
+
+const validationsForm = (form) => {
+  let errors = {};
+  let regexEmail =
+    /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
+  if (!form.email.trim()) {
+    errors.email = "¡Este campo es OBLIGATORIO!";
+  } else if (!regexEmail.test(form.email.trim())) {
+    errors.email =
+      "¡Favor de ingresar un formato de correo electronico valido!";
+  }
+  return errors;
+};
+
+const RecoverPassword = () => {
+  const { form, errors, handleChange, handleBlur, handleSubmit } = useForm(
+    initialForm,
+    validationsForm
+  );
+
+  const auth = getAuth();
+  const triggerResetEmail = async () => {
+    try {
+      console.log(form.email);
+      await sendPasswordResetEmail(auth, form.email);
+      Swal.fire({
+        title: "¡Éxito!",
+        icon: "success",
+        text: "Se ha enviado el link a su correo electrónico para reestablecer la contraseña",
+        showCancelButton: false,
+        showConfirmButton: false,
+        timer: 5000,
+      });
+      console.log("Password reset email sent");
+      console.clear();
+    } catch (err) {
+      if (err.code === "auth/user-not-found") {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "warning",
+          text: "Este correo electrónico NO se encuentra registrado, por lo que no se podrá reestablecer la contraseña.",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 5000,
+        });
+      }
+      console.clear();
+    }
+  };
+
+  return (
+    <>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-sm-12 col-md-6 recover-left center">
+            <h1>Recuperar contraseña</h1>
+            <Link to="/Home">
+              <Button
+                className="btn btn-open"
+                type="button"
+                text="Volver al inicio"
+              />
+            </Link>
+          </div>
+          <div className="col-sm-12 col-md-6 recover-right">
+            <div className="row">
+              <div className="col-12 recover-right-1"></div>
+              <div className="col-12 recover-right-2">
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <Input
+                      type="email"
+                      name="email"
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Correo electronico"
+                      value={form.email}
+                      autoComplete="off"
+                      className="form-control"
+                      placeholder="Correo electronico"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required
+                    />
+                    <div className="form-group pt-2">
+                      {errors.email && <small>{errors.email}</small>}
+                    </div>
+                    <button
+                      className="btn btn-submit mt-4"
+                      type="submit"
+                      onClick={triggerResetEmail}
+                      value="Enviar"
+                    >
+                      Restaurar contrraseña
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default RecoverPassword;

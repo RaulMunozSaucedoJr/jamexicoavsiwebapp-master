@@ -1,0 +1,53 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+.contact-navbar {
+    @include width_height(width_height.$w5, width_height.$h25);
+    background-color: color.$Inmersive_Blue_Black;
+    opacity: 1;
+    border-radius: 1em;
+    position: fixed;
+    right: 0;
+    top: 60%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;;
+
+    a {
+        display: block;
+        text-align: center;
+        padding: 0;
+        transition: all 0.3s ease;
+        color: color.$White;
+        font-size: 3rem;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .contact-navbar {
+        @include width_height(width_height.$w15, width_height.$h18);
+        position: fixed;
+        margin-right: 0;
+        top: 70%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        z-index: 1;
+        border-radius: 1em;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;;
+
+        a {
+            display: block;
+            text-align: center;
+            padding-top: 1rem;
+            color: color.$White;
+            font-size: .8em;
+        }
+    }
+}

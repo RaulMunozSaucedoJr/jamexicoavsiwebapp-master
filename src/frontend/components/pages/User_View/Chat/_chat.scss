@@ -1,0 +1,48 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Margin/Margin'as margin;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+.pantalla-chat {
+    width: 100%;
+    height: 100%;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    background-color: color.$White;
+    border: color.$Inmersive_Blue_Black solid .2rem;
+    margin-bottom: 10px;
+    border-radius: 1em;
+}
+
+.chat-navbar {
+    width: 100%;
+    height: 80px;
+    background-color: color.$Inmersive_Blue_Black;
+}
+
+.message {
+    width: 100%;
+    height: auto;
+    margin-top: .2rem;
+    border-radius: 1em;
+    background-color: color.$White;
+    color: color.$Inmersive_Blue_Black;
+}
+
+.name,
+.text {
+    background-color: color.$Empowered_Yellow;
+    color: black;
+    border-radius: .5em;
+    padding: .2rem;
+}

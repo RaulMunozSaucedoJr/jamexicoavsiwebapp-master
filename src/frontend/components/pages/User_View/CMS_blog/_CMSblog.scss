@@ -1,0 +1,75 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Margin/Margin'as margin;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+
+.blog-left {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-color: color.$Inmersive_Blue_Black;
+    @include padding(padding.$Padding2);
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$Large, color.$White);
+        text-align: center;
+        letter-spacing: 0;
+        padding: 0;
+    }
+}
+
+.blog-right {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-color: color.$White;
+    background-image: url('/src/frontend/assets/images/jpg/Blog.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.blog-bottom {
+    @include width_height(width_height.$w100, width_height.$vh100);
+}
+
+@media only screen and (max-width: 600px) {
+    .blog-left {
+        @include width_height(width_height.$w100, width_height.$vh20);
+        background-color: color.$Inmersive_Blue_Black;
+        border-bottom-left-radius: 1em;
+        border-bottom-right-radius: 1em;
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            text-align: center;
+            letter-spacing: 0;
+            padding: 0
+        }
+    }
+
+    .blog-right {
+        @include width_height(width_height.$w100, width_height.$vh30);
+        background-color: color.$White;
+        background-image: url('/src/frontend/assets/images/jpg/Blog.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .blog-bottom {
+        @include width_height(width_height.$w100, width_height.$vh100);
+
+        small {
+            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Red);
+            text-align: left;
+            letter-spacing: 0;
+            font-weight: bold;
+        }
+    }
+
+}

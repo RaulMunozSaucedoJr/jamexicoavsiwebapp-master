@@ -1,0 +1,64 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Margin/Margin'as margin;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+#mobile-nav {
+    width: 100%;
+    height: auto;
+    background-color: color.$Boundles_Blue;
+    border: color.$Inmersive_Blue_Black solid .2rem;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    z-index: 1;
+
+    .dropdown-menu {
+        width: 100%;
+        height: auto;
+        margin-bottom: 40px;
+        background-color: color.$Inmersive_Blue_Black;
+        text-align: left;
+        border-radius: 1em;
+        padding: 2em;
+        margin: 2em;
+
+        a {
+            @include text(font.$Montserrat, font_size.$Small, color.$White);
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 0;
+            text-decoration: none;
+
+            &:hover,
+            &:active,
+            &:focus {
+                @include text(font.$Montserrat, font_size.$Small, color.$White);
+                text-align: center;
+                font-weight: bold;
+                letter-spacing: 0;
+                text-decoration: none;
+                outline: none;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    #mobile-nav {
+        display: none;
+    }
+}
+
+@media print {
+    #mobile-nav {
+        display: none;
+        visibility: hidden;
+    }
+}

@@ -1,0 +1,74 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Margin/Margin'as margin;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+
+
+.employments-left {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-color: color.$Inmersive_Blue_Black;
+
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$Large, color.$White);
+        text-align: center;
+        letter-spacing: 0;
+        padding: 0;
+    }
+}
+
+.employments-right {
+    @include width_height(width_height.$w50, width_height.$vh100);
+    background-image: url('/src/frontend/assets/images/jpg/Employments.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.employments-bottom {
+    @include width_height(width_height.$w100, width_height.$h100);
+    margin-bottom: 30px;
+    background-color: color.$White;
+}
+
+@media only screen and (max-width: 600px) {
+    .employments-left {
+        @include width_height(width_height.$w100, width_height.$vh30);
+        border-bottom-left-radius: 2em;
+        border-bottom-right-radius: 2em;
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            text-align: center;
+            letter-spacing: 0;
+            padding: 0;
+        }
+    }
+
+    .employments-right {
+        @include width_height(width_height.$w100, width_height.$vh20);
+        background-image: url('/src/frontend/assets/images/jpg/Employments.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .employments-bottom {
+        @include width_height(width_height.$w100, width_height.$vh100);
+    }
+}
+
+small {
+    @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Red);
+    text-align: justify;
+    letter-spacing: 0;
+    font-weight: bold;
+}

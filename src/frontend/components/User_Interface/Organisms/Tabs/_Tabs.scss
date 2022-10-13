@@ -1,0 +1,43 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+.tab-list {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+    padding-left: 0;
+    background-color: transparent;
+    color: white;
+    border: color.$Inmersive_Blue_Black solid .2em;
+    border-radius: 1em;
+}
+
+.tab-list-item {
+    width: 50%;
+    height: auto;
+    display: inline-block;
+    list-style: none;
+    margin-bottom: -1px;
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+    color: color.$Inmersive_Blue_Black;
+    font-weight: bold;
+    border-radius: 1em;
+}
+
+.tab-content {
+    width: 100%;
+    height: auto;
+    border: color.$Inmersive_Blue_Black solid .2em;
+    @include padding(padding.$Padding1);
+    border-radius: 1em;
+}
+
+.tab-list-active {
+    background-color: color.$Inmersive_Blue_Black;
+    border: solid #ccc;
+    border-width: 1px 1px 0 1px;
+    color: white;
+    font-weight: bold;
+}

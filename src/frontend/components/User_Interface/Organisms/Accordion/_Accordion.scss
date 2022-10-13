@@ -1,0 +1,57 @@
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Margin/Margin'as margin;
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+
+.accordion {
+    @include width_height(width_height.$w100, width_height.$hauto);
+    @include padding(padding.$Padding1);
+
+    &-title {
+        @include padding(padding.$Padding1);
+        @include width_height(width_height.$w100, width_height.$hauto);
+        @include text(font.$Montserrat, font_size.$Medium, color.$White);
+        background-color: color.$Inmersive_Blue_Black;
+        justify-content: space-between;
+        flex-direction: row;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+
+        &:hover {
+            @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            background-color: color.$Boundles_Blue;
+        }
+    }
+
+    &-content {
+        @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+        @include margin(margin.$Margin3);
+        background-color: color.$White;
+        font-weight: bold;
+    }
+
+}
+
+
+@media screen and (max-width: 700px) {
+    .accordion {
+        @include width_height(width_height.$w100, width_height.$hauto);
+
+        &-content {
+            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+            @include margin(margin.$Margin3);
+            background-color: color.$White;
+            font-weight: bold;
+            line-height: 2em;
+        }
+    }
+}
