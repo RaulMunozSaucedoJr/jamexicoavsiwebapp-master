@@ -83,7 +83,13 @@
             @include text(font.$Montserrat, font_size.$Small, color.$White);
             text-align: center;
             letter-spacing: 0;
+            text-decoration: none;
             font-weight: bold;
+        }
+
+        small {
+            @include text(font.$Montserrat, font_size.$Small, color.$White);
+            text-decoration: none;
         }
 
     }

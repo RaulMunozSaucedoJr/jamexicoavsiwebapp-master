@@ -57,7 +57,7 @@
 
 @media only screen and (max-width: 600px) {
     .login-left {
-        @include width_height(width_height.$w100, width_height.$vh100);
+        @include width_height(width_height.$w100, width_height.$vh90);
 
         h1 {
             @include text(font.$Montserrat, font_size.$General, color.$White);
@@ -81,6 +81,10 @@
             font-weight: bold;
         }
 
+        small {
+            @include text(font.$Montserrat, font_size.$Small, color.$White);
+            text-decoration: none;
+        }
     }
 
     .login-right {

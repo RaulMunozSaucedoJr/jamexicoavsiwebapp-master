@@ -1,9 +1,9 @@
 import React from "react";
 import JAMexico from "../../../../assets/images/jpg/JAMEXICO.jpg";
 import AvsiMexico from "../../../../assets/images/jpg/AVSI.jpg";
+import EuropeUnion from "../../../../assets/images/jpg/UE.jpg";
 
 export const Navbar = () => {
-
   return (
     <>
       <nav className="navbar navbar-expand-lg sticky-top">
@@ -14,11 +14,15 @@ export const Navbar = () => {
             alt="Logo Navbar Desktop"
           />
           <img
+            src={EuropeUnion}
+            className="img-thumbnail"
+            alt="Logo Navbar Desktop"
+          />
+          <img
             src={AvsiMexico}
             className="img-thumbnail"
             alt="Logo Navbar Desktop"
           />
-
         </div>
       </nav>
     </>

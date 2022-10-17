@@ -18,7 +18,11 @@
         font-weight: bold;
         letter-spacing: 0;
 
-        &:hover {
+        &:hover,
+        &:visited,
+        &:link,
+        &:focus,
+        &:active {
             background-color: color.$Empowered_Yellow;
             @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
             text-align: center;
@@ -34,7 +38,11 @@
         @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
         text-align: center;
 
-        &:hover {
+        &:hover,
+        &:visited,
+        &:link,
+        &:focus,
+        &:active {
             background-color: color.$Empowered_Yellow;
             @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
             text-align: center;
@@ -48,7 +56,11 @@
         cursor: pointer;
         text-align: center;
 
-        &:hover {
+        &:hover,
+        &:visited,
+        &:link,
+        &:focus,
+        &:active {
             @include text(font.$Montserrat, font_size.$Medium, color.$White);
             border: color.$White solid .2rem;
             background-color: transparent;
@@ -64,7 +76,11 @@
         @include text(font.$Montserrat, font_size.$Small, color.$White);
         text-align: center;
 
-        &:hover {
+        &:hover,
+        &:visited,
+        &:link,
+        &:focus,
+        &:active {
             background-color: color.$Empowered_Orange;
             transition: .2s ease-in-out;
             @include text(font.$Montserrat, font_size.$Small, color.$White);
@@ -79,7 +95,11 @@
         @include text(font.$Montserrat, font_size.$Small, color.$White);
         text-align: center;
 
-        &:hover {
+        &:hover,
+        &:visited,
+        &:link,
+        &:focus,
+        &:active {
             background-color: color.$Inmersive_Red;
             transition: .2s ease-in-out;
             @include text(font.$Montserrat, font_size.$Small, color.$White);
@@ -94,7 +114,11 @@
         font-weight: bold;
         letter-spacing: 0;
 
-        &:hover {
+        &:hover,
+        &:visited,
+        &:link,
+        &:focus,
+        &:active {
             @include text(font.$Montserrat, font_size.$Medium, color.$White);
             background-color: color.$Facebook;
             text-align: center;
@@ -110,7 +134,11 @@
         font-weight: bold;
         letter-spacing: 0;
 
-        &:hover {
+        &:hover,
+        &:visited,
+        &:link,
+        &:focus,
+        &:active {
             @include text(font.$Montserrat, font_size.$Medium, color.$White);
             background-color: color.$Google;
             text-align: center;
@@ -147,7 +175,11 @@
                 cursor: pointer;
                 text-align: center;
 
-                &:hover {
+                &:hover,
+                &:visited,
+                &:link,
+                &:focus,
+                &:active {
                     @include text(font.$Montserrat, font_size.$Small, color.$White);
                     border: color.$White solid .2rem;
                     background-color: transparent;
@@ -161,7 +193,11 @@
                 @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
                 text-align: center;
 
-                &:hover {
+                &:hover,
+                &:visited,
+                &:link,
+                &:focus,
+                &:active {
                     background-color: color.$Empowered_Yellow;
                     @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
                     text-align: center;
@@ -172,13 +208,16 @@
             &-filter,
             &-open {
                 background-color: color.$Empowered_Yellow;
-                @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+                @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
                 text-align: center;
 
-                &:hover {
+                &:hover,
+                &:visited,
+                &:link,
+                &:focus,
+                &:active {
                     background-color: color.$Empowered_Yellow;
-                    transition: .2s ease-in-out;
-                    @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+                    @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
                     cursor: pointer;
                 }
             }
@@ -190,7 +229,11 @@
                 @include text(font.$Montserrat, font_size.$Extra_Small, color.$White);
                 text-align: center;
 
-                &:hover {
+                &:hover,
+                &:visited,
+                &:link,
+                &:focus,
+                &:active {
                     background-color: color.$Empowered_Orange;
                     transition: .2s ease-in-out;
                     @include text(font.$Montserrat, font_size.$Extra_Small, color.$White);
@@ -205,7 +248,11 @@
                 @include text(font.$Montserrat, font_size.$Extra_Small, color.$White);
                 text-align: center;
 
-                &:hover {
+                &:hover,
+                &:visited,
+                &:link,
+                &:focus,
+                &:active {
                     background-color: color.$Inmersive_Red;
                     transition: .2s ease-in-out;
                     @include text(font.$Montserrat, font_size.$Extra_Small, color.$White);

@@ -42,7 +42,7 @@ const BottomNavbar = () => {
                 name="briefcase-alt-2"
                 type="solid"
                 color="white"
-                size="md"
+                size="sm"
               ></box-icon>
             </Link>
           </div>
@@ -52,7 +52,7 @@ const BottomNavbar = () => {
                 name="book-content"
                 type="solid"
                 color="white"
-                size="md"
+                size="sm"
               ></box-icon>
             </Link>
           </div>
@@ -63,7 +63,7 @@ const BottomNavbar = () => {
                   type="solid"
                   name="plus-square"
                   color="white"
-                  size="md"
+                  size="sm"
                   animation="flashing"
                 ></box-icon>
               </button>
@@ -122,7 +122,7 @@ const BottomNavbar = () => {
                 name="id-card"
                 type="solid"
                 color="white"
-                size="md"
+                size="sm"
               ></box-icon>
             </Link>
           </div>
@@ -132,7 +132,7 @@ const BottomNavbar = () => {
                 name="bulb"
                 type="solid"
                 color="white"
-                size="md"
+                size="sm"
               ></box-icon>
             </Link>
           </div>
@@ -150,14 +150,14 @@ const BottomNavbar = () => {
               <Link to="/Login">
                 <Button
                   type="button"
-                  text="Logout"
+                  text="Salir"
                   className="btn btn-open"
                   onClick={handleLogout}
                 />
               </Link>
             ) : (
               <Link to="/Login">
-                <Button type="button" text="Login" className="btn btn-open" />
+                <Button type="button" text="Ingresar" className="btn btn-open" />
               </Link>
             )}
           </div>

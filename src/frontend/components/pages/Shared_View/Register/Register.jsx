@@ -12,6 +12,7 @@ const Register = () => {
   let navigate = useNavigate();
 
   const handleSubmitRegister = async (e) => {
+    let regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
     e.preventDefault();
     setError("");
     try {
@@ -23,6 +24,15 @@ const Register = () => {
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
+        });
+      } else if (!password.match(regexPassword)) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "La contraseña deberá de tener: Mayúsculas, minúsculas, números y carácteres especiales con una longitud minima de 8. Favor de verificarlos",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 7000,
         });
       } else {
         await signUp(email, password);
@@ -70,6 +80,11 @@ const Register = () => {
     console.clear();
   };
 
+  const togglePassword = () => {
+    const x = document.getElementById("password");
+    x.type === "password" ? (x.type = "email") : (x.type = "password");
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -88,7 +103,7 @@ const Register = () => {
           <div className="col-12 register-bottom">
             {error && (
               <div
-                className="alert alert-warning alert-dismissible fade show"
+                className="alert alert-warning alert-dismissible fade show d-none"
                 role="alert"
               >
                 <strong>{error}</strong>
@@ -120,7 +135,7 @@ const Register = () => {
               </div>
               <div className="form-group pt-3">
                 <label
-                  htmlFor="email"
+                  htmlFor="password"
                   className="form-label label-inmersive-blue"
                 >
                   Contraseña
@@ -135,6 +150,16 @@ const Register = () => {
                   autoComplete="off"
                   onChange={(e) => setPassword(e.target.value)}
                 />
+              </div>
+              <div className="form-group pt-3">
+                <label>
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    onClick={togglePassword}
+                  />
+                  Mostrar contraseña
+                </label>
               </div>
               <Button
                 id="submit"

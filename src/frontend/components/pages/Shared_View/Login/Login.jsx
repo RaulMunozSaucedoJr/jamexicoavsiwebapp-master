@@ -15,6 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    let regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
     e.preventDefault();
     setError("");
     try {
@@ -27,11 +28,21 @@ const Login = () => {
           showConfirmButton: false,
           timer: 5000,
         });
+      } else if (!password.match(regexPassword)) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "La contraseña deberá de tener: Mayúsculas, minúsculas, nñumeros y carácteres especiales con una longitud minima de 8. Favor de verificarlos",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 7000,
+        });
       } else {
         await logIn(email, password);
         Swal.fire({
-          title: "¡Bienvenido!",
-          text: "Gracias por logearse a la plataforma",
+          // eslint-disable-next-line
+          title: "¡Bienvenido!\n" + `${email}`,
+          text: "Gracias por ingresar a la plataforma",
           icon: "success",
           showCancelButton: false,
           showConfirmButton: false,
@@ -58,15 +69,6 @@ const Login = () => {
           showConfirmButton: false,
           timer: 5000,
         });
-      } else if (err.code === "auth/weak-password") {
-        Swal.fire({
-          title: "¡Atención!",
-          icon: "warning",
-          text: "La contraseña y/o email son incorrectos. Favor de verificarlo",
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 5000,
-        });
       } else if (err.code === "auth/user-disabled") {
         Swal.fire({
           title: "¡Atención!",
@@ -81,6 +83,24 @@ const Login = () => {
           title: "¡Atención!",
           icon: "warning",
           text: "Este correo electrónico NO se encuentra registrado. Favor de dirigirse a la secciòn de registro y registrarlo.",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 5000,
+        });
+      } else if (err.code === "auth/weak-password") {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "warning",
+          text: "La contraseña y/o email son incorrectos. Favor de verificarlo",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 5000,
+        });
+      } else if (err.code === "auth/wrong-password") {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "warning",
+          text: "El correo electrónico y/o contraseña son incorrectos. Favor de verificarlo",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -124,6 +144,11 @@ const Login = () => {
       });
   };
 
+  const togglePassword = () => {
+    const x = document.getElementById("password");
+    x.type === "password" ? (x.type = "email") : (x.type = "password");
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -131,10 +156,10 @@ const Login = () => {
           <div className="col-sm-12 col-md-6 login-left">
             <div className="row">
               <div className="col-sm-12 col-md-12">
-                <h1>Login</h1>
+                <h1>Ingresar</h1>
                 {error && (
                   <div
-                    className="alert alert-warning alert-dismissible fade show"
+                    className="alert alert-warning alert-dismissible fade show d-none"
                     role="alert"
                   >
                     <strong>{error}</strong>
@@ -153,7 +178,7 @@ const Login = () => {
                   noValidate
                 >
                   <div className="form-group pt-3">
-                    <label htmlFor="user">Usuario</label>
+                    <label htmlFor="user">Correo electrónico</label>
                     <input
                       placeholder="Correo electronico"
                       type="email"
@@ -163,15 +188,6 @@ const Login = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                     />
-                    <p>
-                      <strong>
-                        El formato del correo electrónico es incorrecto, favor
-                        de verificarlo.
-                      </strong>
-                    </p>
-                    <div className="invalid-feedback">
-                      Este campo NO puede estar vacio. Favor de verificarlo.
-                    </div>
                   </div>
                   <div className="form-group pt-3">
                     <label htmlFor="password">Contraseña</label>
@@ -185,15 +201,16 @@ const Login = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
-                    <p>
-                      <strong>
-                        La contraseña deberá tener: Mayúsculas, minúsculas,
-                        números, carácteres especiales.
-                      </strong>
-                    </p>
-                    <div className="invalid-feedback">
-                      Este campo NO puede estar vacio. Favor de verificarlo.
-                    </div>
+                  </div>
+                  <div className="form-group pt-3">
+                    <label>
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        onClick={togglePassword}
+                      />
+                      Mostrar contraseña
+                    </label>
                   </div>
                   <div className="form-group pt-3">
                     <Link to="/RecoverPassword">Recuperar contraseña</Link>

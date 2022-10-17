@@ -8,11 +8,11 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 const initialForm = {
   email: "",
 };
+let regexEmail =
+  /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
 
 const validationsForm = (form) => {
   let errors = {};
-  let regexEmail =
-    /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
   if (!form.email.trim()) {
     errors.email = "¡Este campo es OBLIGATORIO!";
   } else if (!regexEmail.test(form.email.trim())) {
@@ -39,6 +39,15 @@ const RecoverPassword = () => {
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
+        });
+      } else if (!form.email.match(regexEmail)) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "El formato del correo electrónico es incorrecto. Favor de verificarlo.",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 7000,
         });
       } else {
         console.log(form.email);

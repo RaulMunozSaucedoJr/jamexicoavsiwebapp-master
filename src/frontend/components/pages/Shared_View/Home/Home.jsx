@@ -4,20 +4,15 @@ import Blog from "../../../../assets/images/jpg/Blog.jpg";
 import Job from "../../../../assets/images/jpg/Job.jpg";
 import Tips from "../../../../assets/images/jpg/Tips.jpg";
 import CV from "../../../../assets/images/jpg/cv.jpg";
-import { UserAuth } from "../../../../context/AuthContext.js";
+//import { UserAuth } from "../../../../context/AuthContext.js";
 
-/*{ user }*/
 const Home = () => {
-  const { email } = UserAuth();
+  //const { user } = UserAuth();
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12 col-md-6 header-home-left center">
-            <div className="alert alert-success alert-dismissible fade show center" role="alert">
-              Bievenido: {email?.displayName}
-              <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
             <h1>JUVENTUDES</h1>
             <p>
               Somos un conjunto de asociaciones civiles las cuales brindamos

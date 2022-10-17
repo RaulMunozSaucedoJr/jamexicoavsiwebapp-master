@@ -58,7 +58,7 @@ small {
 }
 
 .form-control {
-    @include width_height(width_height.$w100, width_height.$vhauto);
+    @include width_height(width_height.$w100, width_height.$hauto);
     display: block;
     text-align: left;
     text-decoration: none;
@@ -66,8 +66,8 @@ small {
     box-sizing: border-box;
     outline: none !important;
     border-radius: .5em;
-    letter-spacing: 0;
-    @include text(font.$Montserrat, 1em, color.$Inmersive_Blue_Black);
+    letter-spacing: .2rem;
+    @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
     font-weight: bolder;
 
     &:focus {
