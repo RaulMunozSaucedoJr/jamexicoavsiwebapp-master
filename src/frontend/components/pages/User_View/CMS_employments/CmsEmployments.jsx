@@ -38,6 +38,17 @@ const CmsEmployments = () => {
   const saveEmployments = async (e) => {
     e.preventDefault();
 
+    if (!employments.title || !employments.category || !employments.description || !employments.web_url) {
+      Swal.fire({
+        icon: "info",
+        title: "¡Atencion!",
+        text: "Ningun campo debe estar vacio. Favor de verificalros.",
+        showCancelButton: false,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+
     if (subid === "") {
       try {
         await addDoc(collection(db, "trabajos"), {
@@ -115,19 +126,6 @@ const CmsEmployments = () => {
     }
   }, [subid]);
 
-  const validateForm = (title, category, description, web_url) => {
-    if (!title || !category || !description || !web_url) {
-      Swal.fire({
-        icon: "info",
-        title: "¡Atencion!",
-        text: "Ningun campo debe estar vacio. Favor de verificalros.",
-        showCancelButton: false,
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-  };
-
   return (
     <>
       <div className="container-fluid">
@@ -174,7 +172,6 @@ const CmsEmployments = () => {
                       id="title"
                       value={employments.title}
                       onChange={handleInputs}
-                      onBlur={validateForm}
                       required
                     />
                   </div>
@@ -189,7 +186,6 @@ const CmsEmployments = () => {
                       id="category"
                       value={employments.category}
                       onChange={handleInputs}
-                      onBlur={validateForm}
                       required
                     />
                   </div>
@@ -204,7 +200,6 @@ const CmsEmployments = () => {
                       id="descripcion"
                       value={employments.descripcion}
                       onChange={handleInputs}
-                      onBlur={validateForm}
                       required
                     />
                   </div>
@@ -219,7 +214,6 @@ const CmsEmployments = () => {
                       id="web_url"
                       value={employments.web_url}
                       onChange={handleInputs}
-                      onBlur={validateForm}
                       required
                     />
                   </div>

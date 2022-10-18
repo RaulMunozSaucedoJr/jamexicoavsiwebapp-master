@@ -12,12 +12,14 @@
 
 #mobile-nav {
     width: 100%;
-    height: auto;
+    height: 10.5%;
+    min-height: 10.5%;
+    max-height: 10.5%;
     background-color: color.$Boundles_Blue;
     border: color.$Inmersive_Blue_Black solid .2rem;
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
-    z-index: 1;
+
 
     .dropdown-menu {
         width: 100%;

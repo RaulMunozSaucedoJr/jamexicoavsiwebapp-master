@@ -57,27 +57,44 @@
                 border-radius: .5em;
             }
 
-            h3 {
-                @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
-                text-align: left;
-                font-weight: bold;
-            }
 
             &-body {
                 @include width_height(width_height.$w100, width_height.$h100);
                 border-left-color: color.$Inmersive_Blue_Black;
                 border-radius: 0;
 
-                p {
+                h3 {
                     @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
                     text-align: left;
                     font-weight: bold;
                 }
 
-                small {
+                p {
                     @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
                     text-align: left;
                     font-weight: bold;
+                }
+
+                small,
+                &:hover,
+                &:visited,
+                &:link,
+                &:focus,
+                &:active {
+                    @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
+                    text-align: left;
+                    font-weight: bold;
+                }
+
+                a,
+                &:hover,
+                &:visited,
+                &:link,
+                &:focus,
+                &:active {
+                    color: inherit;
+                    @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
+                    text-decoration: none;
                 }
             }
         }

@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { EmailTo } from "../../../Indexes/AtomsIndexes";
 
 /* A React component. */
 const ContactNavbar = () => {
+  const [show, setShow] = useState(true);
+  const controlNavbar = () => {
+      window.scrollY > 600 ? setShow(false) : setShow(true);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", controlNavbar);
+    return () => {
+      window.removeEventListener("scroll", controlNavbar);
+    };
+  }, []);
+
   return (
     <>
-      <div className="contact-navbar">
+      <div className={`.contact-navbar ${show && "contact-navbar"}`}>
         <EmailTo email="comunicacion@jamexico.org.mx">
           <box-icon
             name="mail-send"

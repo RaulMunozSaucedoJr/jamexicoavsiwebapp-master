@@ -42,12 +42,13 @@
 @media only screen and (max-width: 600px) {
 
     .jobs-left {
-        @include width_height(width_height.$w100, width_height.$vh30);
+        @include width_height(width_height.$w100, width_height.$vh20);
         border-bottom-left-radius: 2em;
         border-bottom-right-radius: 2em;
 
         h1 {
             @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            font-weight: bold;
             text-align: left;
             letter-spacing: 0;
         }
@@ -55,7 +56,7 @@
 
     .jobs-right {
         @include width_height(width_height.$w80, width_height.$vh30);
-        @include padding(padding.$Padding2);
+        @include padding(padding.$Padding1);
         background-image: url('/src/frontend/assets/images/jpg/marketjobs.jpg');
         background-repeat: no-repeat;
         background-position: center;

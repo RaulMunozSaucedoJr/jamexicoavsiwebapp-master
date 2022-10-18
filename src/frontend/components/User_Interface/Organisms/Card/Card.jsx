@@ -25,15 +25,13 @@ const Card = ({
                 alt={alternativeText}
               />
             </div>
-            <div className="col-md-8 mb-4">
+            <div className="col-md-8">
               <div className={cardBody}>
-                <h3 className="pt-1">{title}</h3>
+                <h3>{title}</h3>
                 <p>{cardText}</p>
                 <p>{secondarycardText}</p>
                 <p>{thirdText}</p>
-                <small>
-                  <Link to="/Home">{smallText}</Link>
-                </small>
+                <Link to="/Home">{smallText}</Link>
               </div>
             </div>
           </div>

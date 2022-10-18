@@ -1,20 +1,36 @@
-@use '../Utilities/Font_Properties/Fonts' as font;
-@use '../Utilities/Font_Properties/Font_Sizes' as font_size;
-@use '../Utilities/Font_Properties/Font_Properties' as font_properties;
+@use '../Utilities/Font_Properties/Fonts'as font;
+@use '../Utilities/Font_Properties/Font_Sizes'as font_size;
+@use '../Utilities/Font_Properties/Font_Properties'as font_properties;
 
-@use '../Utilities/Common/Colors' as color;
+@use '../Utilities/Common/Colors'as color;
 
-@use '../Utilities/Mixins/Mixins' as *;
+@use '../Utilities/Mixins/Mixins'as *;
 
-::placeholder{
+::placeholder {
     @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+    font-weight: bold;
+    text-align: left;
+    letter-spacing: 0;
 }
 
-::selection{
+::selection {
     background-color: color.$Inmersive_Blue_Black;
     color: color.$White;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-track {
     display: none;
+}
+
+@media only screen and (max-width: 600px) {
+
+    ::-webkit-scrollbar,
+    ::-webkit-scrollbar-thumb,
+    ::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-track {
+        display: none;
+    }
 }

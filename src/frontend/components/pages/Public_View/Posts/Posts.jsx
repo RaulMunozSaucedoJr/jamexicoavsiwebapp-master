@@ -88,7 +88,7 @@ const Posts = () => {
             </div>
             <div className="row">
               {lista.map((list, index) => (
-                <div className="col-sm-12 col-md-4 pt-4" key={index}>
+                <div className="col-sm-12 col-md-4 pt-1" key={index}>
                   <Card
                     imageUrl={Post}
                     alternativeTExt="Imagen de Card"
@@ -100,7 +100,7 @@ const Posts = () => {
               ))}
               {dataSearch.map((item, index) => {
                 return (
-                  <div className="col-sm-12 col-md-4 pt-3" key={index}>
+                  <div className="col-sm-12 col-md-4 pt-1" key={index}>
                     <Card title={item.title} cardText={item.desc} />
                   </div>
                 );

@@ -48,7 +48,7 @@ const Home = () => {
           </div>
           <div className="col-sm-12 col-md-12 tools-bottom center">
             <div className="row">
-              <div className="col-sm-12 col-md-3 pt-3">
+              <div className="col-sm-12 col-md-3 pt-2">
                 <Card
                   imageUrl={Job}
                   alternativeTExt="Imagen de Card"
@@ -58,7 +58,7 @@ const Home = () => {
                   smallText="Para mas detalles visite la seccion correspondiente"
                 />
               </div>
-              <div className="col-sm-12 col-md-3 pt-3">
+              <div className="col-sm-12 col-md-3 pt-2">
                 <Card
                   imageUrl={Blog}
                   alternativeTExt="Imagen de Card"
@@ -68,7 +68,7 @@ const Home = () => {
                   smallText="Para mas detalles visite la seccion correspondiente"
                 />
               </div>
-              <div className="col-sm-12 col-md-3 pt-3">
+              <div className="col-sm-12 col-md-3 pt-2">
                 <Card
                   imageUrl={Tips}
                   alternativeTExt="Imagen de Card"
@@ -78,7 +78,7 @@ const Home = () => {
                   smallText="Para mas detalles visite la seccion correspondiente"
                 />
               </div>
-              <div className="col-sm-12 col-md-3 pt-3">
+              <div className="col-sm-12 col-md-3 pt-2">
                 <Card
                   imageUrl={CV}
                   alternativeTExt="Imagen de Card"

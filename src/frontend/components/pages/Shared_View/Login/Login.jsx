@@ -15,7 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    let regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
+    const regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
     e.preventDefault();
     setError("");
     try {
@@ -100,7 +100,7 @@ const Login = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          text: "El correo electrónico y/o contraseña son incorrectos. Favor de verificarlo",
+          text: "La contraseña no es la correcta. Favor de verificarla",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,

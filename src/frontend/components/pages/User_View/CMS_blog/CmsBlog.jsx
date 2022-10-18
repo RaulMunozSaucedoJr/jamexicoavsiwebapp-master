@@ -56,7 +56,7 @@ const CmsBlog = () => {
         timer: 2000,
       });
     } else {
-      await setDoc(doc(db, "tips", subid), {
+      await setDoc(doc(db, "posts", subid), {
         ...post,
       });
       Swal.fire({
@@ -130,140 +130,141 @@ const CmsBlog = () => {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-12 col-md-6 blog-left center">
-          <h1>Manejador de post's</h1>
-          <Link to="/Home">
-            <Button
-              id="button"
-              text="Volver al inicio"
-              className="btn btn-open"
-              type="button"
-            />
-          </Link>
-        </div>
-        <div className="col-sm-12 col-md-6 blog-right"></div>
-        <div className="col-sm-12 col-md-12 blog-bottom pt-5">
-          <Tabs>
-            <div label="Registrar posts">
-              <div
-                className="alert alert-success alert-dismissible fade show"
-                role="alert"
-              >
-                ¡Hola!. Se le recuerda que todos los campos son{" "}
-                <strong>OBLIGATORIOS</strong>.
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                ></button>
+    <>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-sm-12 col-md-6 blog-left center">
+            <h1>Manejador de post's</h1>
+            <Link to="/Home">
+              <Button
+                id="button"
+                text="Volver al inicio"
+                className="btn btn-open"
+                type="button"
+              />
+            </Link>
+          </div>
+          <div className="col-sm-12 col-md-6 blog-right"></div>
+          <div className="col-sm-12 col-md-12 blog-bottom pt-5">
+            <Tabs>
+              <div label="Registrar posts">
+                <div
+                  className="alert alert-success alert-dismissible fade show"
+                  role="alert"
+                >
+                  ¡Hola!. Se le recuerda que todos los campos son{" "}
+                  <strong>OBLIGATORIOS</strong>.
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <form onSubmit={savePosts}>
+                  <div className="form-group pt-3">
+                    <Input
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Titulo"
+                      placeholder="Titulo"
+                      type="text"
+                      className="form-control"
+                      name="title"
+                      id="title"
+                      value={post.title}
+                      onChange={handleInputs}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <Input
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Categoria"
+                      placeholder="Categoria"
+                      type="text"
+                      className="form-control"
+                      name="category"
+                      id="category"
+                      value={post.category}
+                      onChange={handleInputs}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <label
+                      htmlFor="content"
+                      className="form-label label-inmersive-blue"
+                    >
+                      Contenido
+                    </label>
+                    <textarea
+                      placeholder="Contenido"
+                      type="text"
+                      className="form-control"
+                      name="content"
+                      id="content"
+                      value={post.content}
+                      onChange={handleInputs}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <button
+                      className="btn btn-submit"
+                      type="submit"
+                      onClick={validateForm}
+                    >
+                      {subid === "" ? "Registrar" : "Actualizar"}
+                    </button>
+                  </div>
+                </form>
               </div>
-              <form onSubmit={savePosts}>
-                <div className="form-group pt-3">
-                  <Input
-                    titleLabel="form-label label-inmersive-blue"
-                    label="Titulo"
-                    placeholder="Titulo"
-                    type="text"
-                    className="form-control"
-                    name="title"
-                    id="title"
-                    value={post.title}
-                    onChange={handleInputs}
-                    onBlur={validateForm}
-                    required
-                  />
-                </div>
-                <div className="form-group pt-3">
-                  <Input
-                    titleLabel="form-label label-inmersive-blue"
-                    label="Categoria"
-                    placeholder="Categoria"
-                    type="text"
-                    className="form-control"
-                    name="category"
-                    id="category"
-                    value={post.category}
-                    onChange={handleInputs}
-                    required
-                  />
-                </div>
-                <div className="form-group pt-3">
-                  <label
-                    htmlFor="content"
-                    className="form-label label-inmersive-blue"
-                  >
-                    Contenido
-                  </label>
-                  <textarea
-                    placeholder="Contenido"
-                    type="text"
-                    className="form-control"
-                    name="content"
-                    id="content"
-                    value={post.content}
-                    onChange={handleInputs}
-                    onBlur={validateForm}
-                    required
-                  />
-                </div>
-                <div className="form-group pt-3">
-                  <button className="btn btn-submit" type="submit">
-                    {subid === "" ? "Registrar" : "Actualizar"}
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div label="Tabla de posts">
-              <div className="table-responsive">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Titulo</th>
-                      <th>Categoria</th>
-                      <th>Contenido</th>
-                      <th>Accion 1</th>
-                      <th>Accion 2</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {lista.map((list) => (
+              <div label="Tabla de posts">
+                <div className="table-responsive">
+                  <table className="table">
+                    <thead>
                       <tr>
-                        <th scope="row" key={list.id}></th>
-                        <td>{list.title}</td>
-                        <td>{list.category}</td>
-                        <td>{list.content}</td>
-                        <td>
-                          <Button
-                            id="button"
-                            text="Editar"
-                            className="btn btn-edit"
-                            type="button"
-                            onClick={() => setSubid(list.id)}
-                          />
-                        </td>
-                        <td>
-                          <Button
-                            id="button"
-                            text="Borrar"
-                            className="btn btn-delete"
-                            type="button"
-                            onClick={() => deletePost(list.id)}
-                          />
-                        </td>
+                        <th>#</th>
+                        <th>Titulo</th>
+                        <th>Categoria</th>
+                        <th>Contenido</th>
+                        <th>Accion 1</th>
+                        <th>Accion 2</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {lista.map((list) => (
+                        <tr>
+                          <th scope="row" key={list.id}></th>
+                          <td>{list.title}</td>
+                          <td>{list.category}</td>
+                          <td>{list.content}</td>
+                          <td>
+                            <Button
+                              id="button"
+                              text="Editar"
+                              className="btn btn-edit"
+                              type="button"
+                              onClick={() => setSubid(list.id)}
+                            />
+                          </td>
+                          <td>
+                            <Button
+                              id="button"
+                              text="Borrar"
+                              className="btn btn-delete"
+                              type="button"
+                              onClick={() => deletePost(list.id)}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </Tabs>
+            </Tabs>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

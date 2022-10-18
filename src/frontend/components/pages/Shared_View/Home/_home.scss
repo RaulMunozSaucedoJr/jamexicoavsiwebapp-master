@@ -153,16 +153,16 @@
         overflow-x: hidden;
 
         h1 {
-            @include text(font.$Montserrat, font_size.$General, color.$White);
+            @include text(font.$Montserrat, font_size.$Medium, color.$White);
             text-align: center;
             font-weight: bold;
         }
 
         p {
-            @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            @include text(font.$Montserrat, font_size.$Small, color.$White);
             text-align: left;
             font-weight: bold;
-            line-height: 2em;
+            line-height: 3.5rem;
         }
     }
 
@@ -196,19 +196,19 @@
     }
 
     .mision-left {
-        @include width_height(width_height.$w100, width_height.$vh50);
+        @include width_height(width_height.$w100, width_height.$h100);
         background-color: color.$Empowered_Yellow;
-        @include padding(padding.$Padding1);
+        @include padding(padding.$Padding2);
 
         h1 {
-            @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
             text-align: left;
             font-weight: bold;
             letter-spacing: 0;
         }
 
         p {
-            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
             text-align: left;
             font-weight: bold;
             line-height: 2em;
@@ -216,7 +216,7 @@
     }
 
     .mision-right {
-        @include width_height(width_height.$w100, width_height.$vh70);
+        @include width_height(width_height.$w100, width_height.$vh50);
         background-image: url('/src/frontend/assets/images/jpg/Mision.jpg');
         background-position: center;
         background-repeat: no-repeat;
@@ -230,6 +230,7 @@
     .tools-right {
         @include width_height(width_height.$w100, width_height.$vh100);
         background-color: color.$Empowered_Orange;
+        @include padding(padding.$Padding2);
 
         h1 {
             @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);

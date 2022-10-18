@@ -81,8 +81,8 @@ const Register = () => {
   };
 
   const togglePassword = () => {
-    const x = document.getElementById("password");
-    x.type === "password" ? (x.type = "email") : (x.type = "password");
+    const inputType = document.querySelector('#password');
+    inputType.type === "password" ? (inputType.type = "email") : (inputType.type = "password");
   };
 
   return (

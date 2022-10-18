@@ -15,7 +15,9 @@
     transform: translateY(-50%);
     z-index: 1;
     border-top-right-radius: 0;
-    border-bottom-right-radius: 0;;
+    border-bottom-right-radius: 0;
+    transition: linear .5s;
+    ;
 
     a {
         display: block;
@@ -26,12 +28,12 @@
     }
 }
 
- 
+
 @media only screen and (max-width: 600px) {
     .contact-navbar {
         @include width_height(width_height.$w15, width_height.$h10);
         position: fixed;
-        margin-right: 0; 
+        margin-right: 0;
         top: 70%;
         -webkit-transform: translateY(-50%);
         -ms-transform: translateY(-50%);
@@ -39,7 +41,8 @@
         z-index: 1;
         border-radius: 1em;
         border-top-right-radius: 0;
-        border-bottom-right-radius: 0;;
+        border-bottom-right-radius: 0;
+        transition: linear .5s;
 
         a {
             display: block;
