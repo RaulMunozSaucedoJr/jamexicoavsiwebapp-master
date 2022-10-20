@@ -1,6 +1,37 @@
-.modalRoot {
-    z-index: 1;
-    width: 100%;
-    height: auto;
-    background-color: rgba(1, 1, 1, 0.2);
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Properties'as font_properties;
+
+@use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
+
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+.modal {
+  @include width_height(width_height.$vw100, width_height.$h100);
+  border-radius: 1em;
+
+  &-content {
+    border: color.$Inmersive_Blue_Black solid .2em;
   }
+
+  &-header {
+    h1 {
+      @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+      text-align: left;
+      font-weight: bold;
+    }
+  }
+
+  &-body {
+    background-color: color.$White;
+    border-radius: 1em;
+
+    label {
+      @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+      font-weight: bold;
+    }
+  }
+
+}

@@ -13,11 +13,8 @@
 
 .accordion {
     @include width_height(width_height.$w100, width_height.$hauto);
-    @include padding(padding.$Padding1);
 
     &-title {
-        @include padding(padding.$Padding1);
-        @include width_height(width_height.$w100, width_height.$hauto);
         @include text(font.$Montserrat, font_size.$Medium, color.$White);
         background-color: color.$Inmersive_Blue_Black;
         justify-content: space-between;
@@ -34,7 +31,7 @@
 
     &-content {
         @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
-        @include margin(margin.$Margin3);
+        @include margin(margin.$Margin1);
         background-color: color.$White;
         font-weight: bold;
     }
@@ -47,11 +44,20 @@
         @include width_height(width_height.$w100, width_height.$hauto);
 
         &-content {
-            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
-            @include margin(margin.$Margin3);
+            @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
+            @include margin(margin.$Margin1);
             background-color: color.$White;
             font-weight: bold;
             line-height: 2em;
+        }
+
+        &-body {
+            a {
+                @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+                font-weight: bold;
+                text-align: left;
+                text-decoration: none;
+            }
         }
     }
 }

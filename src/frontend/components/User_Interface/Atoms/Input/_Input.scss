@@ -34,4 +34,33 @@
         @include text(font.$Montserrat, font_size.$Medium, color.$Resilent_Turquoise);
 
     }
+
+    @media only screen and (max-width: 600px) {
+        .label {
+            &-white {
+                @include text(font.$Montserrat, font_size.$Small, color.$White);
+
+            }
+
+            &-inmersive-blue {
+                @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+
+            }
+
+            &-boundless_blue {
+                @include text(font.$Montserrat, font_size.$Small, color.$Boundles_Blue);
+
+            }
+
+            &-sustainable-green {
+                @include text(font.$Montserrat, font_size.$Small, color.$Sustainable_Green);
+
+            }
+
+            &-resilent-turquoise {
+                @include text(font.$Montserrat, font_size.$Small, color.$Resilent_Turquoise);
+
+            }
+        }
+    }
 }

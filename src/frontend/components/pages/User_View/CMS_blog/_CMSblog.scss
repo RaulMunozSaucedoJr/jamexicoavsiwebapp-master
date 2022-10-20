@@ -53,7 +53,7 @@
     }
 
     .blog-right {
-        @include width_height(width_height.$w100, width_height.$vh30);
+        @include width_height(width_height.$w100, width_height.$vh25);
         background-color: color.$White;
         background-image: url('/src/frontend/assets/images/jpg/Blog.jpg');
         background-position: center;

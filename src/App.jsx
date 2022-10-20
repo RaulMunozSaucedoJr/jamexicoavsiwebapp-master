@@ -52,8 +52,8 @@ const App = () => {
           <Route exact path="/CmsBlog" element={<Private><CmsBlog /></Private>} />
           <Route exact path="/CmsEmployments" element={<Private><CmsEmployments /></Private>} />
           <Route exact path="/CmsFaqs" element={<Private><CmsFaqs /></Private>} />
-          <Route exact path="/CmsResume" element={<Private><CmsResume /></Private>} />
-          <Route exact path="/CmsTips" element={<Private><CmsTips /></Private>} />
+          <Route exact path="/CmsResume" element={<CmsResume />} />
+          <Route exact path="/CmsTips" element={<CmsTips />} />
           {/*<Route exact path="/CmsUserProfile" element={<CmsUserProfile />} />*/}
           <Route exact path="/PantallaChat" element={<PantallaChat />} />
         </Routes>

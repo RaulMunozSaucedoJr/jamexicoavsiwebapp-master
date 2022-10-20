@@ -35,7 +35,7 @@ const CmsTips = () => {
     setTips({ ...faqs, [name]: value });
   };
   //Function to save faqs and update
-  const saveTipss = async (e) => {
+  const saveTips = async (e) => {
     e.preventDefault();
 
     if (subid === "") {
@@ -162,7 +162,7 @@ const CmsTips = () => {
                   aria-label="Close"
                 ></button>
               </div>
-              <form onSubmit={saveTipss}>
+              <form onSubmit={saveTips}>
                 <div className="form-group pt-3">
                   <Input
                     titleLabel="form-label label-inmersive-blue"

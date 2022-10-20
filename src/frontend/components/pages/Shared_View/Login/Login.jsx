@@ -100,7 +100,7 @@ const Login = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          text: "La contraseña no es la correcta. Favor de verificarla",
+          text: "Contraseña incorrecta. Favor de verificarla",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,

@@ -6,7 +6,7 @@ import { EmailTo } from "../../../Indexes/AtomsIndexes";
 const ContactNavbar = () => {
   const [show, setShow] = useState(true);
   const controlNavbar = () => {
-      window.scrollY > 600 ? setShow(false) : setShow(true);
+      window.scrollY > 400 ? setShow(false) : setShow(true);
   };
 
   useEffect(() => {

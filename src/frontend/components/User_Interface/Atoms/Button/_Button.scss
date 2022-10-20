@@ -13,7 +13,7 @@
 
     &-login {
         background-color: color.$Empowered_Yellow;
-        @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+        @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
         text-align: center;
         font-weight: bold;
         letter-spacing: 0;
@@ -24,7 +24,7 @@
         &:focus,
         &:active {
             background-color: color.$Empowered_Yellow;
-            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
             text-align: center;
             font-weight: bold;
             letter-spacing: 0;
@@ -36,6 +36,7 @@
     &-open {
         background-color: color.$Empowered_Yellow;
         @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+        font-weight: bold;
         text-align: center;
 
         &:hover,
@@ -161,6 +162,7 @@
         @include text(font.$Montserrat, font_size.$Extra_Small, color.$White);
         font-weight: bold;
         letter-spacing: 0;
+        border: none;
     }
 
     @media only screen and (max-width: 37.5em) {
@@ -271,7 +273,9 @@
             }
 
             &-transparent {
-                @include text(font.$Montserrat, font_size.$Small, color.$White);
+                @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+                font-weight: bold;
+                border: color.$Inmersive_Blue_Black solid .2rem;
             }
 
         }

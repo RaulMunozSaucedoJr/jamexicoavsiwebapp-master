@@ -2,129 +2,132 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Button, Input } from "../../../Indexes/AtomsIndexes";
-import { Tabs } from "../../../Indexes/OrganismsIndex";
-import app from "../../../../../backend/Firebase/Firebase-config.js";
-
+import EditEmployments from "./EditEmployments";
 import {
-  getFirestore,
   collection,
-  addDoc,
   getDocs,
-  doc,
+  addDoc,
   deleteDoc,
-  getDoc,
-  setDoc,
+  doc,
+  orderBy,
+  query,
+  serverTimestamp,
 } from "firebase/firestore";
-
-const db = getFirestore(app);
+import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
 const CmsEmployments = () => {
-  const initialValue = {
-    title: "",
-    category: "",
-    descripcion: "",
-    web_url: "",
-  };
+  const [tasks, setTasks] = useState([]);
+  const [createTask, setCreateTask] = useState("");
+  const [createLink, setCreateLink] = useState("");
+  const collectionRef = collection(db, "platforms");
 
-  const [employments, setEmployments] = useState(initialValue);
-  const [listEmployments, setListEmployments] = useState([]);
-  const [subid, setSubid] = useState("");
-
-  const handleInputs = (e) => {
-    const { name, value } = e.target;
-    setEmployments({ ...employments, [name]: value });
-  };
-
-  const saveEmployments = async (e) => {
+  //Add Task Handler
+  const submitTask = async (e) => {
+    const regexLetter = /^[a-zA-ZÀ-ÿ\0-9\u00f1\u00d1\s]/;
+    // eslint-disable-next-line
+    const regexLinks = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
     e.preventDefault();
-
-    if (!employments.title || !employments.category || !employments.description || !employments.web_url) {
-      Swal.fire({
-        icon: "info",
-        title: "¡Atencion!",
-        text: "Ningun campo debe estar vacio. Favor de verificalros.",
-        showCancelButton: false,
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-
-    if (subid === "") {
-      try {
-        await addDoc(collection(db, "trabajos"), {
-          ...employments,
+    try {
+      if (!createTask || !createLink) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "Ningún campo debe estar vacio",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 1000,
         });
-      } catch (error) {
-        console.log(error);
+      } else if (!createTask.match(regexLetter)) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "El campo nombre y descripción NO aceptan números",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } else if (!createLink.match(regexLinks)) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "La dirección web de la plataforma de empleo tiene un formato incorrecto. Favor de verificarla",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } else {
+        await addDoc(collectionRef, {
+          task: createTask,
+          platform: createLink,
+          timestamp: serverTimestamp(),
+        });
+        Swal.fire({
+          title: "Éxito",
+          icon: "success",
+          text: "La bolsa de empleo se registró exitosamente",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //Delete Handler
+  const deleteTask = async (id) => {
+    try {
+      const documentRef = doc(db, "platforms", id);
+      await deleteDoc(documentRef);
       Swal.fire({
         title: "Éxito",
         icon: "success",
-        text: "La bolsa de empleo se he registrado exitosamente",
+        text: "La bolsa de empleo se eliminó exitosamente",
         showCancelButton: false,
         showConfirmButton: false,
-        timer: 2000,
+        timer: 1500,
       });
-    } else {
-      await setDoc(doc(db, "trabajos", subid), {
-        ...employments,
-      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (err) {
       Swal.fire({
-        title: "Error",
-        icon: "error",
-        text: "La bolsa de empleo NO se he podido registrar",
+        title: "¡Atención!",
+        icon: "warning",
+        text:
+          "La bolsa de empleo no se ha podido eliminar.\n" +
+          `Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
         showCancelButton: false,
         showConfirmButton: false,
-        timer: 2000,
+        timer: 1500,
       });
+      console.log(err);
     }
-    setEmployments({ ...initialValue });
-    setSubid("");
   };
 
+  //Query the collection
   useEffect(() => {
-    const getEmployments = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "trabajos"));
-        const docs = [];
-        querySnapshot.forEach((doc) => {
-          docs.push({ ...doc.data(), id: doc.id });
+    const getTasks = async () => {
+      const q = query(collectionRef, orderBy("timestamp"));
+      await getDocs(q)
+        .then((tasks) => {
+          let tasksData = tasks.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setTasks(tasksData);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        setListEmployments(docs);
-      } catch (error) {
-        console.log(error);
-      }
     };
-    getEmployments();
-  }, [listEmployments]);
-
-  const deleteEmployments = async (id) => {
-    await deleteDoc(doc(db, "trabajos", id));
-    Swal.fire({
-      title: "Éxito",
-      icon: "success",
-      text: "La bolsa de trabajo se he borrado exitosamente",
-      showCancelButton: false,
-      showConfirmButton: false,
-      timer: 2000,
-    });
-  };
-
-  const getOne = async (id) => {
-    try {
-      const docRef = doc(db, "trabajos", id);
-      const docSnap = await getDoc(docRef);
-      setEmployments(docSnap.data());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (subid !== "") {
-      getOne(subid);
-    }
-  }, [subid]);
+    getTasks();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
@@ -144,133 +147,199 @@ const CmsEmployments = () => {
 
           <div className="col-sm-12 col-md-6 employments-right"></div>
 
-          <div className="col-sm-12 col-md-12 employments-bottom pt-5">
-            <Tabs>
-              <div label="Registrar trabajos">
-                <div
-                  className="alert alert-success alert-dismissible fade show"
-                  role="alert"
+          <div className="col-sm-12 col-md-12 employments-bottom">
+            <div className="row">
+              <div className="col-12 pt-2">
+                <button
+                  className="btn btn-open"
+                  id="button"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addModal"
                 >
-                  ¡Hola!. Se le recuerda que todos los campos son{" "}
-                  <strong>OBLIGATORIOS</strong>.
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <form onSubmit={saveEmployments}>
-                  <div className="form-group pt-3">
-                    <Input
-                      titleLabel="form-label label-inmersive-blue"
-                      label="Titulo"
-                      placeholder="Titulo"
-                      type="text"
-                      className="form-control"
-                      name="title"
-                      id="title"
-                      value={employments.title}
-                      onChange={handleInputs}
-                      required
-                    />
-                  </div>
-                  <div className="form-group pt-3">
-                    <Input
-                      titleLabel="form-label label-inmersive-blue"
-                      label="Categoria"
-                      placeholder="Categoria"
-                      type="text"
-                      className="form-control"
-                      name="category"
-                      id="category"
-                      value={employments.category}
-                      onChange={handleInputs}
-                      required
-                    />
-                  </div>
-                  <div className="form-group pt-3">
-                    <Input
-                      titleLabel="form-label label-inmersive-blue"
-                      label="Descripcion"
-                      placeholder="Descripcion"
-                      type="text"
-                      className="form-control"
-                      name="descripcion"
-                      id="descripcion"
-                      value={employments.descripcion}
-                      onChange={handleInputs}
-                      required
-                    />
-                  </div>
-                  <div className="form-group pt-3">
-                    <Input
-                      titleLabel="form-label label-inmersive-blue"
-                      label="Sitio web"
-                      placeholder="Sitio web"
-                      type="text"
-                      className="form-control"
-                      name="web_url"
-                      id="web_url"
-                      value={employments.web_url}
-                      onChange={handleInputs}
-                      required
-                    />
-                  </div>
-                  <div className="form-group pt-3">
-                    <button className="btn btn-submit">
-                      {subid === "" ? "Registrar" : "Actualizar"}
-                    </button>
-                  </div>
-                </form>
+                  Agregar bolsa de empleo
+                </button>
               </div>
-              <div label="Tabla de trabajos">
-                <div className="table-responsive-xxl">
-                  <table className="table table-hover">
+
+              {/*ACCORDION WITH RECORDS*/}
+              <div className="col-12 d-sm-block d-md-none pt-2">
+                {tasks.map(({ task, platform, id, timestamp }) => (
+                  <div
+                    className="accordion"
+                    id="accordionPanelsStayOpenExample"
+                    key={id}
+                  >
+                    <div className="accordion-item">
+                      <h2 className="accordion-header" id="headingOne">
+                        <button
+                          className="accordion-button"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#panelsStayOpen-collapseOne"
+                          aria-expanded="true"
+                          aria-controls="panelsStayOpen-collapseOne"
+                        >
+                          {task}
+                        </button>
+                      </h2>
+                      <div
+                        id="panelsStayOpen-collapseOne"
+                        className="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingOne"
+                      >
+                        <div className="accordion-body">
+                          <strong>{task}</strong>
+                          <br />
+                          <a href={platform} target="_blank" rel="noreferrer">
+                            {platform}
+                          </a>
+                          <p>
+                            {new Date(
+                              timestamp.seconds * 1000
+                            ).toLocaleString()}
+                          </p>
+                          <div className="container-fluid">
+                            <div className="row">
+                              <div className="col-6">
+                                <button
+                                  type="button"
+                                  className="btn btn-delete"
+                                  onClick={() => deleteTask(id)}
+                                >
+                                  <box-icon
+                                    name="message-square-x"
+                                    type="solid"
+                                    color="white"
+                                    size="sm"
+                                  ></box-icon>
+                                </button>
+                              </div>
+                              <div className="col-6">
+                                <EditEmployments
+                                  task={task}
+                                  platform={platform}
+                                  id={id}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/*TABLE WITH RECORDS*/}
+              {/*<div className="col-12 pt-4 d-sm-none d-md-block d-none">
+                <div className="table-responsive">
+                  <table className="table table-hover table-striped table-bordered">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Sitio web</th>
-                        <th scope="col">Accion 1</th>
-                        <th scope="col">Accion 2</th>
+                        <th>Titulo</th>
+                        <th>Categoria</th>
+                        <th>Contenido</th>
+                        <th>Fecha</th>
+                        <th>Accion 1</th>
+                        <th>Accion 2</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {listEmployments.map((list) => (
-                        <tr>
-                          <th scope="row" key={list.id}></th>
-                          <td>{list.title}</td>
-                          <td>{list.category}</td>
-                          <td>{list.descripcion}</td>
-                          <td>{list.web_url}</td>
-                          <td>
-                            <Button
-                              id="button"
-                              text="Editar"
-                              className="btn btn-edit"
-                              type="button"
-                              onClick={() => setSubid(list.id)}
-                            />
-                          </td>
-                          <td>
-                            <Button
-                              id="button"
-                              text="Borrar"
-                              className="btn btn-delete"
-                              type="button"
-                              onClick={() => deleteEmployments(list.id)}
-                            />
-                          </td>
-                        </tr>
-                      ))}
+                      {tasks.map(
+                        ({ task, category, content, id, timestamp }) => (
+                          <tr scope="row" key={id}>
+                            <td>{task}</td>
+                            <td>{category}</td>
+                            <td>{content}</td>
+                            <td>
+                              {new Date(
+                                timestamp.seconds * 1000
+                              ).toLocaleString()}
+                            </td>
+                            <td>
+                              <EditBlog content={content} task={task} id={id} />
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-delete"
+                                onClick={() => deleteTask(id)}
+                              >
+                                <box-icon
+                                  name="message-square-x"
+                                  type="solid"
+                                  color="white"
+                                  size="sm"
+                                ></box-icon>
+                              </button>
+                            </td>
+                          </tr>
+                        )
+                      )}
                     </tbody>
                   </table>
                 </div>
-              </div>
-            </Tabs>
+              </div>*/}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="addModal"
+        tabIndex="-1"
+        aria-labelledby="addModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title" id="addModalLabel">
+                Añadir plataformas
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+            </div>
+            <div className="modal-body">
+              <form onSubmit={submitTask}>
+                <div className="form-group">
+                  <Input
+                    titleLabel="form-label label-inmersive-blue"
+                    label="Titulo"
+                    type="text"
+                    className="form-control"
+                    name="title"
+                    id="title"
+                    placeholder="Titulo"
+                    onChange={(e) => setCreateTask(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <Input
+                    titleLabel="form-label label-inmersive-blue"
+                    label="Link"
+                    type="text"
+                    className="form-control"
+                    name="url"
+                    id="url"
+                    placeholder="Link"
+                    onChange={(e) => setCreateLink(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group pt-2">
+                  <button className="btn btn-submit" type="submit">
+                    Agregar plataformas
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

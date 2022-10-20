@@ -40,7 +40,9 @@
 
 @media only screen and (max-width: 600px) {
     .faqs-left {
-        @include width_height(width_height.$w100, width_height.$vh30);
+        @include width_height(width_height.$w100, width_height.$vh20);
+        border-bottom-left-radius: 1em;
+        border-bottom-right-radius: 1em;
 
         h1 {
             @include text(font.$Montserrat, font_size.$Medium, color.$White);
