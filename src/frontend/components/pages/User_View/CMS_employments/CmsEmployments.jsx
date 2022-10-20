@@ -24,8 +24,7 @@ const CmsEmployments = () => {
   //Add Task Handler
   const submitTask = async (e) => {
     const regexLetter = /^[a-zA-ZÀ-ÿ\0-9\u00f1\u00d1\s]/;
-    // eslint-disable-next-line
-    const regexLinks = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+    const regexLinks =/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
     e.preventDefault();
     try {
       if (!createTask || !createLink) {

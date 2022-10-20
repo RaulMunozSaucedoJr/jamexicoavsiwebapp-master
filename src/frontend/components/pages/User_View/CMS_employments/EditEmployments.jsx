@@ -9,7 +9,7 @@ const EditEmployments = ({ task, platform, id }) => {
 
   const updateTask = async (e) => {
     const regexLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]/;
-    const regexLinks = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+    const regexLinks =/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
     e.preventDefault();
     try {
       if (!tasks || !platforms) {
@@ -43,7 +43,7 @@ const EditEmployments = ({ task, platform, id }) => {
         const taskDocument = doc(db, "platforms", id);
         await updateDoc(taskDocument, {
           task: tasks,
-          platform: platforms
+          platform: platforms,
         });
         Swal.fire({
           title: "Éxito",
