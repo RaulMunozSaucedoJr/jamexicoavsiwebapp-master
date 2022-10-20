@@ -93,7 +93,8 @@ const CmsBlog = () => {
       Swal.fire({
         title: "¡Atención!",
         icon: "warning",
-        text: "El post no se ha podido eliminar.\n" +
+        text:
+          "El post no se ha podido eliminar.\n" +
           `Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
         showCancelButton: false,
         showConfirmButton: false,
@@ -120,6 +121,7 @@ const CmsBlog = () => {
         });
     };
     getTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
