@@ -222,57 +222,6 @@ const CmsBlog = () => {
                   </div>
                 ))}
               </div>
-
-              {/*TABLE WITH RECORDS*/}
-              <div className="col-12 pt-4 d-sm-none d-md-block d-none">
-                <div className="table-responsive">
-                  <table className="table table-hover table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Titulo</th>
-                        <th>Categoria</th>
-                        <th>Contenido</th>
-                        <th>Fecha</th>
-                        <th>Accion 1</th>
-                        <th>Accion 2</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tasks.map(
-                        ({ task, category, content, id, timestamp }) => (
-                          <tr scope="row" key={id}>
-                            <td>{task}</td>
-                            <td>{category}</td>
-                            <td>{content}</td>
-                            <td>
-                              {new Date(
-                                timestamp.seconds * 1000
-                              ).toLocaleString()}
-                            </td>
-                            <td>
-                              <EditBlog content={content} task={task} id={id} />
-                            </td>
-                            <td>
-                              <button
-                                type="button"
-                                className="btn btn-delete"
-                                onClick={() => deleteTask(id)}
-                              >
-                                <box-icon
-                                  name="message-square-x"
-                                  type="solid"
-                                  color="white"
-                                  size="sm"
-                                ></box-icon>
-                              </button>
-                            </td>
-                          </tr>
-                        )
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
             </div>
           </div>
         </div>
