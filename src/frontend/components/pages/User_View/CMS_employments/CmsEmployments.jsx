@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Button, Input } from "../../../Indexes/AtomsIndexes";
+import ReactPaginate from "react-paginate";
+import { Button, Input, TextArea } from "../../../Indexes/AtomsIndexes";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import EditEmployments from "./EditEmployments";
 import {
   collection,
@@ -19,6 +21,14 @@ const CmsEmployments = () => {
   const [tasks, setTasks] = useState([]);
   const [createTask, setCreateTask] = useState("");
   const [createLink, setCreateLink] = useState("");
+  const [createDescription, setCreateDescription] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
+  const usersPerPage = 2;
+  const pagesVisited = pageNumber * usersPerPage;
+  const pageCount = Math.ceil(tasks.length / usersPerPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
   const collectionRef = collection(db, "platforms");
 
   //Add Task Handler
@@ -28,7 +38,7 @@ const CmsEmployments = () => {
       /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
     e.preventDefault();
     try {
-      if (!createTask || !createLink) {
+      if (!createTask || !createLink || !createDescription) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -37,11 +47,14 @@ const CmsEmployments = () => {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if (!createTask.match(regexLetter)) {
+      } else if (
+        !createTask.match(regexLetter) ||
+        !createDescription.match(regexLetter)
+      ) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          text: "El campo nombre y descripción NO aceptan números",
+          text: "El campo nombre y des",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 2000,
@@ -59,11 +72,12 @@ const CmsEmployments = () => {
         await addDoc(collectionRef, {
           task: createTask,
           platform: createLink,
+          description: createDescription,
           timestamp: serverTimestamp(),
         });
         Swal.fire({
-          title: "Éxito",
           icon: "success",
+          title: "Éxito",
           text: "La bolsa de empleo se registró exitosamente",
           showCancelButton: false,
           showConfirmButton: false,
@@ -71,9 +85,20 @@ const CmsEmployments = () => {
         });
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 500);
       }
     } catch (err) {
+      Swal.fire({
+        icon: "warning",
+        title: "¡Atención!",
+        // eslint-disable-next-line
+        text:
+          "La bolsa de empleo NO se ha podido registrar.\n" +
+          `Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
+        showCancelButton: false,
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.log(err);
     }
   };
@@ -89,11 +114,11 @@ const CmsEmployments = () => {
         text: "La bolsa de empleo se eliminó exitosamente",
         showCancelButton: false,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1000,
       });
       setTimeout(() => {
         window.location.reload();
-      }, 1500);
+      }, 500);
     } catch (err) {
       Swal.fire({
         title: "¡Atención!",
@@ -135,7 +160,7 @@ const CmsEmployments = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 employments-left center">
             <h1>Manejador de empleos</h1>
-            <Link to="/Home">
+            <Link to={Routing.Home}>
               <Button
                 id="button"
                 text="Volver al inicio"
@@ -149,7 +174,7 @@ const CmsEmployments = () => {
 
           <div className="col-sm-12 col-md-12 employments-bottom">
             <div className="row">
-              <div className="col-12 pt-2">
+              <div className="col-md-4 offset-md-4 pt-2">
                 <button
                   className="btn btn-open"
                   id="button"
@@ -161,46 +186,109 @@ const CmsEmployments = () => {
                 </button>
               </div>
 
-              {/*ACCORDION WITH RECORDS*/}
               <div className="col-12 d-sm-block d-md-none pt-2">
-                {tasks.map(({ task, platform, id, timestamp }) => (
-                  <div
-                    className="accordion"
-                    id="accordionPanelsStayOpenExample"
-                    key={id}
-                  >
-                    <div className="accordion-item">
-                      <h2 className="accordion-header" id="headingOne">
-                        <button
-                          className="accordion-button"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#panelsStayOpen-collapseOne"
-                          aria-expanded="true"
-                          aria-controls="panelsStayOpen-collapseOne"
-                        >
-                          {task}
-                        </button>
-                      </h2>
-                      <div
-                        id="panelsStayOpen-collapseOne"
-                        className="accordion-collapse collapse show"
-                        aria-labelledby="panelsStayOpen-headingOne"
-                      >
-                        <div className="accordion-body">
-                          <strong>{task}</strong>
+                {tasks
+                  .slice(pagesVisited, pagesVisited + usersPerPage)
+                  .map(({ task, platform, description, id, timestamp }) => (
+                    <div className="col-12 pt-2" key={id}>
+                      <div className="card">
+                        <div className="card-header">
+                          <h1>{task}</h1>
+                        </div>
+                        <div className="card-body">
+                          <p>{description}</p>
+                          <h6>
+                            <a
+                              rel="nofollow noopener noreferrer"
+                              href={platform}
+                            >
+                              <span className="badge badge-link">
+                                {platform}
+                              </span>
+                            </a>
+                          </h6>
+                          <div className="row">
+                            <div className="col-6">
+                              <button
+                                type="button"
+                                className="btn btn-delete"
+                                onClick={() => deleteTask(id)}
+                              >
+                                <box-icon
+                                  name="message-square-x"
+                                  type="solid"
+                                  color="white"
+                                  size="sm"
+                                />
+                              </button>
+                            </div>
+                            <div className="col-6">
+                              <EditEmployments
+                                task={task}
+                                platform={platform}
+                                description={description}
+                                id={id}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card-footer">
+                          Fecha de creacion:
                           <br />
-                          <a href={platform} target="_blank" rel="noreferrer">
-                            {platform}
-                          </a>
-                          <p>
-                            {new Date(
-                              timestamp.seconds * 1000
-                            ).toLocaleString()}
-                          </p>
-                          <div className="container-fluid">
-                            <div className="row">
-                              <div className="col-6">
+                          {new Date(timestamp.seconds * 1000).toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              <div className="col-12 pt-2 d-none d-md-block">
+                <div className="table-responsive">
+                  <table className="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Titulo</th>
+                        <th>Plataforma</th>
+                        <th>Descripcion</th>
+                        <th>Fecha de Creacion</th>
+                        <th>Accion 1</th>
+                        <th>Accion 2</th>
+                      </tr>
+                    </thead>
+                    <tbody className="table-group-divider">
+                      {tasks
+                        .slice(pagesVisited, pagesVisited + usersPerPage)
+                        .map(
+                          ({ task, platform, description, id, timestamp }) => (
+                            <tr key={id}>
+                              <td>{task}</td>
+                              <td className="center">
+                                <h4>
+                                  <a
+                                    rel="nofollow noopener noreferrer"
+                                    href={platform}
+                                  >
+                                    <span className="badge bg-success">
+                                      {platform}
+                                    </span>
+                                  </a>
+                                </h4>
+                              </td>
+                              <td>{description}</td>
+                              <td>
+                                {new Date(
+                                  timestamp.seconds * 1000
+                                ).toLocaleString()}
+                              </td>
+                              <td>
+                                <EditEmployments
+                                  task={task}
+                                  platform={platform}
+                                  description={description}
+                                  id={id}
+                                />
+                              </td>
+                              <td>
                                 <button
                                   type="button"
                                   className="btn btn-delete"
@@ -211,23 +299,34 @@ const CmsEmployments = () => {
                                     type="solid"
                                     color="white"
                                     size="sm"
-                                  ></box-icon>
+                                  />
                                 </button>
-                              </div>
-                              <div className="col-6">
-                                <EditEmployments
-                                  task={task}
-                                  platform={platform}
-                                  id={id}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                              </td>
+                            </tr>
+                          )
+                        )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="col-12 pt-4">
+                <ReactPaginate
+                  breakLabel="..."
+                  previousLabel={
+                    <box-icon name="skip-previous" color="black" size="xs" />
+                  }
+                  nextLabel={
+                    <box-icon name="skip-next" color="black" size="xs" />
+                  }
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName={"paginationBttns"}
+                  previousLinkClassName={"previousBttn"}
+                  nextLinkClassName={"nextBttn"}
+                  disabledClassName={"paginationDisabled"}
+                  activeClassName={"paginationActive"}
+                />
               </div>
             </div>
           </div>
@@ -270,6 +369,19 @@ const CmsEmployments = () => {
                   />
                 </div>
                 <div className="form-group">
+                  <TextArea
+                    titleLabel="form-label label-inmersive-blue"
+                    label="Descripción"
+                    type="text"
+                    className="form-control"
+                    name="description"
+                    id="description"
+                    placeholder="Descripción"
+                    onChange={(e) => setCreateDescription(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group">
                   <Input
                     titleLabel="form-label label-inmersive-blue"
                     label="Link"
@@ -283,9 +395,11 @@ const CmsEmployments = () => {
                   />
                 </div>
                 <div className="form-group pt-2">
-                  <button className="btn btn-submit" type="submit">
-                    Agregar plataformas
-                  </button>
+                  <Button
+                    type="submit"
+                    className="btn btn-submit"
+                    text="Agregar bolsa de empleo"
+                  />
                 </div>
               </form>
             </div>

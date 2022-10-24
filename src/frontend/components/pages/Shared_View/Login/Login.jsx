@@ -40,15 +40,15 @@ const Login = () => {
       } else {
         await logIn(email, password);
         Swal.fire({
+          icon: "success",
           // eslint-disable-next-line
           title: "¡Bienvenido!\n" + `${email}`,
           text: "Gracias por ingresar a la plataforma",
-          icon: "success",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 4000,
         });
-        navigate("/Home");
+        navigate("/");
       }
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
@@ -73,7 +73,8 @@ const Login = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          text: "El usuario se encuentra inactivo por el momento. Favor de contactar al servicio de ayuda para habilitar nuevamente su usuario",
+          // eslint-disable-next-line
+          text: "El correo:\n" + `${email}\n`+"\nse encuentra inactivo por el momento. Favor de contactar al servicio de ayuda para habilitar nuevamente su usuario",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -82,7 +83,8 @@ const Login = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          text: "Este correo electrónico NO se encuentra registrado. Favor de dirigirse a la secciòn de registro y registrarlo.",
+          // eslint-disable-next-line
+          text: "El correo:\n"+`${email}`+"electrónico NO se encuentra registrado. Favor de dirigirse a la secciòn de registro.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -105,6 +107,15 @@ const Login = () => {
           showConfirmButton: false,
           timer: 5000,
         });
+      }else if(err.code === "auth/account-exists-with-different-credential"){
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "warning",
+          text: "Ya existe una cuenta con este email relacionado a una red social\n. Por favor, trate de ingresar con su correo personal",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 5000,
+        });
       }
       setError(err.message);
     }
@@ -122,7 +133,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user != null) {
-      navigate("/Home");
+      navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
@@ -133,7 +144,7 @@ const Login = () => {
       .then(
         (re) => {
           if (user != null) {
-            navigate("/Home");
+            navigate("/");
           }
           console.log(re);
         },
@@ -189,7 +200,7 @@ const Login = () => {
                       required
                     />
                   </div>
-                  <div className="form-group pt-3">
+                  <div className="form-group pt-1">
                     <label htmlFor="password">Contraseña</label>
                     <input
                       placeholder="Contraseña"
@@ -202,7 +213,7 @@ const Login = () => {
                       required
                     />
                   </div>
-                  <div className="form-group pt-3">
+                  <div className="form-group pt-2">
                     <label>
                       <input
                         type="checkbox"
@@ -212,14 +223,17 @@ const Login = () => {
                       Mostrar contraseña
                     </label>
                   </div>
-                  <div className="form-group pt-3">
+                  <div className="form-group pt-2">
                     <Link to="/RecoverPassword">Recuperar contraseña</Link>
                   </div>
-                  <div className="form-group pt-3">
+                  <div className="form-group pt-2">
                     <Button
                       type="submit"
                       text="Login"
+                      id="Login"
+                      name="Login"
                       className="btn btn-submit"
+                      disabled={!email || !password}
                     />
                   </div>
                 </form>

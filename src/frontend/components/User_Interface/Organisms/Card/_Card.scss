@@ -3,9 +3,8 @@
 @use '../../../../assets/Scss/Utilities/Font_Properties/Font_Properties'as font_properties;
 
 @use '../../../../assets/Scss/Utilities/Width_Height/Width_Height'as width_height;
-
+@use '../../../../assets/Scss/Utilities/Padding/Padding'as padding;
 @use '../../../../assets/Scss/Utilities/Common/Colors'as color;
-
 @use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
 
 
@@ -22,10 +21,12 @@
         border-radius: .5em;
     }
 
-    h1 {
-        @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
-        text-align: left;
-        font-weight: bold;
+    &-header {
+        h1 {
+            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+            text-align: left;
+            font-weight: bold;
+        }
     }
 
     &-body {
@@ -33,12 +34,15 @@
         border-radius: 0;
         border-left-color: color.$Inmersive_Blue_Black;
 
-        p {
+        a {
             @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+            @include padding(padding.$Padding1);
             text-align: left;
             font-weight: bold;
+            text-decoration: underline;
         }
 
+        p,
         small {
             @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
             text-align: left;
@@ -48,53 +52,39 @@
 
     @media only screen and (max-width: 600px) {
         .card {
-            @include width_height(width_height.$w100, width_height.$h50);
+            @include width_height(width_height.$w100, width_height.$hauto);
 
-            img {
-                width: 50%;
-                height: 50%;
-                object-fit: contain;
-                border-radius: .5em;
+            &-header {
+                @include width_height(width_height.$w100, width_height.$hauto);
+                background-color: color.$White;
             }
-
 
             &-body {
                 @include width_height(width_height.$w100, width_height.$h100);
-                border-left-color: color.$Inmersive_Blue_Black;
-                border-radius: 0;
+                background-color: color.$White;
 
-                h3 {
-                    @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+                h1 {
+                    @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
                     text-align: left;
                     font-weight: bold;
                 }
 
                 p {
-                    @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
+                    @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
                     text-align: left;
                     font-weight: bold;
                 }
+            }
 
-                small,
-                &:hover,
-                &:visited,
-                &:link,
-                &:focus,
-                &:active {
+            &-footer {
+                @include width_height(width_height.$w100, width_height.$hauto);
+                background-color: color.$White;
+
+                small {
                     @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
                     text-align: left;
-                    font-weight: bold;
-                }
-
-                a,
-                &:hover,
-                &:visited,
-                &:link,
-                &:focus,
-                &:active {
-                    color: inherit;
-                    @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
-                    text-decoration: none;
+                    font-weight: bolder;
+                    letter-spacing: .2rem;
                 }
             }
         }

@@ -53,7 +53,7 @@
     }
 
     .blog-right {
-        @include width_height(width_height.$w100, width_height.$vh25);
+        @include width_height(width_height.$w100, width_height.$vh20);
         background-color: color.$White;
         background-image: url('/src/frontend/assets/images/jpg/Blog.jpg');
         background-position: center;
@@ -65,7 +65,7 @@
         @include width_height(width_height.$w100, width_height.$vh100);
 
         small {
-            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Red);
+            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
             text-align: left;
             letter-spacing: 0;
             font-weight: bold;

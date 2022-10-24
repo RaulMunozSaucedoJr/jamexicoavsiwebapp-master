@@ -4,10 +4,8 @@ import Blog from "../../../../assets/images/jpg/Blog.jpg";
 import Job from "../../../../assets/images/jpg/Job.jpg";
 import Tips from "../../../../assets/images/jpg/Tips.jpg";
 import CV from "../../../../assets/images/jpg/cv.jpg";
-//import { UserAuth } from "../../../../context/AuthContext.js";
 
 const Home = () => {
-  //const { user } = UserAuth();
   return (
     <>
       <div className="container-fluid">

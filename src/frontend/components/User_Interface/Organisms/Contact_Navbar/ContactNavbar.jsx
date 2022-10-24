@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import { EmailTo } from "../../../Indexes/AtomsIndexes";
 
 /* A React component. */
@@ -27,7 +28,7 @@ const ContactNavbar = () => {
             size="small"
           />
         </EmailTo>
-        <Link to="/Home">
+        <Link to={Routing.Home}>
           <box-icon
             name="home-alt-2"
             type="solid"

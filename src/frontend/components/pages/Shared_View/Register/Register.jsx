@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Button } from "../../../Indexes/AtomsIndexes";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import { UserAuth } from "../../../../context/AuthContext.js";
 
 const Register = () => {
@@ -39,19 +40,21 @@ const Register = () => {
         Swal.fire({
           title: "Éxito",
           icon: "success",
-          text: "El registro ha sido exitosó",
+          // eslint-disable-next-line
+          text: "Bienvenido:\n"+`${email}\n`+"Se le recuerda que tiene que completar su perfil de usuario.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 4000,
         });
-        navigate("/Home");
+        navigate("/ProfileUser");
       }
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         Swal.fire({
           title: "Error",
           icon: "error",
-          text: "El correo electrónico ya se encuentra en uso. Favor dirigirse al login e ingresar las credenciales correctas ó reestablezca su contraseña",
+          // eslint-disable-next-line
+          text:"El correo"+`${email}\n`+"ya se encuentra en uso.\n"+"Registrese ó reestablezca su contraseña.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -74,6 +77,15 @@ const Register = () => {
           showConfirmButton: false,
           timer: 5000,
         });
+      }else if(err.code === "auth/account-exists-with-different-credential"){
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "warning",
+          text: "Ya existe una cuenta con este email relacionado a una red social\n. Por favor, trate de ingresar con su correo personal",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 5000,
+        });
       }
       setError(err.message);
     }
@@ -81,8 +93,10 @@ const Register = () => {
   };
 
   const togglePassword = () => {
-    const inputType = document.querySelector('#password');
-    inputType.type === "password" ? (inputType.type = "email") : (inputType.type = "password");
+    const inputType = document.querySelector("#password");
+    inputType.type === "password"
+      ? (inputType.type = "text")
+      : (inputType.type = "password");
   };
 
   return (
@@ -91,7 +105,7 @@ const Register = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 register-left center">
             <h1>Registro</h1>
-            <Link to="/Home">
+            <Link to={Routing.Home}>
               <Button
                 type="button"
                 text="Regresar al inicio"
@@ -167,6 +181,7 @@ const Register = () => {
                 text="Registrarse"
                 className="btn btn-submit mt-4"
                 type="submit"
+                disabled={!email || !password}
               />
             </form>
             <div className="form-group pt-3">

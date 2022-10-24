@@ -35,3 +35,42 @@
 .important {
     color: color.$Inmersive_Red;
 }
+
+.paginationBttns {
+    width: 100%;
+    height: auto;
+    height: auto;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+
+    a {
+        margin: .2em;
+        padding: .5em;
+        border-radius: .5em;
+        border: 1px solid color.$Inmersive_Blue_Black;
+        color: color.$Inmersive_Blue_Black;
+
+        &:hover {
+            color: color.$Inmersive_Blue_Black;
+            background-color: color.$Empowered_Yellow;
+            font-weight: bolder;
+        }
+
+        &:active {
+            color: color.$Inmersive_Blue_Black;
+            background-color: color.$Empowered_Yellow;
+        }
+
+        &:disabled {
+            background-color: transparent;
+        }
+    }
+
+}
+
+.badge-link{
+    background-color: color.$Empowered_Yellow;
+    color: color.$Inmersive_Blue_Black;
+    text-decoration: none;
+}

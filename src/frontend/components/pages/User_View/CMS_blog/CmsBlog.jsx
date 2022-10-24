@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
 import { Button, Input } from "../../../Indexes/AtomsIndexes";
 import EditBlog from "./EditBlog";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import {
   collection,
   getDocs,
@@ -11,7 +13,7 @@ import {
   doc,
   orderBy,
   query,
-  serverTimestamp,
+  serverTimestamp
 } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
@@ -20,6 +22,16 @@ const CmsBlog = () => {
   const [createTask, setCreateTask] = useState("");
   const [createCategory, setCategory] = useState("");
   const [createContent, setContent] = useState("");
+
+  const [pageNumber, setPageNumber] = useState(0);
+  const usersPerPage = 2;
+  const pagesVisited = pageNumber * usersPerPage;
+
+  const pageCount = Math.ceil(tasks.length / usersPerPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
   const collectionRef = collection(db, "tasks");
 
   //Add Task Handler
@@ -66,9 +78,21 @@ const CmsBlog = () => {
         });
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 700);
       }
     } catch (err) {
+      Swal.fire({
+        title: "¡Atención!",
+        icon: "error",
+        // eslint-disable-next-line
+        text:
+          "El post no se ha podido registrar\n" +
+          "Favor de enviar el error:" +
+          `${err} al equipo de soporte`,
+        showCancelButton: false,
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.log(err);
     }
   };
@@ -93,6 +117,7 @@ const CmsBlog = () => {
       Swal.fire({
         title: "¡Atención!",
         icon: "warning",
+        // eslint-disable-next-line
         text:
           "El post no se ha podido eliminar.\n" +
           `Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
@@ -130,7 +155,7 @@ const CmsBlog = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 blog-left center">
             <h1>Manejador de posts</h1>
-            <Link to="/Home">
+            <Link to={Routing.Home}>
               <Button
                 className="btn btn-open"
                 id="button"
@@ -143,7 +168,7 @@ const CmsBlog = () => {
 
           <div className="col-sm-12 col-md-12 blog-bottom">
             <div className="row">
-              <div className="col-12 pt-4">
+              <div className="col-md-4 offset-md-4 col pt-4">
                 <button
                   className="btn btn-open"
                   id="button"
@@ -155,73 +180,127 @@ const CmsBlog = () => {
                 </button>
               </div>
 
-              {/*ACCORDION WITH RECORDS*/}
-              <div className="col-12 pt-4 d-sm-block d-md-none">
-                {tasks.map(({ task, category, content, id, timestamp }) => (
-                  <div
-                    className="accordion"
-                    id="accordionPanelsStayOpenExample"
-                    key={id}
-                  >
-                    <div className="accordion-item">
-                      <h2 className="accordion-header" id="headingOne">
-                        <button
-                          className="accordion-button"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#panelsStayOpen-collapseOne"
-                          aria-expanded="true"
-                          aria-controls="panelsStayOpen-collapseOne"
-                        >
-                          {task}
-                        </button>
-                      </h2>
-                      <div
-                        id="panelsStayOpen-collapseOne"
-                        className="accordion-collapse collapse show"
-                        aria-labelledby="panelsStayOpen-headingOne"
-                      >
-                        <div className="accordion-body">
-                          <strong>{task}</strong>
-                          <p>{category}</p>
-                          <p>{content}</p>
-                          <p>
-                            {new Date(
-                              timestamp.seconds * 1000
-                            ).toLocaleString()}
-                          </p>
-                          <div className="container">
-                            <div className="row">
-                              <div className="col-6">
-                                <button
-                                  type="button"
-                                  className="btn btn-delete"
-                                  onClick={() => deleteTask(id)}
-                                >
-                                  <box-icon
-                                    name="message-square-x"
-                                    type="solid"
-                                    color="white"
-                                    size="sm"
-                                  ></box-icon>
-                                </button>
-                              </div>
-                              <div className="col-6">
-                                <EditBlog
-                                  task={task}
-                                  category={category}
-                                  content={content}
-                                  id={id}
+              <div className="col-12 pt-2 d-sm-block d-md-none">
+                {tasks
+                  .slice(pagesVisited, pagesVisited + usersPerPage)
+                  .map(({ task, category, content, id, timestamp }) => (
+                    <div className="col-12 pt-2" key={id}>
+                      <div className="card">
+                        <div className="card-body">
+                          <div className="card-header">
+                            <h1 className="text-center">{task}</h1>
+                          </div>
+                          <p className="card-text">{category}</p>
+                          <p className="card-text">{content}</p>
+                          <div className="row">
+                            <div className="col-6">
+                              <button
+                                type="button"
+                                className="btn btn-delete"
+                                onClick={() => deleteTask(id)}
+                              >
+                                <box-icon
+                                  name="message-square-x"
+                                  type="solid"
+                                  color="white"
+                                  size="sm"
                                 />
-                              </div>
+                              </button>
+                            </div>
+                            <div className="col-6">
+                              <EditBlog
+                                task={task}
+                                category={category}
+                                content={content}
+                                id={id}
+                              />
                             </div>
                           </div>
                         </div>
+                        <div className="card-footer">
+                          <small>
+                            Fecha de creación:
+                            <br />
+                            {new Date(
+                              timestamp.seconds * 1000
+                            ).toLocaleString()}
+                          </small>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
+
+              <div className="col-12 pt-2 d-none d-md-block">
+                <div className="table-responsive">
+                  <table className="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Titulo</th>
+                        <th>Categoria</th>
+                        <th>Contenido</th>
+                        <th>Fecha de Creacion</th>
+                        <th>Accion 1</th>
+                        <th>Accion 2</th>
+                      </tr>
+                    </thead>
+                    <tbody className="table-group-divider">
+                      {tasks
+                        .slice(pagesVisited, pagesVisited + usersPerPage)
+                        .map(({ task, category, content, id, timestamp }) => (
+                          <tr key={id}>
+                            <td>{task}</td>
+                            <td>{category}</td>
+                            <td>{content}</td>
+                            <td>
+                              {new Date(
+                                timestamp.seconds * 1000
+                              ).toLocaleString()}
+                            </td>
+                            <td>
+                              <EditBlog
+                                task={task}
+                                category={category}
+                                content={content}
+                                id={id}
+                              />
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-delete"
+                                onClick={() => deleteTask(id)}
+                              >
+                                <box-icon
+                                  name="message-square-x"
+                                  type="solid"
+                                  color="white"
+                                  size="sm"
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              <div className="col-12 pt-4">
+                <ReactPaginate
+                  breakLabel="..."
+                  previousLabel={"<-"}
+                  nextLabel={"->"}
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName={"paginationBttns"}
+                  previousLinkClassName={"previousBttn"}
+                  nextLinkClassName={"nextBttn"}
+                  disabledClassName={"paginationDisabled"}
+                  activeClassName={"paginationActive"}
+                />
+              </div>
+
             </div>
           </div>
         </div>

@@ -19,12 +19,12 @@ import {
   CmsBlog,
   CmsEmployments,
   CmsFaqs,
-  CmsResume,
   CmsTips,
   //CmsUserProfile,
   PantallaChat,
 } from "./frontend/components/Indexes/PagesIndex";
-import Private from "./frontend/components/Private/Private.js";
+import * as Routing from "./frontend/assets/javascript/constants/routing/routing.js";
+//import Private from "./frontend/components/Private/Private.js";
 import { AuthContextProvider } from "./frontend/context/AuthContext.js";
 const App = () => {
 
@@ -35,27 +35,25 @@ const App = () => {
         <BottomNavbar />
         <ContactNavbar />
         <Routes>
-          {/*PUBLIC ROUTES*/}
-          <Route exact path="*" element={<Error404 />} />
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/Home" element={<Home />} />
-          <Route exact path="/Login" element={<Login />} />
-          <Route exact path="/Register" element={<Register />} />
-          <Route exact path="/RecoverPassword" element={<RecoverPassword />} />
-          <Route exact path="/Error404" element={<Error404 />} />
-          <Route exact path="/Home" element={<Home />} />
-          <Route exact path="/Jobs" element={<Jobs />} />
-          <Route exact path="/Posts" element={<Posts />} />
-          <Route exact path="/Profile" element={<Profile />} />
-          <Route exact path="/Tips" element={<Tips />} />
+          {/*ERROR HANDLING ROUTES*/}
+          <Route exact path={Routing.NotFound} element={<Error404 />} />
+          {/*LOGIN, REGISTER, RECOVER PASSWORD*/}
+          <Route exact path={Routing.Login} element={<Login />} />
+          <Route exact path={Routing.Register} element={<Register />} />
+          <Route exact path={Routing.RecoverPassword} element={<RecoverPassword />} />
+          {/*SHARED PUBLIC ROUTES*/}
+          <Route exact path={Routing.Home} element={<Home />} />
+          <Route exact path= {Routing.Jobs} element={<Jobs />} />
+          <Route exact path={Routing.Posts} element={<Posts />} />
+          <Route exact path={Routing.Profile} element={<Profile />} />
+          <Route exact path={Routing.Tips} element={<Tips />} />
           {/*PROTECTED ROUTES*/}
-          <Route exact path="/CmsBlog" element={<Private><CmsBlog /></Private>} />
-          <Route exact path="/CmsEmployments" element={<Private><CmsEmployments /></Private>} />
-          <Route exact path="/CmsFaqs" element={<Private><CmsFaqs /></Private>} />
-          <Route exact path="/CmsResume" element={<CmsResume />} />
-          <Route exact path="/CmsTips" element={<CmsTips />} />
+          <Route exact path={Routing.CmsBlog} element={<CmsBlog />} />
+          <Route exact path={Routing.CmsEmployments} element={<CmsEmployments />} />
+          <Route exact path={Routing.CmsFaqs} element={<CmsFaqs />} />
+          <Route exact path={Routing.CmsTips} element={<CmsTips />} />
           {/*<Route exact path="/CmsUserProfile" element={<CmsUserProfile />} />*/}
-          <Route exact path="/PantallaChat" element={<PantallaChat />} />
+          <Route exact path={Routing.PantallaChat} element={<PantallaChat />} />
         </Routes>
       </AuthContextProvider>
     </>

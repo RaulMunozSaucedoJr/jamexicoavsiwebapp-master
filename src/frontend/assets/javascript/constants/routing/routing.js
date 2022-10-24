@@ -1,0 +1,15 @@
+export const NotFound = '*';
+export const Home = '/';
+export const Register = '/Register';
+export const Login = 'Login';
+export const RecoverPassword = '/RecoverPassword';
+export const Jobs = '/Jobs';
+export const Posts = '/Posts';
+export const Profile = '/Profile';
+export const Tips = '/Tips';
+export const CmsBlog = '/CmsBlog';
+export const CmsEmployments = '/CmsEmployments';
+export const CmsFaqs = '/CmsFaqs';
+export const CmsTips = '/CmsTips';
+export const CmsResume = '/CmsResume';
+export const PantallaChat = '/PantallaChat';

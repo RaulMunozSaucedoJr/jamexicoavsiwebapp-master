@@ -48,15 +48,6 @@ strong {
     letter-spacing: 0;
 }
 
-small {
-    @include text(font.$Montserrat, font_size.$Small, color.$White);
-    text-align: justify;
-    letter-spacing: 0;
-    font-weight: bold;
-    text-decoration: underline;
-    text-decoration-color: color.$Inmersive_Red;
-}
-
 .form-control {
     @include width_height(width_height.$w100, width_height.$hauto);
     display: block;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../Indexes/AtomsIndexes";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import Swal from "sweetalert2";
 import Card from "../../../User_Interface/Organisms/Card/Card";
 import Profiles from "../../../../assets/images/jpg/profile.jpg";
@@ -55,7 +56,7 @@ const Profile = () => {
       <div className="row">
         <div className="col-sm-12 col-md-6 profiles-left center">
           <h1>Perfiles</h1>
-          <Link to="/Home">
+          <Link to={Routing.Home}>
             <Button
               type="button"
               id="button"

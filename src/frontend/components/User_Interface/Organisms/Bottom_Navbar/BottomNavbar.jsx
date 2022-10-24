@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Button } from "../../../Indexes/AtomsIndexes";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import { UserAuth } from "../../../../context/AuthContext.js";
 
 const BottomNavbar = () => {
@@ -18,7 +19,7 @@ const BottomNavbar = () => {
         showConfirmButton: false,
         timer: 4000,
       });
-      navigate("/Home");
+      navigate("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -37,7 +38,7 @@ const BottomNavbar = () => {
       <div className="container-fluid fixed-bottom" id="mobile-nav">
         <div className="row">
           <div className="col-2 center">
-            <Link to="Jobs">
+            <Link to={Routing.Jobs}>
               <box-icon
                 name="briefcase-alt-2"
                 type="solid"
@@ -47,7 +48,7 @@ const BottomNavbar = () => {
             </Link>
           </div>
           <div className="col-2 center">
-            <Link to="/Posts">
+            <Link to={Routing.Posts}>
               <box-icon
                 name="book-content"
                 type="solid"
@@ -69,55 +70,55 @@ const BottomNavbar = () => {
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <Link to="/CmsBlog">CMS Blog</Link>
+                  <Link to={Routing.CmsBlog}>CMS Blog</Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link to="/CmsEmployments">CMS Jobs</Link>
+                  <Link to={Routing.CmsEmployments}>CMS Jobs</Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link to="/CmsFaqs">CMS Faqs</Link>
+                  <Link to={Routing.CmsFaqs}>CMS Faqs</Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link to="/CmsUserProfile">CMS Profile</Link>
+                  <Link to={Routing.Profile}>CMS Profile</Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link to="/CMSResume">CMS CV</Link>
+                  <Link to={Routing.CmsResume}>CMS CV</Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link to="/CmsTips">CMS Tips</Link>
+                  <Link to={Routing.CmsTips}>CMS Tips</Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link to="/CMSUsers">CMS Users</Link>
+                  <Link to="/CmsUsers">CMS Users</Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link to="/PantallaChat">Chat</Link>
+                  <Link to={Routing.PantallaChat}>Chat</Link>
                 </li>
               </ul>
             </div>
           </div>
           <div className="col-2 center">
-            <Link to="/Profile">
+            <Link to={Routing.Profile}>
               <box-icon
                 name="id-card"
                 type="solid"
@@ -127,7 +128,7 @@ const BottomNavbar = () => {
             </Link>
           </div>
           <div className="col-2 center">
-            <Link to="/Tips">
+            <Link to={Routing.Tips}>
               <box-icon
                 name="bulb"
                 type="solid"
@@ -137,17 +138,21 @@ const BottomNavbar = () => {
             </Link>
           </div>
           <div className="col-5">
-            <Link to="/Register">
-              <Button
-                type="button"
-                text="Registrate"
-                className="btn btn-transparent text-white"
-              />
-            </Link>
+            {user ? (
+              <p className="text-center text-white">Logeado</p>
+            ) : (
+              <Link to={Routing.Register}>
+                <Button
+                  type="button"
+                  text="Registrate"
+                  className="btn btn-transparent text-white"
+                />
+              </Link>
+            )}
           </div>
           <div className="col-2 center">
             {user ? (
-              <Link to="/Login">
+              <Link to={Routing.Login}>
                 <Button
                   type="button"
                   text="Salir"
@@ -156,8 +161,12 @@ const BottomNavbar = () => {
                 />
               </Link>
             ) : (
-              <Link to="/Login">
-                <Button type="button" text="Ingresar" className="btn btn-open" />
+              <Link to={Routing.Login}>
+                <Button
+                  type="button"
+                  text="Ingresar"
+                  className="btn btn-open"
+                />
               </Link>
             )}
           </div>

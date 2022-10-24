@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Card } from "../../../Indexes/OrganismsIndex";
 import { Button } from "../../../Indexes/AtomsIndexes";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import data from "../../../../../backend/Data/DataTips.js";
 
 import CV from "../../../../assets/images/jpg/cv.jpg";
@@ -57,7 +58,7 @@ const Tips = () => {
       <div className="row">
         <div className="col-sm-12 col-md-6 tips-left center">
           <h1>Tips de empleo</h1>
-          <Link to="/Home">
+          <Link to={Routing.Home}>
             <Button
               id="button"
               text="Volver al inicio"

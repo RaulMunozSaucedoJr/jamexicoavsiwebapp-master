@@ -1,53 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Card } from "../../../Indexes/OrganismsIndex";
+import ReactPaginate from "react-paginate";
 import { Button } from "../../../Indexes/AtomsIndexes";
-import Swal from "sweetalert2";
-import data from "../../../../../backend/Data/DataJobs";
-import app from "../../../../../backend/Firebase/Firebase-config.js";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-const db = getFirestore(app);
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
 const Jobs = () => {
-  const [lista, setList] = useState([]);
-  useEffect(() => {
-    const getList = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "trabajos"));
-        const docs = [];
-        querySnapshot.forEach((doc) => {
-          docs.push({ ...doc.data(), id: doc.id });
-        });
-        setList(docs);
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "¡Carga erronea!",
-          text: "No se han podido cargar los trabajos. Por favor, contacte con el equipo de soporte.",
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        console.log(error);
-      }
-    };
-    getList();
-  }, [lista]);
+  const [tasks, setTasks] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const usersPerPage = 2;
+  const pagesVisited = pageNumber * usersPerPage;
 
-  const [filter, setFilter] = useState("");
-
-  const searchText = (event) => {
-    setFilter(event.target.value);
+  const pageCount = Math.ceil(tasks.length / usersPerPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
   };
-
-  let dataSearch = data.cardData.filter((item) => {
-    return Object.keys(item).some((key) =>
-      item[key]
-        .toString()
-        .toLowerCase()
-        .includes(filter.toString().toLowerCase())
-    );
-  });
+  const collectionRef = collection(db, "platforms");
+  useEffect(() => {
+    const getTasks = async () => {
+      const q = query(collectionRef, orderBy("timestamp"));
+      await getDocs(q)
+        .then((tasks) => {
+          let tasksData = tasks.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setTasks(tasksData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -55,7 +42,7 @@ const Jobs = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 jobs-left center">
             <h1>Bolsas de empleo</h1>
-            <Link to="/Home">
+            <Link to={Routing.Home}>
               <Button
                 id="button"
                 text="Volver al inicio"
@@ -76,33 +63,52 @@ const Jobs = () => {
               <input
                 type="text"
                 name="search"
-                value={filter}
                 id="search"
                 placeholder="Filtre aquí..."
                 className="form-control"
-                onChange={searchText.bind(this)}
               />
             </div>
             <div className="row">
-              {lista.map((list, index) => (
-                <div className="col-sm-12 col-md-4 pt-4" key={index}>
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="card-title">{list.title}</div>
-                      <p className="card-text">{list.category}</p>
-                      <p className="card-text">{list.descripcion}</p>
-                      <p className="card-text">{list.web_url}</p>
+              <div className="col-12 pt-2 d-sm-block d-md-none">
+                {tasks
+                  .slice(pagesVisited, pagesVisited + usersPerPage)
+                  .map(({ task, platform, description, id, timestamp }) => (
+                    <div className="col-12 pt-2" key={id}>
+                      <div className="card">
+                        <div className="card-body">
+                          <div className="card-header">
+                            <h1 className="text-center">{task}</h1>
+                          </div>
+                          <p className="card-text">{platform}</p>
+                          <p className="card-text">{description}</p>
+                        </div>
+                        <div className="card-footer">
+                          <small>
+                            Fecha de creación:
+                            <br />
+                            {new Date(
+                              timestamp.seconds * 1000
+                            ).toLocaleString()}
+                          </small>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-              {dataSearch.map((item, index) => {
-                return (
-                  <div className="col-sm-12 col-md-4 pt-3" key={index}>
-                    <Card title={item.title} cardText={item.desc} />
-                  </div>
-                );
-              })}
+                  ))}
+              </div>
+              <div className="col-12 pt-4">
+                <ReactPaginate
+                  breakLabel="..."
+                  previousLabel={"<-"}
+                  nextLabel={"->"}
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName={"paginationBttns"}
+                  previousLinkClassName={"previousBttn"}
+                  nextLinkClassName={"nextBttn"}
+                  disabledClassName={"paginationDisabled"}
+                  activeClassName={"paginationActive"}
+                />
+              </div>
             </div>
           </div>
         </div>

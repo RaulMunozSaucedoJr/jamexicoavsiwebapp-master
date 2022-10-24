@@ -165,7 +165,7 @@
         border: none;
     }
 
-    @media only screen and (max-width: 37.5em) {
+    @media only screen and (max-width: 600px) {
         .btn {
             width: 100%;
             height: auto;
@@ -276,6 +276,25 @@
                 @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
                 font-weight: bold;
                 border: color.$Inmersive_Blue_Black solid .2rem;
+            }
+
+            &-download {
+                width: 100%;
+                height: auto;
+                background-color: blue;
+                @include text(font.$Montserrat, font_size.$Extra_Small, color.$White);
+                text-align: center;
+
+                &:hover,
+                &:visited,
+                &:link,
+                &:focus,
+                &:active {
+                    background-color: color.$Inmersive_Blue_Black;
+                    transition: .2s ease-in-out;
+                    @include text(font.$Montserrat, font_size.$Extra_Small, color.$White);
+                    cursor: pointer;
+                }
             }
 
         }

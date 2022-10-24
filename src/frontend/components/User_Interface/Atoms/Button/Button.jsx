@@ -9,6 +9,7 @@ const Button = ({
   onSubmit,
   databstoggle,
   databstarget,
+  disabled
 }) => {
   return (
     <>
@@ -21,6 +22,7 @@ const Button = ({
         onSubmit={onSubmit}
         data-bs-toggle={databstoggle}
         data-bs-target={databstarget}
+        disabled={disabled}
       >
         {text}
       </button>

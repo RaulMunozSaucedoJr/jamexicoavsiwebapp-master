@@ -3,17 +3,16 @@ import Swal from "sweetalert2";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
-const EditEmployments = ({ task, platform, description, id }) => {
+const EditTips = ({ task, category, content, id }) => {
   const [tasks, setTasks] = useState([task]);
-  const [platforms, setPlatforms] = useState([platform]);
-  const [descriptions, setDescriptions] = useState([description]);
+  const [categorys, setCategory] = useState([category]);
+  const [contents, setContent] = useState([content]);
 
   const updateTask = async (e) => {
     const regexLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]/;
-    const regexLinks =/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
     e.preventDefault();
     try {
-      if (!tasks || !platforms || !descriptions) {
+      if (!tasks || !categorys || !contents) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -22,7 +21,11 @@ const EditEmployments = ({ task, platform, description, id }) => {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if (!tasks.match(regexLetter) || !descriptions.match(regexLetter)) {
+      } else if (
+        !tasks.match(regexLetter) ||
+        !categorys.match(regexLetter) ||
+        !contents.match(regexLetter)
+      ) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -31,25 +34,17 @@ const EditEmployments = ({ task, platform, description, id }) => {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if (!platforms.match(regexLinks)) {
-        Swal.fire({
-          title: "¡Atención!",
-          icon: "info",
-          text: "El link de la plataforma es erroneo. Favor de verificarlo",
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 1000,
-        });
       } else {
-        const taskDocument = doc(db, "platforms", id);
+        const taskDocument = doc(db, "tips", id);
         await updateDoc(taskDocument, {
           task: tasks,
-          platform: platforms,
+          category: categorys,
+          content: contents,
         });
         Swal.fire({
           title: "Éxito",
           icon: "success",
-          text: "La bolsa de empleo se ha actualizado exitosamente",
+          text: "El tip se ha actualizado exitosamente",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 2000,
@@ -90,7 +85,7 @@ const EditEmployments = ({ task, platform, description, id }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title" id="editLabel">
-                Editar plataformas
+                Editar tip
               </h1>
               <button
                 type="button"
@@ -111,7 +106,6 @@ const EditEmployments = ({ task, platform, description, id }) => {
                   <input
                     type="text"
                     id="title"
-                    name="title"
                     className="form-control"
                     defaultValue={tasks}
                     onChange={(e) => setTasks(e.target.value)}
@@ -120,33 +114,33 @@ const EditEmployments = ({ task, platform, description, id }) => {
                 <div className="form-group pt-2">
                   <label
                     className="form-label label-inmersive-blue"
-                    htmlFor="Title"
+                    htmlFor="category"
                   >
-                    Titulo
+                    Categoria
                   </label>
-                  <textarea
+                  <input
                     type="text"
-                    id="description"
-                    name="description"
+                    id="category"
+                    placeholder="Categoria"
                     className="form-control"
-                    defaultValue={descriptions}
-                    onChange={(e) => setDescriptions(e.target.value)}
+                    defaultValue={categorys}
+                    onChange={(e) => setCategory(e.target.value)}
                   />
                 </div>
                 <div className="form-group pt-2">
                   <label
                     className="form-label label-inmersive-blue"
-                    htmlFor="platforms"
+                    htmlFor="content"
                   >
-                    Link
+                    Contenido
                   </label>
-                  <input
+                  <textarea
                     type="text"
-                    id="platforms"
-                    name="platforms"
+                    id="content"
+                    placeholder="Contenido"
                     className="form-control"
-                    defaultValue={platforms}
-                    onChange={(e) => setPlatforms(e.target.value)}
+                    defaultValue={contents}
+                    onChange={(e) => setContent(e.target.value)}
                   />
                 </div>
                 <div className="form-group pt-2">
@@ -155,7 +149,7 @@ const EditEmployments = ({ task, platform, description, id }) => {
                     className="btn btn-submit"
                     onClick={(e) => updateTask(e)}
                   >
-                    Actualizar plataformas
+                    Actualizar posts
                   </button>
                 </div>
               </form>
@@ -167,4 +161,4 @@ const EditEmployments = ({ task, platform, description, id }) => {
   );
 };
 
-export default EditEmployments;
+export default EditTips;

@@ -44,7 +44,7 @@ const EditTask = ({ task, category, content, id }) => {
         Swal.fire({
           title: "Éxito",
           icon: "success",
-          text: "El tip se ha actualizado exitosamente",
+          text: "El post se ha actualizado exitosamente",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 2000,
@@ -134,7 +134,7 @@ const EditTask = ({ task, category, content, id }) => {
                   >
                     Contenido
                   </label>
-                  <input
+                  <textarea
                     type="text"
                     id="content"
                     placeholder="Contenido"

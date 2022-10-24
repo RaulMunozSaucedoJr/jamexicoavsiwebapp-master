@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Button, Input } from "../../../Indexes/AtomsIndexes.jsx";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import { useForm } from "../../../../assets/javascript/hooks/useForm.js";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
@@ -35,7 +36,7 @@ const RecoverPassword = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          text: "Ningún campo debe de estar vacio. Favor de verificarlos",
+          text: "Este campo NO debe de estar vacio\n. Favor de verificarlo",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -55,7 +56,8 @@ const RecoverPassword = () => {
         Swal.fire({
           title: "¡Éxito!",
           icon: "success",
-          text: "Se ha enviado el link a su correo electrónico para reestablecer la contraseña",
+          // eslint-disable-next-line
+          text: "Se ha enviado el link para recuperación de contraseña al siguiente correo:\n"+`${form.email}`,
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -68,7 +70,8 @@ const RecoverPassword = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          text: "Este correo electrónico NO se encuentra registrado, por lo que no se podrá reestablecer la contraseña.",
+          // eslint-disable-next-line
+          text: "El correo:\n"+`${form.email}\n`+"NO se encuentra registrado, por lo que no se podrá reestablecer la contraseña.\n Favor de registrarse para poder ingresar a la plataforma",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -93,7 +96,7 @@ const RecoverPassword = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 recover-left center">
             <h1>Recuperar contraseña</h1>
-            <Link to="/Home">
+            <Link to={Routing.Home}>
               <Button
                 className="btn btn-open"
                 type="button"

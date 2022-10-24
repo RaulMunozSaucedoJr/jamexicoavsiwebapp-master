@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
 import { Input, Button } from "../../../Indexes/AtomsIndexes";
 import EditFaqs from "./EditFaqs";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import {
   collection,
   getDocs,
@@ -19,6 +21,14 @@ const CmsFaqs = () => {
   const [tasks, setTasks] = useState([]);
   const [createTask, setCreateTask] = useState("");
   const [createAnswer, setCreateAnswer] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
+  const usersPerPage = 2;
+  const pagesVisited = pageNumber * usersPerPage;
+
+  const pageCount = Math.ceil(tasks.length / usersPerPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
   const collectionRef = collection(db, "faqs");
 
   //Add Task Handler
@@ -98,6 +108,7 @@ const CmsFaqs = () => {
       Swal.fire({
         title: "¡Atención!",
         icon: "warning",
+        // eslint-disable-next-line
         text:
           "La pregunta frecuente no se ha podido eliminar.\n" +
           `Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
@@ -135,7 +146,7 @@ const CmsFaqs = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 faqs-left center">
             <h1>Manejador de FAQs</h1>
-            <Link to="/Home">
+            <Link to={Routing.Home}>
               <Button
                 id="button"
                 text="Volver al inicio"
@@ -147,7 +158,7 @@ const CmsFaqs = () => {
           <div className="col-sm-12 col-md-6 faqs-right"></div>
           <div className="col-sm-12 col-md-12 faqs-bottom">
             <div className="row">
-              <div className="col-12 pt-2">
+              <div className="col-md-4 offset-md-4 pt-2">
                 <button
                   className="btn btn-open"
                   id="button"
@@ -159,66 +170,111 @@ const CmsFaqs = () => {
                 </button>
               </div>
 
-              {/*ACCORDION WITH RECORDS*/}
               <div className="col-12 d-sm-block d-md-none pt-2">
-                {tasks.map(({ task, answer, id, timestamp }) => (
-                  <div
-                    className="accordion"
-                    id="accordionPanelsStayOpenExample"
-                    key={id}
-                  >
-                    <div className="accordion-item">
-                      <h2 className="accordion-header" id="headingOne">
-                        <button
-                          className="accordion-button"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#panelsStayOpen-collapseOne"
-                          aria-expanded="true"
-                          aria-controls="panelsStayOpen-collapseOne"
-                        >
-                          {task}
-                        </button>
-                      </h2>
-                      <div
-                        id="panelsStayOpen-collapseOne"
-                        className="accordion-collapse collapse show"
-                        aria-labelledby="panelsStayOpen-headingOne"
-                      >
-                        <div className="accordion-body">
-                          <strong>{task}</strong>
+                {tasks
+                  .slice(pagesVisited, pagesVisited + usersPerPage)
+                  .map(({ task, answer, id, timestamp }) => (
+                    <div className="col-12 pt-2" key={id}>
+                      <div className="card">
+                        <div className="card-header">
+                          <h1 className="text-center">{task}</h1>
+                        </div>
+                        <div className="card-body">
+                          <p>{task}</p>
                           <p>{answer}</p>
-                          <p>
-                            {new Date(
-                              timestamp.seconds * 1000
-                            ).toLocaleString()}
-                          </p>
-                          <div className="container-fluid">
-                            <div className="row">
-                              <div className="col-6">
-                                <button
-                                  type="button"
-                                  className="btn btn-delete"
-                                  onClick={() => deleteTask(id)}
-                                >
-                                  <box-icon
-                                    name="message-square-x"
-                                    type="solid"
-                                    color="white"
-                                    size="sm"
-                                  ></box-icon>
-                                </button>
-                              </div>
-                              <div className="col-6">
-                                <EditFaqs task={task} answer={answer} id={id} />
-                              </div>
+                          <div className="row">
+                            <div className="col-6">
+                              <button
+                                type="button"
+                                className="btn btn-delete"
+                                onClick={() => deleteTask(id)}
+                              >
+                                <box-icon
+                                  name="message-square-x"
+                                  type="solid"
+                                  color="white"
+                                  size="sm"
+                                />
+                              </button>
+                            </div>
+                            <div className="col-6">
+                              <EditFaqs task={task} answer={answer} id={id} />
                             </div>
                           </div>
                         </div>
+                        <div className="card-footer">
+                          {new Date(timestamp.seconds * 1000).toLocaleString()}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+              </div>
+
+              <div className="col-12 pt-2 d-none d-md-block">
+                <div className="table-responsive">
+                  <table className="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th>Respuesta</th>
+                        <th>Fecha de Creacion</th>
+                        <th>Accion 1</th>
+                        <th>Accion 2</th>
+                      </tr>
+                    </thead>
+                    <tbody className="table-group-divider">
+                      {tasks
+                        .slice(pagesVisited, pagesVisited + usersPerPage)
+                        .map(({ task, answer, id, timestamp }) => (
+                          <tr key={id}>
+                            <td>{task}</td>
+                            <td>{answer}</td>
+                            <td>
+                              {new Date(
+                                timestamp.seconds * 1000
+                              ).toLocaleString()}
+                            </td>
+                            <td>
+                              <EditFaqs task={task} answer={answer} id={id} />
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-delete"
+                                onClick={() => deleteTask(id)}
+                              >
+                                <box-icon
+                                  name="message-square-x"
+                                  type="solid"
+                                  color="white"
+                                  size="sm"
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="col-12 pt-4">
+                <ReactPaginate
+                  breakLabel="..."
+                  previousLabel={
+                    <box-icon name="skip-previous" color="black" size="xs" />
+                  }
+                  nextLabel={
+                    <box-icon name="skip-next" color="black" size="xs" />
+                  }
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName={"paginationBttns"}
+                  previousLinkClassName={"previousBttn"}
+                  nextLinkClassName={"nextBttn"}
+                  disabledClassName={"paginationDisabled"}
+                  activeClassName={"paginationActive"}
+                />
               </div>
             </div>
           </div>

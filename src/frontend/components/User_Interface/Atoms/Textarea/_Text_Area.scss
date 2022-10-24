@@ -1,0 +1,66 @@
+@use '../../../../assets/Scss/Utilities/Font_Properties/Fonts'as font;
+@use '../../../../assets/Scss/Utilities/Font_Properties/Font_Sizes'as font_size;
+@use '../../../../assets/Scss/Utilities/Font_Properties/_Font_Properties.scss'as font_properties;
+
+@use '../../../../assets/Scss/Utilities/Common/Colors'as color;
+
+@use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
+
+.label {
+    text-align: left;
+    font-weight: bold;
+
+    &-white {
+        @include text(font.$Montserrat, font_size.$Medium, color.$White);
+
+    }
+
+    &-inmersive-blue {
+        @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+
+    }
+
+    &-boundless_blue {
+        @include text(font.$Montserrat, font_size.$Medium, color.$Boundles_Blue);
+
+    }
+
+    &-sustainable-green {
+        @include text(font.$Montserrat, font_size.$Medium, color.$Sustainable_Green);
+
+    }
+
+    &-resilent-turquoise {
+        @include text(font.$Montserrat, font_size.$Medium, color.$Resilent_Turquoise);
+
+    }
+
+    @media only screen and (max-width: 600px) {
+        .label {
+            &-white {
+                @include text(font.$Montserrat, font_size.$Small, color.$White);
+
+            }
+
+            &-inmersive-blue {
+                @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+
+            }
+
+            &-boundless_blue {
+                @include text(font.$Montserrat, font_size.$Small, color.$Boundles_Blue);
+
+            }
+
+            &-sustainable-green {
+                @include text(font.$Montserrat, font_size.$Small, color.$Sustainable_Green);
+
+            }
+
+            &-resilent-turquoise {
+                @include text(font.$Montserrat, font_size.$Small, color.$Resilent_Turquoise);
+
+            }
+        }
+    }
+}
