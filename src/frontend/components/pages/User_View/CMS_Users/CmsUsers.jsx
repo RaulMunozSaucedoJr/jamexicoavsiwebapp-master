@@ -19,7 +19,7 @@ import {
 import { getFirestore, setDoc } from "firebase/firestore";
 import app from "../../../../../backend/Firebase/Firebase-config";
 
-const CmsUsers = () => {
+const CmsUsers = () => { 
   const [users, setUsers] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

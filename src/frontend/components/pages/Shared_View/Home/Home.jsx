@@ -7,7 +7,7 @@ const Home = ({ user }) => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12 col-md-6 header-home-left center">
-            <h1>JUVENTUDES</h1>
+            <h1>JUVENTUDES JA MEXICO & AVSI</h1>
             <p>
               Somos un conjunto de asociaciones civiles las cuales brindamos
               herramientas necesarias para apoyar los distintos tipos de
