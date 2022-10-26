@@ -16,12 +16,12 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
-  const logIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const logIn = (email, password, rol) => {
+    return signInWithEmailAndPassword(auth, email, password, rol);
   };
 
-  const signUp = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signUp = (email, password, rol) => {
+    return createUserWithEmailAndPassword(auth, email, password, rol);
   };
   const logOut = () => {
     signOut(auth);

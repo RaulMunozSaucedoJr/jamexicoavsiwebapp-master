@@ -31,7 +31,11 @@ const Card = ({
                 <p>{cardText}</p>
                 <p>{secondarycardText}</p>
                 <p>{thirdText}</p>
-                <Link to="/Home">{smallText}</Link>
+                <h2>
+                  <a rel="nofollow noopener noreferrer" href={smallText}>
+                    <span className="badge badge-link">{smallText}</span>
+                  </a>
+                </h2>
               </div>
             </div>
           </div>

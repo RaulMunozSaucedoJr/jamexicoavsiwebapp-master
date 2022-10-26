@@ -4,20 +4,25 @@ import Swal from "sweetalert2";
 import { Button } from "../../../Indexes/AtomsIndexes";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import { UserAuth } from "../../../../context/AuthContext.js";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+import app from "../../../../../backend/Firebase/Firebase-config";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rol, setRol] = useState("");
   const [error, setError] = useState("");
   const { signUp } = UserAuth();
   let navigate = useNavigate();
+  const firestore = getFirestore(app);
 
   const handleSubmitRegister = async (e) => {
+    const regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
     let regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
     e.preventDefault();
     setError("");
     try {
-      if (!email || !password) {
+      if (!email || !password || !rol) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -25,6 +30,15 @@ const Register = () => {
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
+        });
+      } else if (!email.match(regexEmail)) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "El formato del correo electrónico  es invalido. Favor de verificarlo..",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 3000,
         });
       } else if (!password.match(regexPassword)) {
         Swal.fire({
@@ -36,17 +50,21 @@ const Register = () => {
           timer: 7000,
         });
       } else {
-        await signUp(email, password);
+        const infoUsuario = await signUp(email, password, rol);
+        const docuRef = doc(firestore, `users/${infoUsuario.user.uid}`);
+        setDoc(docuRef, { correo: email, password: password, rol: rol });
         Swal.fire({
           title: "Éxito",
           icon: "success",
           // eslint-disable-next-line
-          text: "Bienvenido:\n"+`${email}\n`+"Se le recuerda que tiene que completar su perfil de usuario.",
+          text: "Bienvenido:\n" +
+            `${email}\n` +
+            "Se le recuerda que tiene que completar su perfil de usuario.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 4000,
         });
-        navigate("/ProfileUser");
+        navigate("/");
       }
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
@@ -54,7 +72,11 @@ const Register = () => {
           title: "Error",
           icon: "error",
           // eslint-disable-next-line
-          text:"El correo"+`${email}\n`+"ya se encuentra en uso.\n"+"Registrese ó reestablezca su contraseña.",
+          text:
+            "El correo" +
+            `${email}\n` +
+            "ya se encuentra en uso.\n" +
+            "Registrese ó reestablezca su contraseña.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -77,7 +99,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 5000,
         });
-      }else if(err.code === "auth/account-exists-with-different-credential"){
+      } else if (err.code === "auth/account-exists-with-different-credential") {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
@@ -164,6 +186,23 @@ const Register = () => {
                   autoComplete="off"
                   onChange={(e) => setPassword(e.target.value)}
                 />
+              </div>
+              <div className="form-group pt-3">
+                <label
+                  htmlFor="password"
+                  className="form-label label-inmersive-blue"
+                >
+                  Rol
+                </label>
+                <select
+                  className="form-select"
+                  name="rol"
+                  id="rol"
+                  onChange={(e) => setRol(e.target.value)}
+                >
+                  <option value="">Seleccione su rol</option>
+                  <option value="user">Usuario</option>
+                </select>
               </div>
               <div className="form-group pt-3">
                 <label>

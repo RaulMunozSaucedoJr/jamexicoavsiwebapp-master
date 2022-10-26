@@ -6,3 +6,4 @@ export {default as Footer} from '../User_Interface/Organisms/Footer/Footer';
 export {default as Header} from '../User_Interface/Organisms/Header/Header';
 export {default as Navbar} from '../User_Interface/Organisms/Navbar/Navbar';
 export {default as Tabs} from '../User_Interface/Organisms/Tabs/Tabs';
+export {default as Loading} from '../User_Interface/Organisms/Loading/Loading';

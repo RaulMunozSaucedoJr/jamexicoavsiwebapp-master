@@ -69,8 +69,17 @@
 
 }
 
-.badge-link{
+.badge-link {
+    font-size: .7em;
     background-color: color.$Empowered_Yellow;
     color: color.$Inmersive_Blue_Black;
     text-decoration: none;
+}
+
+.swal2-title {
+    font-size: 1.5em;
+}
+
+.swal2-text {
+    font-size: 1em;
 }

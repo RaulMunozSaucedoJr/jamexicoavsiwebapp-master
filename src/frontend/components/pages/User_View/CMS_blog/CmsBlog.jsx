@@ -85,8 +85,7 @@ const CmsBlog = () => {
         title: "¡Atención!",
         icon: "error",
         // eslint-disable-next-line
-        text:
-          "El post no se ha podido registrar\n" +
+        text: "El post no se ha podido registrar\n" +
           "Favor de enviar el error:" +
           `${err} al equipo de soporte`,
         showCancelButton: false,

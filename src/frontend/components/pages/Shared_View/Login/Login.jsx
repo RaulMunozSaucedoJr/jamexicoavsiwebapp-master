@@ -10,23 +10,27 @@ const auth = getAuth(app);
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // eslint-disable-next-line
+  const [rol, setRol] = useState("");
   const [error, setError] = useState("");
   const { logIn } = UserAuth();
   const navigate = useNavigate();
+
+  const [isLogin] = useState(false);
 
   const handleSubmit = async (e) => {
     const regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
     e.preventDefault();
     setError("");
     try {
-      if (!email && !password) {
+      if (!email || !password) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
           text: "Ningún campo debe de estar vacio. Favor de verificarlos",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 5000,
+          timer: 2500,
         });
       } else if (!password.match(regexPassword)) {
         Swal.fire({
@@ -38,20 +42,31 @@ const Login = () => {
           timer: 7000,
         });
       } else {
-        await logIn(email, password);
-        Swal.fire({
-          icon: "success",
-          // eslint-disable-next-line
-          title: "¡Bienvenido!\n" + `${email}`,
-          text: "Gracias por ingresar a la plataforma",
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 4000,
-        });
-        navigate("/");
+        if (!isLogin) {
+          await logIn(email, password, rol);
+          Swal.fire({
+            icon: "success",
+            // eslint-disable-next-line
+            title: "¡Bienvenido!\n" + `${email}\n`,
+            text: "Gracias por ingresar a la plataforma\n",
+            showCancelButton: false,
+            showConfirmButton: false,
+            timer: 4000,
+          });
+          navigate("/");
+        }
       }
     } catch (err) {
-      if (err.code === "auth/email-already-in-use") {
+      if (err.code === "auth/internal-error") {
+        Swal.fire({
+          title: "Error",
+          icon: "error",
+          text: "Ha ocurrido un error en el servidor. Favor de comunicarlo al personal de TI mediante correo electrónico.",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      } else if (err.code === "auth/email-already-in-use") {
         Swal.fire({
           title: "Error",
           icon: "error",
@@ -74,7 +89,10 @@ const Login = () => {
           title: "¡Atención!",
           icon: "info",
           // eslint-disable-next-line
-          text: "El correo:\n" + `${email}\n`+"\nse encuentra inactivo por el momento. Favor de contactar al servicio de ayuda para habilitar nuevamente su usuario",
+          text:
+            "El correo:\n" +
+            `${email}\n` +
+            "\nse encuentra inactivo por el momento. Favor de contactar al servicio de ayuda para habilitar nuevamente su usuario",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -84,7 +102,9 @@ const Login = () => {
           title: "¡Atención!",
           icon: "warning",
           // eslint-disable-next-line
-          text: "El correo:\n"+`${email}`+"electrónico NO se encuentra registrado. Favor de dirigirse a la secciòn de registro.",
+          text: "El correo:\n" +
+            `${email}` +
+            "electrónico NO se encuentra registrado. Favor de dirigirse a la secciòn de registro.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -93,7 +113,7 @@ const Login = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          text: "La contraseña y/o email son incorrectos. Favor de verificarlo",
+          text: "La contraseña debe de tener: Mayúsculas, minúsculas, números y carácteres especiales con una longitud minínima de 8",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -107,7 +127,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 5000,
         });
-      }else if(err.code === "auth/account-exists-with-different-credential"){
+      } else if (err.code === "auth/account-exists-with-different-credential") {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
@@ -133,7 +153,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user != null) {
-      navigate("/");
+      navigate("/Login");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
@@ -144,7 +164,7 @@ const Login = () => {
       .then(
         (re) => {
           if (user != null) {
-            navigate("/");
+            navigate("/Login");
           }
           console.log(re);
         },
@@ -213,6 +233,19 @@ const Login = () => {
                       required
                     />
                   </div>
+                  {/*<div className="form-group pt-1">
+                    <label htmlFor="rol">Rol</label>
+                    <select
+                      className="form-select"
+                      name="rol"
+                      id="rol"
+                      onChange={(e) => setRol(e.target.value)}
+                    >
+                      <option value="">Seleccionar rol</option>
+                      <option value="user">Usuario</option>
+                      <option value="admin">Administrador</option>
+                    </select>
+                  </div>*/}
                   <div className="form-group pt-2">
                     <label>
                       <input
@@ -232,6 +265,7 @@ const Login = () => {
                       text="Login"
                       id="Login"
                       name="Login"
+                      value={isLogin ? "Iniciar sesión" : "Iniciar sesión"}
                       className="btn btn-submit"
                       disabled={!email || !password}
                     />

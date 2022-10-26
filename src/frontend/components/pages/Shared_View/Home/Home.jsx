@@ -1,11 +1,9 @@
 import React from "react";
+import { Link, Routes } from "react-router-dom";
+import * as Routing from "../../../../assets/javascript/constants/routing/routing";
 import Card from "../../../User_Interface/Organisms/Card/Card";
-import Blog from "../../../../assets/images/jpg/Blog.jpg";
-import Job from "../../../../assets/images/jpg/Job.jpg";
-import Tips from "../../../../assets/images/jpg/Tips.jpg";
-import CV from "../../../../assets/images/jpg/cv.jpg";
 
-const Home = () => {
+const Home = ({ user }) => {
   return (
     <>
       <div className="container-fluid">
@@ -36,58 +34,71 @@ const Home = () => {
           </div>
           <div className="col-sm-12 col-md-6 mision-right"></div>
 
-          <div className="col-sm-12 col-md-6 tools-left"></div>
-          <div className="col-sm-12 col-md-6 tools-right">
-            <h1>Nuestras herramientas</h1>
-            <p>
-              Algunas de las herramientas digitales que estamos por ofrecer son
-              las siguientes:
-            </p>
-          </div>
-          <div className="col-sm-12 col-md-12 tools-bottom center">
-            <div className="row">
-              <div className="col-sm-12 col-md-3 pt-2">
-                <Card
-                  imageUrl={Job}
-                  alternativeTExt="Imagen de Card"
-                  title="Bolsas de trabajo"
-                  cardText="Aqui podras encontrar las diferentes bolsas de trabajo, tanto las digitales internacionales como las naciones de cada entidad del pais."
-                  secondarycardText=""
-                  smallText="Para mas detalles visite la seccion correspondiente"
-                />
+          {user.rol === "admin" || user.rol === "superadmin" ? (
+            <>
+              <div className="col-sm-12 col-md-6 admin-tools-left center">
+                <h1>Herramientas para administradores</h1>
+                <p>
+                  A continuación se muestran las herramientas con las que
+                  contarán los administradores
+                </p>
               </div>
-              <div className="col-sm-12 col-md-3 pt-2">
-                <Card
-                  imageUrl={Blog}
-                  alternativeTExt="Imagen de Card"
-                  title="Blog"
-                  cardText="Aqui podras encontrar distintos tipos de publicaciones, tanto de tecnologia asi como economia, etc."
-                  secondarycardText=""
-                  smallText="Para mas detalles visite la seccion correspondiente"
-                />
+              <div className="col-sm-12 col-md-6 admin-tools-right"></div>
+              <div className="col-sm-12 col-md-12 admin-tools-bottom">
+                <div className="row">
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Manejador de bolsas para el empleo"
+                      cardText="Aqui podras registrar las diferentes bolsas de trabajo, tanto las digitales internacionales como las naciones de cada entidad del pais."
+                      secondarycardText=""
+                      smallText="/CmsEmployments"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Manejador de posts para el blog"
+                      cardText="Aqui podras registrar, consultar, eliminar los distintos tipos de publicaciones, tanto de tecnologia asi como economia, etc."
+                      secondarycardText=""
+                      smallText="/CmsBlog"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Manejador de preguntas frecuentes"
+                      cardText="Aqui podras registrar, consultar, eliminar las preguntas frecuentes que puedan tener tanto los usuarios asi como los administradores"
+                      secondarycardText=""
+                      smallText="/CmsFaqs"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Manejador de usuarios"
+                      cardText="Aqui podras registrar, consultar, eliminar a los usuarios que usan la plataforma, desde usuarios generales asi como administradores."
+                      secondarycardText=""
+                      smallText="/CmsUsers"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Manejador de información personal y/o profesional de usuarios"
+                      cardText="Aqui podras registrar, consultar, eliminar la información personal y laboral de cada uno de los usuarios, independientemente de su email y/o contraseña"
+                      secondarycardText=""
+                      smallText="/CmsUserProfile"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="col-sm-12 col-md-3 pt-2">
-                <Card
-                  imageUrl={Tips}
-                  alternativeTExt="Imagen de Card"
-                  title="Tips"
-                  cardText="Aqui podras encontrar distintos tipos de tipis para obtener tu primer empleo. Los tips van desde como hacer tu primer C.V. hasta como hablar en una entrevista."
-                  secondarycardText=""
-                  smallText="Para mas detalles visite la seccion correspondiente"
-                />
-              </div>
-              <div className="col-sm-12 col-md-3 pt-2">
-                <Card
-                  imageUrl={CV}
-                  alternativeTExt="Imagen de Card"
-                  title="Perfil"
-                  cardText="Aqui podras ver tu informacion previamente registrada, la cual podras compartir con tus conocidos y/o reclutadores."
-                  secondarycardText=""
-                  smallText="Para mas detalles visite la seccion correspondiente"
-                />
-              </div>
-            </div>
-          </div>
+            </>
+          ) : (
+            <>
+
+            </>
+          )}
 
           <div className="col-sm-3 col-md-3 faqs-home-left center">
             <h1>Preguntas frecuentes</h1>

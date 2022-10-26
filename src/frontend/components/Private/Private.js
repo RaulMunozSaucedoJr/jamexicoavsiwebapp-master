@@ -19,7 +19,7 @@ const Protected = ({ children }) => {
       showConfirmButton: false,
       timer: 4000,
     });
-    return <Navigate to="/" />;
+    return <Navigate to="/Login" />;
   }
   return children;
 };

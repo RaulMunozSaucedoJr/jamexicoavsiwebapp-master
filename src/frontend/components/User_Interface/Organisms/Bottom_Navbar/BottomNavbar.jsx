@@ -19,7 +19,7 @@ const BottomNavbar = () => {
         showConfirmButton: false,
         timer: 4000,
       });
-      navigate("/");
+      navigate("/Login");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -58,79 +58,14 @@ const BottomNavbar = () => {
             </Link>
           </div>
           <div className="col-4 center">
-            <div className="dropup dropup-center">
-              <button type="button" className="btn" data-bs-toggle="dropdown">
-                <box-icon
-                  type="solid"
-                  name="plus-square"
-                  color="white"
-                  size="sm"
-                  animation="flashing"
-                ></box-icon>
-              </button>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link to={Routing.CmsBlog}>CMS Blog</Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link to={Routing.CmsEmployments}>CMS Jobs</Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link to={Routing.CmsFaqs}>CMS Faqs</Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link to={Routing.Profile}>CMS Profile</Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link to={Routing.CmsResume}>CMS CV</Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link to={Routing.CmsTips}>CMS Tips</Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link to="/CmsUsers">CMS Users</Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <Link to={Routing.PantallaChat}>Chat</Link>
-                </li>
-              </ul>
-            </div>
+            <p className="text-white">
+              <strong>¡Hola!</strong>
+            </p>
           </div>
           <div className="col-2 center">
-            <Link to={Routing.Profile}>
+            <Link to={Routing.Faqs}>
               <box-icon
-                name="id-card"
-                type="solid"
-                color="white"
-                size="sm"
-              ></box-icon>
-            </Link>
-          </div>
-          <div className="col-2 center">
-            <Link to={Routing.Tips}>
-              <box-icon
-                name="bulb"
+                name="book-content"
                 type="solid"
                 color="white"
                 size="sm"
@@ -139,7 +74,13 @@ const BottomNavbar = () => {
           </div>
           <div className="col-5">
             {user ? (
-              <p className="text-center text-white">Logeado</p>
+              <Link to={Routing.PantallaChat}>
+                <Button
+                  type="button"
+                  text="Chat"
+                  className="btn btn-transparent text-white"
+                />
+              </Link>
             ) : (
               <Link to={Routing.Register}>
                 <Button

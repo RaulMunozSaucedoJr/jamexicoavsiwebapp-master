@@ -121,6 +121,32 @@
     background-color: color.$Inmersive_Blue_Black;
 }
 
+.admin-tools-left {
+    @include width_height(width_height.$w50, width_height.$vh50);
+    background-color: color.$Empowered_Yellow;
+    @include padding(padding.$Padding1);
+
+    h1 {
+        @include text(font.$Montserrat, font_size.$Large, color.$Inmersive_Blue_Black);
+        font-weight: bold;
+        text-align: center;
+    }
+
+    p {
+        @include text(font.$Montserrat, font_size.$General, color.$Inmersive_Blue_Black);
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+.admin-tools-right {
+    @include width_height(width_height.$w50, width_height.$vh50);
+    background-image: url('/src/frontend/assets/images/jpg/AdminTools.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 
 .faqs-home-left {
     @include width_height(width_height.$w30, width_height.$vh100);
@@ -248,9 +274,41 @@
     }
 
     .tools-bottom {
-        @include width_height(width_height.$w100, width_height.$vh100);
+        @include width_height(width_height.$w100, width_height.$h100);
         background-color: color.$Inmersive_Blue_Black;
         margin-bottom: 700px;
+    }
+
+    .admin-tools-left {
+        @include width_height(width_height.$w100, width_height.$vh50);
+        background-color: color.$Inmersive_Blue_Black;
+        @include padding(padding.$Padding1);
+
+        h1 {
+            @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            font-weight: bold;
+            text-align: center;
+            text-align: left;
+        }
+
+        p {
+            @include text(font.$Montserrat, font_size.$Small, color.$White);
+            text-align: left;
+            font-weight: bold;
+        }
+    }
+
+    .admin-tools-right {
+        @include width_height(width_height.$w100, width_height.$vh30);
+        background-image: url('/src/frontend/assets/images/jpg/AdminTools.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .admin-tools-bottom{
+        @include width_height(width_height.$w100, width_height.$h100);
+        @include padding(padding.$Padding1);
     }
 
     .faqs-home-left {
