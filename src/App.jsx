@@ -69,7 +69,7 @@ const App = () => {
         <BottomNavbar/>
         <Routes>
           {/*ERROR HANDLING ROUTES*/}
-          <Route exact path={Routing.NotFound} element={<Error404 user={user} />} />
+          <Route exact path={Routing.NotFound} element={<Error404 />} />
           {/*LOGIN, REGISTER, RECOVER PASSWORD*/}
           <Route exact path={Routing.Login} element={<Login />} />
           <Route exact path={Routing.Register} element={<Register />} />
