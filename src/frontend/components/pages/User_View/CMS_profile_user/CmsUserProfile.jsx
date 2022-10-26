@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Tabs } from "../../../Indexes/OrganismsIndex";
-import { Button, Input } from "../../../Indexes/AtomsIndexes";
+import React from "react";
 
 const CmsUserProfile = () => {
 

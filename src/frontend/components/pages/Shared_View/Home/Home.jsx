@@ -1,6 +1,4 @@
 import React from "react";
-import { Link, Routes } from "react-router-dom";
-import * as Routing from "../../../../assets/javascript/constants/routing/routing";
 import Card from "../../../User_Interface/Organisms/Card/Card";
 
 const Home = ({ user }) => {
