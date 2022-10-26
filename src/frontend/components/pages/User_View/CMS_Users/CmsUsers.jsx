@@ -91,6 +91,9 @@ const CmsUsers = () => {
           showConfirmButton: false,
           timer: 4000,
         });
+        setTimeout(() => {
+          window.location.reload();
+        }, 700);
       }
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
