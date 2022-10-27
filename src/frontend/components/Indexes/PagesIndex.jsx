@@ -1,6 +1,6 @@
 export {default as Jobs} from '../pages/Public_View/Jobs/Jobs';
 export {default as Posts} from '../pages/Public_View/Posts/Posts';
-export {default as Profile} from '../pages/Public_View/Profile/Profile';
+export {default as Faqs} from '../pages/Public_View/Profile/Faqs';
 export {default as Tips} from '../pages/Public_View/Tips/Tips';
 export {default as Error404} from '../pages/Shared_View/Error_404/Error404';
 export {default as Home} from '../pages/Shared_View/Home/Home';
@@ -14,4 +14,6 @@ export {default as CmsUserProfile} from '../pages/User_View/CMS_profile_user/Cms
 export {default as CmsTips} from '../pages/User_View/CMS_tips/CmsTips';
 export {default as CmsResume} from '../pages/User_View/CMS_Resumes/CmsResume';
 export {default as CmsUsers} from '../pages/User_View/CMS_Users/CmsUsers';
+export {default as CmsTools} from '../pages/User_View/CMSTools/CmsTools';
+export {default as Interview} from '../pages/User_View/Interview/Interview';
 export {default as PantallaChat} from '../pages/User_View/Chat/PantallaChat';

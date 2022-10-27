@@ -3,12 +3,7 @@ import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Button } from "../../../Indexes/AtomsIndexes";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
-import {
-  collection,
-  getDocs,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
 const Posts = () => {
@@ -110,8 +105,12 @@ const Posts = () => {
               <div className="col-12 pt-4">
                 <ReactPaginate
                   breakLabel="..."
-                  previousLabel={"<-"}
-                  nextLabel={"->"}
+                  previousLabel={
+                    <box-icon name="skip-previous" color="white" size="sm" />
+                  }
+                  nextLabel={
+                    <box-icon name="skip-next" color="white" size="sm" />
+                  }
                   pageCount={pageCount}
                   onPageChange={changePage}
                   containerClassName={"paginationBttns"}

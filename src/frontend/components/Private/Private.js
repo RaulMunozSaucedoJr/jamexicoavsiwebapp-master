@@ -9,12 +9,11 @@ import { UserAuth } from "../../context/AuthContext.js";
  */
 const Protected = ({ children }) => {
   const { user } = UserAuth();
-  console.log("Check user in Private: ", user);
   if (!user) {
     Swal.fire({
       title: "Info",
       icon: "info",
-      text: "Para ingresar a este apartado, favor de iniciar sesión.",
+      text: "Para hacer uso de las distintas herramientas necesita registrarse y/o ingresar con sus credenciales.",
       showCancelButton: false,
       showConfirmButton: false,
       timer: 4000,

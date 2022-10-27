@@ -48,12 +48,12 @@ const Login = () => {
             icon: "success",
             // eslint-disable-next-line
             title: "¡Bienvenido!\n" + `${email}\n`,
-            text: "Gracias por ingresar a la plataforma\n",
+            text: "Se le recuerda que tiene que completar su perfil",
             showCancelButton: false,
             showConfirmButton: false,
             timer: 4000,
           });
-          navigate("/");
+          navigate("/CmsUSerProfile");
         }
       }
     } catch (err) {
@@ -89,8 +89,7 @@ const Login = () => {
           title: "¡Atención!",
           icon: "info",
           // eslint-disable-next-line
-          text:
-            "El correo:\n" +
+          text: "El correo:\n" +
             `${email}\n` +
             "\nse encuentra inactivo por el momento. Favor de contactar al servicio de ayuda para habilitar nuevamente su usuario",
           showCancelButton: false,

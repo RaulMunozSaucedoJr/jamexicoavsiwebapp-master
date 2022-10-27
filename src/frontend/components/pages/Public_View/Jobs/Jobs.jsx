@@ -98,8 +98,12 @@ const Jobs = () => {
               <div className="col-12 pt-4">
                 <ReactPaginate
                   breakLabel="..."
-                  previousLabel={"<-"}
-                  nextLabel={"->"}
+                  previousLabel={
+                    <box-icon name="skip-previous" color="white" size="sm" />
+                  }
+                  nextLabel={
+                    <box-icon name="skip-next" color="white" size="sm" />
+                  }
                   pageCount={pageCount}
                   onPageChange={changePage}
                   containerClassName={"paginationBttns"}

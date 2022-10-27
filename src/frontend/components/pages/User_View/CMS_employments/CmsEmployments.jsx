@@ -399,6 +399,7 @@ const CmsEmployments = () => {
                     type="submit"
                     className="btn btn-submit"
                     text="Agregar bolsa de empleo"
+                    disabled={!createTask || !createDescription || !createLink}
                   />
                 </div>
               </form>

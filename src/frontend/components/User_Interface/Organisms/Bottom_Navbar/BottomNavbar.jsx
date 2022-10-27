@@ -37,7 +37,7 @@ const BottomNavbar = () => {
     <>
       <div className="container-fluid fixed-bottom" id="mobile-nav">
         <div className="row">
-          <div className="col-2 center">
+          <div className="col-2 center mt-2 mb-1">
             <Link to={Routing.Jobs}>
               <box-icon
                 name="briefcase-alt-2"
@@ -47,7 +47,7 @@ const BottomNavbar = () => {
               ></box-icon>
             </Link>
           </div>
-          <div className="col-2 center">
+          <div className="col-2 center mt-2 mb-1">
             <Link to={Routing.Posts}>
               <box-icon
                 name="book-content"
@@ -57,15 +57,30 @@ const BottomNavbar = () => {
               ></box-icon>
             </Link>
           </div>
-          <div className="col-4 center">
-            <p className="text-white">
-              <strong>¡Hola!</strong>
-            </p>
+          <div className="col-4 center mt-2 mb-1">
+            <Link to={Routing.Interview}>
+              <box-icon
+                name="tv"
+                type="solid"
+                color="white"
+                size="sm"
+              ></box-icon>
+            </Link>
           </div>
-          <div className="col-2 center">
+          <div className="col-2 center mt-2 mb-1">
+            <Link to={Routing.Tips}>
+              <box-icon
+                name="bulb"
+                type="solid"
+                color="white"
+                size="sm"
+              ></box-icon>
+            </Link>
+          </div>
+          <div className="col-2 center mt-2 mb-1">
             <Link to={Routing.Faqs}>
               <box-icon
-                name="book-content"
+                name="bookmark"
                 type="solid"
                 color="white"
                 size="sm"

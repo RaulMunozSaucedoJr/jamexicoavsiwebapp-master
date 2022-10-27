@@ -12,7 +12,7 @@ const EditFaqs = ({ task, answer, id }) => {
     const regexAnswer = /^[a-zA-ZÀ-ÿ\0-9\u00f1\u00d1\s]/;
     e.preventDefault();
     try {
-      if (!tasks) {
+      if (!tasks || !answers) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",

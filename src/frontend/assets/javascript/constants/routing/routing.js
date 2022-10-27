@@ -17,3 +17,5 @@ export const CmsFaqs = '/CmsFaqs';
 export const CmsTips = '/CmsTips';
 export const CmsResume = '/CmsResume';
 export const PantallaChat = '/PantallaChat';
+export const Interview = '/Interview';
+export const CmsTools = '/CmsTools';

@@ -22,8 +22,8 @@
     }
 
     &-header {
-        h1 {
-            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+        h4 {
+            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
             text-align: left;
             font-weight: bold;
         }

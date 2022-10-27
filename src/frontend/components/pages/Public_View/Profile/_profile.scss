@@ -37,7 +37,7 @@
 @media only screen and (max-width: 600px) {
 
     .profiles-left {
-        @include width_height(width_height.$w100, width_height.$vh30);
+        @include width_height(width_height.$w100, width_height.$vh25);
         border-bottom-left-radius: 2em;
         border-bottom-right-radius: 2em;
 
@@ -45,13 +45,13 @@
             @include text(font.$Montserrat, font_size.$Medium, color.$White);
             text-align: center;
             letter-spacing: 0;
-        }
+        } 
 
     }
 
     .profiles-right {
-        @include width_height(width_height.$w100, width_height.$vh30);
-        background-image: url('/src/frontend/assets/images/jpg/listprofiles.jpg');
+        @include width_height(width_height.$w100, width_height.$vh25);
+        background-image: url('/src/frontend/assets/images/jpg/Faqs.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -59,7 +59,7 @@
 
     .profiles-bottom {
         @include width_height(width_height.$w100, width_height.$vh100);
-        background-color: color.$Empowered_Yellow;
+        background-color: color.$Boundles_Blue;
         border-top-left-radius: 2em;
         border-top-right-radius: 2em;
     }

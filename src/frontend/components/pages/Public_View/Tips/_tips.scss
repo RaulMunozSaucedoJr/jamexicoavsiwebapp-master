@@ -36,7 +36,7 @@
 
 @media only screen and (max-width: 600px) {
     .tips-left {
-        @include width_height(width_height.$w100, width_height.$vh30);
+        @include width_height(width_height.$w100, width_height.$vh25);
         border-bottom-left-radius: 2em;
         border-bottom-right-radius: 2em;
 
@@ -48,16 +48,16 @@
     }
 
     .tips-right {
-        @include width_height(width_height.$w100, width_height.$vh30);
+        @include width_height(width_height.$w100, width_height.$vh25);
         background-image: url('/src/frontend/assets/images/jpg/TipsList.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
     }
 
-    .tips-bottom-home {
+    .tips-bottom {
         @include width_height(width_height.$w100, width_height.$vh100);
-        background-color: color.$Empowered_Yellow;
+        background-color: color.$Boundles_Blue;
         border-top-left-radius: 2em;
         border-top-right-radius: 2em;
     }

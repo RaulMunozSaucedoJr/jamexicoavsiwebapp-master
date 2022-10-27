@@ -89,6 +89,15 @@ const Home = ({ user }) => {
                       smallText="/CmsUserProfile"
                     />
                   </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Manejador de Tips para el empleo"
+                      cardText="Aqui podras registrar, consultar, eliminar los distintos tips para el empleo."
+                      secondarycardText=""
+                      smallText="/CmsTips"
+                    />
+                  </div>
                 </div>
               </div>
             </>

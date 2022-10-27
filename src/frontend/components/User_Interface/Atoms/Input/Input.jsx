@@ -16,7 +16,9 @@ const Input = ({
   inputMode,
   onBlur,
   pattern,
-  title
+  title,
+  accept,
+  defaultValue
 }) => {
   return (
     <>
@@ -40,6 +42,8 @@ const Input = ({
           inputMode={inputMode}
           pattern={pattern}
           title={title}
+          accept={accept}
+          defaultValue={defaultValue}
         />
       </div>
     </>

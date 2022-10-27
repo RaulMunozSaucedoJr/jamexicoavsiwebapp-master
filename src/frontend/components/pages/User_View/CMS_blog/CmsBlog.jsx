@@ -13,7 +13,7 @@ import {
   doc,
   orderBy,
   query,
-  serverTimestamp
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
@@ -85,7 +85,8 @@ const CmsBlog = () => {
         title: "¡Atención!",
         icon: "error",
         // eslint-disable-next-line
-        text: "El post no se ha podido registrar\n" +
+        text:
+          "El post no se ha podido registrar\n" +
           "Favor de enviar el error:" +
           `${err} al equipo de soporte`,
         showCancelButton: false,
@@ -284,7 +285,7 @@ const CmsBlog = () => {
                   </table>
                 </div>
               </div>
-              
+
               <div className="col-12 pt-4">
                 <ReactPaginate
                   breakLabel="..."
@@ -299,7 +300,6 @@ const CmsBlog = () => {
                   activeClassName={"paginationActive"}
                 />
               </div>
-
             </div>
           </div>
         </div>
@@ -371,7 +371,11 @@ const CmsBlog = () => {
                   />
                 </div>
                 <div className="form-group pt-2">
-                  <button className="btn btn-submit" type="submit">
+                  <button
+                    className="btn btn-submit"
+                    type="submit"
+                    disabled={!createTask || !createCategory || !createContent}
+                  >
                     Crear post
                   </button>
                 </div>

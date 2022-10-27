@@ -77,7 +77,7 @@ const CmsUsers = () => {
         const infoUsuario = await signUp(email, password, rol);
         const docuRef = doc(firestore, `users/${infoUsuario.user.uid}`);
         setDoc(docuRef, {
-          correo: email,
+          email: email,
           password: password,
           rol: rol,
           timestamp: serverTimestamp(),
@@ -240,8 +240,8 @@ const CmsUsers = () => {
                           <div className="card-header">
                             <h1 className="text-center">{email}</h1>
                           </div>
-                          <p className="card-text">{password}</p>
-                          <p className="card-text">{rol}</p>
+                          <p id="blur">{password}</p>
+                          <p>{rol}</p>
                           <div className="row">
                             <div className="col-6">
                               <button
@@ -300,7 +300,7 @@ const CmsUsers = () => {
                         .map(({ email, password, rol, id, timestamp }) => (
                           <tr key={id}>
                             <td>{email}</td>
-                            <td>{password}</td>
+                            <td id="blur">{password}</td>
                             <td>{rol}</td>
                             <td>
                               {new Date(

@@ -36,6 +36,15 @@ const ContactNavbar = () => {
             size="small"
           ></box-icon>
         </Link>
+        <Link to={Routing.CmsTools}>
+          <box-icon 
+          name='cog'
+          type="solid"
+          color="white"
+          size="small"
+          >
+        </box-icon>
+        </Link>
       </div>
     </>
   );
