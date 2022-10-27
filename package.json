@@ -41,7 +41,7 @@
     "workbox-streams": "^6.5.4",
     "yup": "^0.32.11"
   },
-  "homepage": "https://fantastic-fox-f5afed.netlify.app/Login",
+  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
