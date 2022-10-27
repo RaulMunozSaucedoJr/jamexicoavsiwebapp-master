@@ -16,6 +16,8 @@ const TextArea = ({
   onBlur,
   pattern,
   title,
+  defaultValue,
+  onKeyDown,
 }) => {
   return (
     <>
@@ -32,11 +34,13 @@ const TextArea = ({
           id={id}
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           onBlur={onBlur}
           readOnly={readOnly}
           disabled={disabled}
           inputMode={inputMode}
           pattern={pattern}
+          defaultValue={defaultValue}
           title={title}
         />
       </div>

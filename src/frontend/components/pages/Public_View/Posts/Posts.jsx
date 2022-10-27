@@ -61,7 +61,7 @@ const Posts = () => {
             <div className="form-group pt-2 mb-2 text-center">
               <label
                 htmlFor="search"
-                className="form-label label-inmersive-blue"
+                className="form-label label-white"
               >
                 Filtrar posts...
               </label>

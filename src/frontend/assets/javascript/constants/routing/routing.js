@@ -11,6 +11,7 @@ export const Tips = '/Tips';
 export const RoutesCMS = '/RoutesCMS';
 export const CmsBlog = '/CmsBlog';
 export const CmsUsers = 'CmsUsers';
+export const CmsProfessionalData = '/CmsProfessionalData';
 export const CmsUserProfile = '/CmsUserProfile';
 export const CmsEmployments = '/CmsEmployments';
 export const CmsFaqs = '/CmsFaqs';

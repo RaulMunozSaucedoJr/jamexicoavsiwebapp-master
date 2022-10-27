@@ -26,6 +26,7 @@ import {
   CmsTips,
   CmsEmployments,
   CmsUserProfile,
+  CmsProfessionalData,
   PantallaChat,
   Interview
 } from "./frontend/components/Indexes/PagesIndex";
@@ -87,6 +88,7 @@ const App = () => {
           <Route exact path={Routing.Tips} element={<Private><Tips /></Private>} />
           <Route exact path={Routing.Faqs} element={<Faqs />} />
           {/*CONTENT MANAGMENT PAGES BASED ON SUPERADMIN-ADMIN ROLE AUTH*/}
+          <Route exact path={Routing.CmsProfessionalData} element={<Private><CmsProfessionalData /></Private>} />
           <Route exact path={Routing.CmsTools} element={<Private><CmsTools /></Private>} />
           <Route exact path={Routing.CmsBlog} element={<Private><CmsBlog /></Private>} />
           <Route exact path={Routing.CmsEmployments} element={<Private><CmsEmployments /></Private>} />

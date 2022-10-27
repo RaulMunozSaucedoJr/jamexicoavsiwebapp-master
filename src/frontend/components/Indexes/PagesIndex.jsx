@@ -7,6 +7,7 @@ export {default as Home} from '../pages/Shared_View/Home/Home';
 export {default as Login} from '../pages/Shared_View/Login/Login';
 export {default as Register} from '../pages/Shared_View/Register/Register';
 export {default as RecoverPassword} from '../pages/Shared_View/Recover_Password/RecoverPassword';
+export {default as CmsProfessionalData} from '../pages/User_View/CMS_Professional_Data/CmsProfessionalData';
 export {default as CmsBlog} from '../pages/User_View/CMS_blog/CmsBlog';
 export {default as CmsEmployments} from '../pages/User_View/CMS_employments/CmsEmployments';
 export {default as CmsFaqs} from '../pages/User_View/CMS_faqs/CmsFaqs';

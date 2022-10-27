@@ -392,42 +392,42 @@ const CmsUsers = () => {
               )}
               <form onSubmit={handleSubmitRegister}>
                 <div className="form-group pt-3">
-                  <label htmlFor="" className="form-label label-white">
+                  <label htmlFor="emailregister" className="form-label label-white">
                     Correo electrónico
                   </label>
                   <input
                     className="form-control"
                     type="text"
                     inputMode="email"
-                    name=""
-                    id=""
+                    name="emailregister"
+                    id="emailregister"
                     placeholder="Correo electrónico"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="form-group pt-3">
-                  <label htmlFor="" className="form-label label-white">
+                  <label htmlFor="passwordregister" className="form-label label-white">
                     Contraseña
                   </label>
                   <input
                     className="form-control"
                     type="password"
                     inputMode="text"
-                    name=""
-                    id=""
+                    name="passwordregister"
+                    id="passwordregister"
                     placeholder="Contraseña"
                     autoComplete="off"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="form-group pt-3">
-                  <label htmlFor="" className="form-label label-white">
+                  <label htmlFor="rolregister" className="form-label label-white">
                     Rol
                   </label>
                   <select
                     className="form-select"
-                    name=""
-                    id="rol"
+                    name="rolregister"
+                    id="rolregister"
                     onChange={(e) => setRol(e.target.value)}
                   >
                     <option value="">Seleccione su rol</option>

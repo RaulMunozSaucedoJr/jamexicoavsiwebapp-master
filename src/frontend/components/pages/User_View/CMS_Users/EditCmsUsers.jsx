@@ -65,6 +65,13 @@ const EditCmsUsers = ({ email, password, rol, id }) => {
     }
   };
 
+  const togglePassword = () => {
+    const inputType = document.querySelector("#passwordUpdate");
+    inputType.type === "password"
+      ? (inputType.type = "text")
+      : (inputType.type = "password");
+  };
+
   return (
     <>
       <button
@@ -106,13 +113,13 @@ const EditCmsUsers = ({ email, password, rol, id }) => {
                 <div className="form-group pt-2">
                   <label
                     className="form-label label-inmersive-blue"
-                    htmlFor="userupdate"
+                    htmlFor="emailupdate"
                   >
                     Usuario
                   </label>
                   <input
                     type="text"
-                    id="userupdate"
+                    id="emailupdate"
                     className="form-control"
                     defaultValue={emails}
                     onChange={(e) => setEmails(e.target.value)}
@@ -121,13 +128,13 @@ const EditCmsUsers = ({ email, password, rol, id }) => {
                 <div className="form-group pt-2">
                   <label
                     className="form-label label-inmersive-blue"
-                    htmlFor=""
+                    htmlFor="passwordUpdate"
                   >
-                    Categoria
+                    Contraseña
                   </label>
                   <input
                     type="password"
-                    id=""
+                    id="passwordUpdate"
                     placeholder="Contraseña"
                     className="form-control"
                     defaultValue={passwords}
@@ -137,19 +144,31 @@ const EditCmsUsers = ({ email, password, rol, id }) => {
                 </div>
                 <div className="form-group pt-2">
                   <label
-                    className="form-label label-inmersive-blue"
-                    htmlFor=""
+                    htmlFor="roleUpdate"
+                    className="form-label label-white"
                   >
                     Rol
                   </label>
-                  <input
-                    type="text"
-                    id=""
-                    placeholder="Rol"
-                    className="form-control"
-                    defaultValue={rols}
+                  <select
+                    className="form-select"
+                    name="roleUpdate"
+                    id="roleUpdate"
                     onChange={(e) => setRoles(e.target.value)}
-                  />
+                  >
+                    <option defaultValue={rols}>Seleccione su rol</option>
+                    <option value="user">Usuario</option>
+                    <option value="admin">Administrador</option>
+                  </select>
+                </div>
+                <div className="form-group pt-3">
+                  <label>
+                    <input
+                      type="checkbox"
+                      className="form-check-input text-white"
+                      onClick={togglePassword}
+                    />
+                    Mostrar contraseña
+                  </label>
                 </div>
                 <div className="form-group pt-2">
                   <button
