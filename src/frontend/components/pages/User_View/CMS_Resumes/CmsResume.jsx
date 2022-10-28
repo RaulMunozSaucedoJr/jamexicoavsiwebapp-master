@@ -141,7 +141,7 @@ const CmsResume = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 create-resume-left center">
             <h1>Creador de C.V.</h1>
-            <Link to="/Home">
+            <Link to="/">
               <Button
                 type="button"
                 className="btn btn-submit"

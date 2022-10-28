@@ -19,7 +19,7 @@ const BottomNavbar = () => {
         showConfirmButton: false,
         timer: 4000,
       });
-      navigate("/Login");
+      navigate("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -37,56 +37,60 @@ const BottomNavbar = () => {
     <>
       <div className="container-fluid fixed-bottom" id="mobile-nav">
         <div className="row">
-          <div className="col-2 center mt-2 mb-1">
-            <Link to={Routing.Jobs}>
-              <box-icon
-                name="briefcase-alt-2"
-                type="solid"
-                color="white"
-                size="sm"
-              ></box-icon>
-            </Link>
-          </div>
-          <div className="col-2 center mt-2 mb-1">
-            <Link to={Routing.Posts}>
-              <box-icon
-                name="book-content"
-                type="solid"
-                color="white"
-                size="sm"
-              ></box-icon>
-            </Link>
-          </div>
-          <div className="col-4 center mt-2 mb-1">
-            <Link to={Routing.Interview}>
-              <box-icon
-                name="tv"
-                type="solid"
-                color="white"
-                size="sm"
-              ></box-icon>
-            </Link>
-          </div>
-          <div className="col-2 center mt-2 mb-1">
-            <Link to={Routing.Tips}>
-              <box-icon
-                name="bulb"
-                type="solid"
-                color="white"
-                size="sm"
-              ></box-icon>
-            </Link>
-          </div>
-          <div className="col-2 center mt-2 mb-1">
-            <Link to={Routing.Faqs}>
-              <box-icon
-                name="bookmark"
-                type="solid"
-                color="white"
-                size="sm"
-              ></box-icon>
-            </Link>
-          </div>
+          {user ? (
+            <>
+              <div className="col-2 center mt-2">
+                <Link to={Routing.Jobs}>
+                  <box-icon
+                    name="briefcase-alt-2"
+                    type="solid"
+                    color="white"
+                    size="sm"
+                  ></box-icon>
+                </Link>
+              </div>
+              <div className="col-2 center mt-2">
+                <Link to={Routing.Posts}>
+                  <box-icon
+                    name="book-content"
+                    type="solid"
+                    color="white"
+                    size="sm"
+                  ></box-icon>
+                </Link>
+              </div>
+              <div className="col-4 center mt-2">
+                <Link to={Routing.Interview}>
+                  <box-icon
+                    name="tv"
+                    type="solid"
+                    color="white"
+                    size="sm"
+                  ></box-icon>
+                </Link>
+              </div>
+              <div className="col-2 center mt-2">
+                <Link to={Routing.Tips}>
+                  <box-icon
+                    name="bulb"
+                    type="solid"
+                    color="white"
+                    size="sm"
+                  ></box-icon>
+                </Link>
+              </div>
+              <div className="col-2 center mt-2">
+                <Link to={Routing.Faqs}>
+                  <box-icon name="question-mark" color="white" size="sm" />
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="col-12 center">
+              <p></p>
+            </div>
+          )}
+
           <div className="col-5">
             {user ? (
               <Link to={Routing.PantallaChat}>
@@ -126,15 +130,44 @@ const BottomNavbar = () => {
               </Link>
             )}
           </div>
-          <div className="col-5">
-            <Button
-              type="button"
-              text="Arriba"
-              className="btn btn-transparent text-white"
-              onClick={() => {
-                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-              }}
-            />
+          <div className="col-5 dropup-center dropup">
+            {user ? (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-transparent text-white dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Crear
+                </button>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link to="/CV">CV</Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <Link to="/Interview">Simulador</Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <Link to="/Profile">Perfil</Link>
+                  </li>
+                </ul>
+              </>
+            ) : (
+              <Link to="/Faqs">
+                <Button
+                  type="button"
+                  text="FAQ's"
+                  className="btn btn-transparent text-white"
+                />
+              </Link>
+            )}
           </div>
         </div>
       </div>

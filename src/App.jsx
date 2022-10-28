@@ -9,6 +9,7 @@ import {
 import {
   //Shared pages
   Home,
+  HomeAdmins,
   Login,
   Register,
   Error404,
@@ -18,17 +19,16 @@ import {
   Posts,
   Tips,
   Faqs,
+  PantallaChat,
+  Interview,
   //Admin pages
-  CmsTools,
   CmsBlog,
   CmsFaqs,
   CmsUsers,
   CmsTips,
   CmsEmployments,
   CmsUserProfile,
-  CmsProfessionalData,
-  PantallaChat,
-  Interview
+  CmsProfessionalData
 } from "./frontend/components/Indexes/PagesIndex";
 import * as Routing from "./frontend/assets/javascript/constants/routing/routing.js";
 import Private from "./frontend/components/Private/Private";
@@ -40,6 +40,7 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 
 const App = () => {
+  
   const [user, setUser] = useState(null);
   async function getRol(uid) {
     const docuRef = doc(firestore, `users/${uid}`);
@@ -78,6 +79,8 @@ const App = () => {
         <Routes>
           {/* ERROR ROUTE PAGE*/}
           <Route exact path={Routing.NotFound} element={<Error404 />} />
+          {/*HOMEPAGE*/}
+          <Route exact path={Routing.Home} element={<Home />} />
           {/*LOGIN, REGISTER, RECOVER PAGES*/}
           <Route exact path={Routing.Login} element={<Login />} />
           <Route exact path={Routing.Register} element={<Register />} />
@@ -89,7 +92,6 @@ const App = () => {
           <Route exact path={Routing.Faqs} element={<Faqs />} />
           {/*CONTENT MANAGMENT PAGES BASED ON SUPERADMIN-ADMIN ROLE AUTH*/}
           <Route exact path={Routing.CmsProfessionalData} element={<Private><CmsProfessionalData /></Private>} />
-          <Route exact path={Routing.CmsTools} element={<Private><CmsTools /></Private>} />
           <Route exact path={Routing.CmsBlog} element={<Private><CmsBlog /></Private>} />
           <Route exact path={Routing.CmsEmployments} element={<Private><CmsEmployments /></Private>} />
           <Route exact path={Routing.CmsFaqs} element={<Private><CmsFaqs /></Private>} />
@@ -103,23 +105,17 @@ const App = () => {
           <Route exact path={Routing.Interview} element={<Private><Interview /></Private>} />
           {/*
             //!ROLES:
-              
               //!SUPERADMIN:
-                //!CAN USE COMPLETE CRUD OF CMS
-                //!CHAT
-                //!cAN CREATE ADMINS
-              
+                //!CAN USE COMPLETE CRUD OF ALL OF CMS
               //!ADMIN
                 //!CAN USE COMPLETE CRUD OF CMS EXCEPT OF CREATE ADMINS
-                //!CHAT
-
               //!GENERIC
-                //!CAN POST ON BLOG, CAN CREATE HIS PROFILE, CAN USE CH
-                //!CHAT
-                //
+                //!CAN USE THE CV CREATOR, JOIN INTO A INTERVIEW SIMULATION AND CHECK THE BLOG POSTS, TIPS, JOBS PLATFORMS 
+                //!ONLY IF THE USER ITS REGISTER AND LOGED
+                //!IF THE USER ISNT LOGGED ONLY ACCESS TO FAQS, REGISTER, LOGIN
           */
           }
-          {user ? <Route path={Routing.Home} element={<Home user={user}/>} /> : <Route path={Routing.Login} element={<Login />} />}
+          {user ? <Route path={Routing.HomeAdmins} element={<HomeAdmins user={user}/>} /> : <Route path={Routing.Login} element={<Login />} />}
         </Routes>
       </AuthContextProvider>
     </>

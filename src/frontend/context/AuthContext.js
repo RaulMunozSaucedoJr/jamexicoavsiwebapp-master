@@ -20,8 +20,8 @@ export const AuthContextProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password, rol);
   };
 
-  const signUp = (email, password, rol) => {
-    return createUserWithEmailAndPassword(auth, email, password, rol);
+  const signUp = (email, password, repeatpassword, rol) => {
+    return createUserWithEmailAndPassword(auth, email, password, repeatpassword, rol);
   };
   const logOut = () => {
     signOut(auth);

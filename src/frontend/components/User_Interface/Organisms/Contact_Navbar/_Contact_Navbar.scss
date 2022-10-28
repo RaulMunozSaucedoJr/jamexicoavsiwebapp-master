@@ -31,7 +31,7 @@
 
 @media only screen and (max-width: 600px) {
     .contact-navbar {
-        @include width_height(width_height.$w15, width_height.$h15);
+        @include width_height(width_height.$w15, width_height.$h10);
         position: fixed;
         margin-right: 0;
         top: 70%;

@@ -57,10 +57,11 @@
 
 @media only screen and (max-width: 600px) {
     .login-left {
-        @include width_height(width_height.$w100, width_height.$vh100);
+        @include width_height(width_height.$w100, width_height.$vh90);
+        overflow-y: hidden;
 
         h1 {
-            @include text(font.$Montserrat, font_size.$Medium, color.$White);
+            @include text(font.$Montserrat, font_size.$General, color.$White);
             text-align: center;
             letter-spacing: 0;
             font-weight: bold;

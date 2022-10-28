@@ -10,16 +10,17 @@ const auth = getAuth(app);
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // eslint-disable-next-line
-  const [rol, setRol] = useState("");
   const [error, setError] = useState("");
+  // eslint-disable-next-line
+  const [rol] = useState("");
   const { logIn } = UserAuth();
   const navigate = useNavigate();
 
   const [isLogin] = useState(false);
 
   const handleSubmit = async (e) => {
-    const regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
+    const regexEmail =
+      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
     e.preventDefault();
     setError("");
     try {
@@ -32,11 +33,11 @@ const Login = () => {
           showConfirmButton: false,
           timer: 2500,
         });
-      } else if (!password.match(regexPassword)) {
+      } else if (!email.match(regexEmail)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          text: "La contraseña deberá de tener: Mayúsculas, minúsculas, nñumeros y carácteres especiales con una longitud minima de 8. Favor de verificarlos",
+          text: "El formato del correo electrónico es incorrecto. Favor de verificarlo.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 7000,
@@ -51,9 +52,9 @@ const Login = () => {
             text: "Se le recuerda que tiene que completar su perfil",
             showCancelButton: false,
             showConfirmButton: false,
-            timer: 4000,
+            timer: 2500,
           });
-          navigate("/CmsUSerProfile");
+          navigate("/HomeAdmins");
         }
       }
     } catch (err) {
@@ -89,7 +90,8 @@ const Login = () => {
           title: "¡Atención!",
           icon: "info",
           // eslint-disable-next-line
-          text: "El correo:\n" +
+          text:
+            "El correo:\n" +
             `${email}\n` +
             "\nse encuentra inactivo por el momento. Favor de contactar al servicio de ayuda para habilitar nuevamente su usuario",
           showCancelButton: false,
@@ -101,18 +103,10 @@ const Login = () => {
           title: "¡Atención!",
           icon: "warning",
           // eslint-disable-next-line
-          text: "El correo:\n" +
+          text:
+            "El correo:\n" +
             `${email}` +
             "electrónico NO se encuentra registrado. Favor de dirigirse a la secciòn de registro.",
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 5000,
-        });
-      } else if (err.code === "auth/weak-password") {
-        Swal.fire({
-          title: "¡Atención!",
-          icon: "warning",
-          text: "La contraseña debe de tener: Mayúsculas, minúsculas, números y carácteres especiales con una longitud minínima de 8",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -121,16 +115,7 @@ const Login = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          text: "Contraseña incorrecta. Favor de verificarla",
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 5000,
-        });
-      } else if (err.code === "auth/account-exists-with-different-credential") {
-        Swal.fire({
-          title: "¡Atención!",
-          icon: "warning",
-          text: "Ya existe una cuenta con este email relacionado a una red social\n. Por favor, trate de ingresar con su correo personal",
+          text: "Correo electrónico y/o contraseña incorrecto(s). Favor de verificar",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
@@ -146,7 +131,9 @@ const Login = () => {
     try {
       await googleSignIn();
     } catch (error) {
+      console.clear();
       console.log(error);
+      console.clear();
     }
   };
 
@@ -165,7 +152,9 @@ const Login = () => {
           if (user != null) {
             navigate("/Login");
           }
+          console.clear();
           console.log(re);
+          console.clear();
         },
         [user]
       )
@@ -201,13 +190,8 @@ const Login = () => {
                     ></button>
                   </div>
                 )}
-                <form
-                  onSubmit={handleSubmit}
-                  id="login"
-                  className="needs-validation"
-                  noValidate
-                >
-                  <div className="form-group pt-3">
+                <form onSubmit={handleSubmit} id="login" noValidate>
+                  <div className="form-group pt-4">
                     <label htmlFor="user">Correo electrónico</label>
                     <input
                       placeholder="Correo electronico"
@@ -219,7 +203,7 @@ const Login = () => {
                       required
                     />
                   </div>
-                  <div className="form-group pt-1">
+                  <div className="form-group pt-4">
                     <label htmlFor="password">Contraseña</label>
                     <input
                       placeholder="Contraseña"
@@ -232,20 +216,7 @@ const Login = () => {
                       required
                     />
                   </div>
-                  {/*<div className="form-group pt-1">
-                    <label htmlFor="rol">Rol</label>
-                    <select
-                      className="form-select"
-                      name="rol"
-                      id="rol"
-                      onChange={(e) => setRol(e.target.value)}
-                    >
-                      <option value="">Seleccionar rol</option>
-                      <option value="user">Usuario</option>
-                      <option value="admin">Administrador</option>
-                    </select>
-                  </div>*/}
-                  <div className="form-group pt-2">
+                  <div className="form-group pt-4">
                     <label>
                       <input
                         type="checkbox"
@@ -255,10 +226,10 @@ const Login = () => {
                       Mostrar contraseña
                     </label>
                   </div>
-                  <div className="form-group pt-2">
+                  <div className="form-group pt-4">
                     <Link to="/RecoverPassword">Recuperar contraseña</Link>
                   </div>
-                  <div className="form-group pt-2">
+                  <div className="form-group pt-4">
                     <Button
                       type="submit"
                       text="Login"
@@ -272,17 +243,17 @@ const Login = () => {
                 </form>
               </div>
 
-              <div className="col-4 pt-4">
+              <div className="col-4 pt-2">
                 <hr className="rounded" />
               </div>
-              <div className="col-4 pt-4">
+              <div className="col-4 pt-2">
                 <p>O ingresa con:</p>
               </div>
-              <div className="col-4 pt-4">
+              <div className="col-4 pt-2">
                 <hr className="rounded" />
               </div>
 
-              <div className="col-sm-12 col-md-6 pt-3">
+              <div className="col-sm-12 col-md-6 pt-2">
                 <Button
                   id="modal"
                   text="Google"
@@ -291,7 +262,7 @@ const Login = () => {
                   onClick={handleGoogleSignIn}
                 />
               </div>
-              <div className="col-sm-12 col-md-6 pt-3">
+              <div className="col-sm-12 col-md-6 pt-2">
                 <Button
                   id="modal"
                   text="Facebook"

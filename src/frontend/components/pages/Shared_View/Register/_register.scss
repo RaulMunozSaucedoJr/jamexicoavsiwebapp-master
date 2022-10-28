@@ -46,7 +46,7 @@
 @media only screen and (max-width: 600px) {
 
     .register-left {
-        @include width_height(width_height.$w100, width_height.$vh20);
+        @include width_height(width_height.$w100, width_height.$vh15);
         border-bottom-left-radius: 2em;
         border-bottom-right-radius: 2em;
 
@@ -68,7 +68,7 @@
     }
 
     .register-bottom {
-        @include width_height(width_height.$w100, width_height.$vh60);
+        @include width_height(width_height.$w100, width_height.$vh70);
         background-color: color.$Inmersive_Blue_Black;
 
         h1 {

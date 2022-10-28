@@ -50,6 +50,7 @@ strong {
 
 .form-control {
     @include width_height(width_height.$w100, width_height.$hauto);
+    @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
     display: block;
     text-align: left;
     text-decoration: none;
@@ -57,21 +58,19 @@ strong {
     box-sizing: border-box;
     outline: none !important;
     border-radius: .5em;
-    letter-spacing: .2rem;
-    @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
-    font-weight: bolder;
+    font-weight: 900;
 
     &:focus {
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px transparent;
         outline: 0 none;
-        @include text(font.$Montserrat, 1em, color.$Inmersive_Blue_Black);
+        @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
     }
 
     &:hover {
         &:focus {
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px transparent;
             outline: 0 none;
-            @include text(font.$Montserrat, 1em, color.$Inmersive_Blue_Black);
+            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
         }
     }
 }

@@ -10,9 +10,10 @@ const Error_404 = () => {
         <div className="row">
           <div className="col-md-6 error-left center">
             <h1>
-              ¡Lo sentimos, a menos que se haya <strong>registrado e iniciado sesión</strong> en la plataforma, no podrá hacer uso de ella en ciertas secciones!.
+              <strong>¡Lo sentimos!</strong>
             </h1>
-            <Link to={Routing.Login}>
+            <h1>No encontramos el recurso que buscas.</h1>
+            <Link to={Routing.Home}>
               <Button
                 id="button"
                 text="Volver al inicio"

@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import { EmailTo } from "../../../Indexes/AtomsIndexes";
 
-/* A React component. */
 const ContactNavbar = () => {
   const [show, setShow] = useState(true);
   const controlNavbar = () => {
-      window.scrollY > 400 ? setShow(false) : setShow(true);
+    window.scrollY > 400 ? setShow(false) : setShow(true);
   };
 
   useEffect(() => {
@@ -35,15 +34,6 @@ const ContactNavbar = () => {
             color="white"
             size="small"
           ></box-icon>
-        </Link>
-        <Link to={Routing.CmsTools}>
-          <box-icon 
-          name='cog'
-          type="solid"
-          color="white"
-          size="small"
-          >
-        </box-icon>
         </Link>
       </div>
     </>

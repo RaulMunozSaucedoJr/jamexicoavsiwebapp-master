@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../../../User_Interface/Organisms/Card/Card";
 
-const Home = ({ user }) => {
+const HomeVisitors = () => {
   return (
     <>
       <div className="container-fluid">
@@ -9,9 +9,9 @@ const Home = ({ user }) => {
           <div className="col-sm-12 col-md-6 header-home-left center">
             <h1>JUVENTUDES</h1>
             <p>
-              Somos un conjunto de asociaciones civiles las cuales brindamos
-              herramientas necesarias para apoyar los distintos tipos de
-              emprendimiento en Mexico.
+              Somos una plataforma la cual responde al problema que enfrentan
+              los jovenes para encontrar su primer empleo, ya sea por falta de
+              oportunidades, conocimientos y/o habilidades.
             </p>
           </div>
           <div className="col-sm-12 col-md-6 header-home-right">
@@ -23,99 +23,80 @@ const Home = ({ user }) => {
             </div>
           </div>
           <div className="col-sm-12 col-md-6 mision-left center">
-            <h1>Nuestra misión</h1>
+            <h1>Nuestro objetivo</h1>
             <p>
-              Es capacitar a ls jovenes mediante distintos medios de
-              comunicacion, tanto presencial como virtualmente a traves de
-              distintas herramientas pedagogicas y/o tecnologicas.
+              Es otorgar a los jovenes herramientas digitales con las cuales
+              estos podrán realizar exitosamente la busqueda de su primer
+              empleo. Siendoles de ayuda las herramientas descritas en la
+              siguiente sección.
             </p>
           </div>
           <div className="col-sm-12 col-md-6 mision-right"></div>
-
-          {user.rol === "admin" || user.rol === "superadmin" ? (
-            <>
-              <div className="col-sm-12 col-md-6 admin-tools-left center">
-                <h1>Herramientas para administradores</h1>
-                <p>
-                  A continuación se muestran las herramientas con las que
-                  contarán los administradores
-                </p>
+          <div className="col-sm-12 col-md-6 tools-right">
+            <h1>Herramientas para tu primer empleo</h1>
+          </div>
+          <div className="col-sm-12 col-md-6 tools-bottom">
+            <div className="row">
+              <div className="col-sm-12 col-md-12 pt-2">
+                <h1>Herramientas para usuarios</h1>
               </div>
-              <div className="col-sm-12 col-md-6 admin-tools-right"></div>
-              <div className="col-sm-12 col-md-12 admin-tools-bottom">
-                <div className="row">
-                  <div className="col-sm-12 col-md-3 pt-2">
-                    <Card
-                      alternativeTExt="Imagen de Card"
-                      title="Manejador de bolsas para el empleo"
-                      cardText="Aqui podras registrar las diferentes bolsas de trabajo, tanto las digitales internacionales como las naciones de cada entidad del pais."
-                      secondarycardText=""
-                      smallText="/CmsEmployments"
-                    />
-                  </div>
-                  <div className="col-sm-12 col-md-3 pt-2">
-                    <Card
-                      alternativeTExt="Imagen de Card"
-                      title="Manejador de posts para el blog"
-                      cardText="Aqui podras registrar, consultar, eliminar los distintos tipos de publicaciones, tanto de tecnologia asi como economia, etc."
-                      secondarycardText=""
-                      smallText="/CmsBlog"
-                    />
-                  </div>
-                  <div className="col-sm-12 col-md-3 pt-2">
-                    <Card
-                      alternativeTExt="Imagen de Card"
-                      title="Manejador de preguntas frecuentes"
-                      cardText="Aqui podras registrar, consultar, eliminar las preguntas frecuentes que puedan tener tanto los usuarios asi como los administradores"
-                      secondarycardText=""
-                      smallText="/CmsFaqs"
-                    />
-                  </div>
-                  <div className="col-sm-12 col-md-3 pt-2">
-                    <Card
-                      alternativeTExt="Imagen de Card"
-                      title="Manejador de usuarios"
-                      cardText="Aqui podras registrar, consultar, eliminar a los usuarios que usan la plataforma, desde usuarios generales asi como administradores."
-                      secondarycardText=""
-                      smallText="/CmsUsers"
-                    />
-                  </div>
-                  <div className="col-sm-12 col-md-3 pt-2">
-                    <Card
-                      alternativeTExt="Imagen de Card"
-                      title="Manejador de información personal y/o profesional de usuarios"
-                      cardText="Aqui podras registrar, consultar, eliminar la información personal y laboral de cada uno de los usuarios, independientemente de su email y/o contraseña"
-                      secondarycardText=""
-                      smallText="/CmsUserProfile"
-                    />
-                  </div>
-                  <div className="col-sm-12 col-md-3 pt-2">
-                    <Card
-                      alternativeTExt="Imagen de Card"
-                      title="Manejador de Tips para el empleo"
-                      cardText="Aqui podras registrar, consultar, eliminar los distintos tips para el empleo."
-                      secondarycardText=""
-                      smallText="/CmsTips"
-                    />
-                  </div>
-                  <div className="col-sm-12 col-md-3 pt-2">
-                    <Card
-                      alternativeTExt="Imagen de Card"
-                      title="Manejador de información laboral"
-                      cardText="Aqui podras registrar, consultar, eliminar la información laboral de los distintos usuarios."
-                      secondarycardText=""
-                      smallText="/CmsProfessionalData"
-                    />
-                  </div>
-                </div>
+              <div className="col-sm-12 col-md-3 pt-2">
+                <Card
+                  alternativeTExt="Imagen de Card"
+                  title="Simulador de entrevistas"
+                  cardText="Aquí el usuario podrá ingresar a una video conferencia en determinada fecha cada ciertos meses. En la cual se les darán consejos sobre como afrontar las entrevistas de HH.RR y técnicas."
+                  secondarycardText=""
+                  smallText="/Interview"
+                />
               </div>
-            </>
-          ) : (
-            <>
-
-            </>
-          )}
-
+              <div className="col-sm-12 col-md-3 pt-2">
+                <Card
+                  alternativeTExt="Imagen de Card"
+                  title="Creador de CV´s"
+                  cardText="Aquí el usuario podrá crear su C.V., registrando toda su informaciòn personal y/o laboral para posteriormente imprimirlo"
+                  secondarycardText=""
+                  smallText="/CVCreator"
+                />
+              </div>
+              <div className="col-sm-12 col-md-3 pt-2">
+                <Card
+                  alternativeTExt="Imagen de Card"
+                  title="Chat"
+                  cardText="Aqui podra chatear con otros usuarios igual que el y compartir ideas, tips, etc."
+                  secondarycardText=""
+                  smallText="/PantallaChat"
+                />
+              </div>
+              <div className="col-sm-12 col-md-3 pt-2">
+                <Card
+                  alternativeTExt="Imagen de Card"
+                  title="Tips para tu primer empleo"
+                  cardText="Aqui podra consultar los diferentes tipos de tips para que a la hora de que se enfrenten a su primer entrevista, ya lleven un background sobre que hacer y que no."
+                  secondarycardText=""
+                  smallText="/Tips"
+                />
+              </div>
+              <div className="col-sm-12 col-md-3 pt-2">
+                <Card
+                  alternativeTExt="Imagen de Card"
+                  title="Blog"
+                  cardText="Aqui podra consultar diferentes topicos sobre tu primer empleo entre otros, aparte de poder crear nuevos posts y compartirlos con los demas usuarios."
+                  secondarycardText=""
+                  smallText="/Posts"
+                />
+              </div>
+              <div className="col-sm-12 col-md-3 pt-2">
+                <Card
+                  alternativeTExt="Imagen de Card"
+                  title="Bolsas de empleo"
+                  cardText="Aqui podra consultar las diferentes bolsas de empleo, ya sean las plataformas nacionales, populares, etc."
+                  secondarycardText=""
+                  smallText="/Jobs"
+                />
+              </div>
+              <hr />
+            </div>
+          </div>
           <div className="col-sm-3 col-md-3 faqs-home-left center">
             <h1>Preguntas frecuentes</h1>
           </div>
@@ -225,4 +206,4 @@ const Home = ({ user }) => {
   );
 };
 
-export default Home;
+export default HomeVisitors;

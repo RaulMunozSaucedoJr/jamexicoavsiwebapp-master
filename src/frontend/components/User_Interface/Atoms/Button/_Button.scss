@@ -159,11 +159,11 @@
     }
 
     &-transparent {
-        @include text(font.$Montserrat, font_size.$Extra_Small, color.$White);
+        @include text(font.$Montserrat, font_size.$Small, color.$White);
         font-weight: bold;
         letter-spacing: 0;
         border: none;
-    }
+    } 
 
     @media only screen and (max-width: 600px) {
         .btn {
@@ -273,7 +273,7 @@
             }
 
             &-transparent {
-                @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+                @include text(font.$Montserrat, font_size.$Small, color.$White);
                 font-weight: bold;
                 border: color.$Inmersive_Blue_Black solid .2rem;
             }

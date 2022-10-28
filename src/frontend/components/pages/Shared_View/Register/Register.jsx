@@ -10,19 +10,21 @@ import app from "../../../../../backend/Firebase/Firebase-config";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatpassword, setRepeatPassword] = useState("");
   const [rol, setRol] = useState("");
-  const [error, setError] = useState("");
+  const [setError] = useState("");
   const { signUp } = UserAuth();
   let navigate = useNavigate();
   const firestore = getFirestore(app);
 
   const handleSubmitRegister = async (e) => {
-    const regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
+    const regexEmail =
+      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
     let regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
     e.preventDefault();
     setError("");
     try {
-      if (!email || !password || !rol) {
+      if (!email || !password || !rol || !repeatpassword) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -40,7 +42,10 @@ const Register = () => {
           showConfirmButton: false,
           timer: 3000,
         });
-      } else if (!password.match(regexPassword)) {
+      } else if (
+        !password.match(regexPassword) ||
+        !repeatpassword.match(regexPassword)
+      ) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -49,22 +54,32 @@ const Register = () => {
           showConfirmButton: false,
           timer: 7000,
         });
+      } else if (password !== repeatpassword) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "Ambas contraseñas deben de coincidir. Favor de verificarlo",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 7000,
+        });
       } else {
-        const infoUsuario = await signUp(email, password, rol);
+        const infoUsuario = await signUp(email, password, repeatpassword, rol);
         const docuRef = doc(firestore, `users/${infoUsuario.user.uid}`);
-        setDoc(docuRef, { correo: email, password: password, rol: rol });
+        setDoc(docuRef, { correo: email, password: password, repeatpassword:repeatpassword,  rol: rol });
         Swal.fire({
           title: "Éxito",
           icon: "success",
           // eslint-disable-next-line
-          text: "Bienvenido:\n" +
+          text:
+            "Bienvenido:\n" +
             `${email}\n` +
             "Se le recuerda que tiene que completar su perfil de usuario.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 4000,
         });
-        navigate("/");
+        navigate("/HomeAdmins");
       }
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
@@ -99,15 +114,6 @@ const Register = () => {
           showConfirmButton: false,
           timer: 5000,
         });
-      } else if (err.code === "auth/account-exists-with-different-credential") {
-        Swal.fire({
-          title: "¡Atención!",
-          icon: "warning",
-          text: "Ya existe una cuenta con este email relacionado a una red social\n. Por favor, trate de ingresar con su correo personal",
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 5000,
-        });
       }
       setError(err.message);
     }
@@ -127,32 +133,18 @@ const Register = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 register-left center">
             <h1>Registro</h1>
-            <Link to={Routing.Home}>
+            <Link to={Routing.Login}>
               <Button
                 type="button"
-                text="Regresar al inicio"
+                text="Regresar al login"
                 className="btn btn-submit"
               />
             </Link>
           </div>
           <div className="col-sm-12 col-md-6 register-right"></div>
           <div className="col-12 register-bottom">
-            {error && (
-              <div
-                className="alert alert-warning alert-dismissible fade show d-none"
-                role="alert"
-              >
-                <strong>{error}</strong>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                ></button>
-              </div>
-            )}
             <form onSubmit={handleSubmitRegister}>
-              <div className="form-group pt-3">
+              <div className="form-group pt-1">
                 <label
                   htmlFor="email"
                   className="form-label label-inmersive-blue"
@@ -169,7 +161,7 @@ const Register = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="form-group pt-3">
+              <div className="form-group pt-1">
                 <label
                   htmlFor="password"
                   className="form-label label-inmersive-blue"
@@ -187,9 +179,27 @@ const Register = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div className="form-group pt-3">
+              <div className="form-group pt-1">
                 <label
-                  htmlFor="password"
+                  htmlFor="repeatpassword"
+                  className="form-label label-inmersive-blue"
+                >
+                  Repetir Contraseña
+                </label>
+                <input
+                  className="form-control"
+                  type="password"
+                  inputMode="text"
+                  name="repeatpassword"
+                  id="repeatpassword"
+                  placeholder="Contraseña"
+                  autoComplete="off"
+                  onChange={(e) => setRepeatPassword(e.target.value)}
+                />
+              </div>
+              <div className="form-group pt-1">
+                <label
+                  htmlFor="rol"
                   className="form-label label-inmersive-blue"
                 >
                   Rol

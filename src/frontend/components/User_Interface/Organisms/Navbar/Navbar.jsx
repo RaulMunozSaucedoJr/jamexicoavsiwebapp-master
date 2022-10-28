@@ -8,21 +8,27 @@ export const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg sticky-top">
         <div className="container-fluid">
-          <img
-            src={JAMexico}
-            className="img-thumbnail"
-            alt="Logo Navbar Desktop"
-          />
-          <img
-            src={EuropeUnion}
-            className="img-thumbnail"
-            alt="Logo Navbar Desktop"
-          />
-          <img
-            src={AvsiMexico}
-            className="img-thumbnail"
-            alt="Logo Navbar Desktop"
-          />
+          <a href="https://www.jamexico.org.mx/">
+            <img
+              src={JAMexico}
+              className="img-thumbnail"
+              alt="Logo Navbar Desktop"
+            />
+          </a>
+          <a href="https://www.eeas.europa.eu/delegations/m%C3%A9xico_es?s=248">
+            <img
+              src={EuropeUnion}
+              className="img-thumbnail"
+              alt="Logo Navbar Desktop"
+            />
+          </a>
+          <a href="https://www.avsi.org/en/what-we-do/countries/mexico">
+            <img
+              src={AvsiMexico}
+              className="img-thumbnail"
+              alt="Logo Navbar Desktop"
+            />
+          </a>
         </div>
       </nav>
     </>

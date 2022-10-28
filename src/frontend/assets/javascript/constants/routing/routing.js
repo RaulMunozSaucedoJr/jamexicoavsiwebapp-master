@@ -1,5 +1,6 @@
 export const NotFound = '*';
 export const Home = '/';
+export const HomeAdmins = '/HomeAdmins';
 export const Register = '/Register';
 export const Login = 'Login';
 export const RecoverPassword = '/RecoverPassword';
@@ -20,3 +21,4 @@ export const CmsResume = '/CmsResume';
 export const PantallaChat = '/PantallaChat';
 export const Interview = '/Interview';
 export const CmsTools = '/CmsTools';
+export const ContactNavbar = '/ContactNavbar'

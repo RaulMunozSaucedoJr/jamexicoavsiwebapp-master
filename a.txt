@@ -1,1 +1,60 @@
 fantastic-fox-f5afed.netlify.app
+
+<div className="col-sm-12 col-md-12 pt-2">
+                    <h1>Herramientas para usuarios</h1>
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Simulador de entrevistas"
+                      cardText="Aquí el usuario podrá ingresar a una video conferencia en determinada fecha cada ciertos meses. En la cual se les darán consejos sobre como afrontar las entrevistas de HH.RR y técnicas."
+                      secondarycardText=""
+                      smallText="/Interview"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Creador de CV´s"
+                      cardText="Aquí el usuario podrá crear su C.V., registrando toda su informaciòn personal y/o laboral para posteriormente imprimirlo"
+                      secondarycardText=""
+                      smallText="/CVCreator"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Chat"
+                      cardText="Aqui podra chatear con otros usuarios igual que el y compartir ideas, tips, etc."
+                      secondarycardText=""
+                      smallText="/PantallaChat"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Tips para tu primer empleo"
+                      cardText="Aqui podra consultar los diferentes tipos de tips para que a la hora de que se enfrenten a su primer entrevista, ya lleven un background sobre que hacer y que no."
+                      secondarycardText=""
+                      smallText="/Tips"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Blog"
+                      cardText="Aqui podra consultar diferentes topicos sobre tu primer empleo entre otros, aparte de poder crear nuevos posts y compartirlos con los demas usuarios."
+                      secondarycardText=""
+                      smallText="/Posts"
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-3 pt-2">
+                    <Card
+                      alternativeTExt="Imagen de Card"
+                      title="Bolsas de empleo"
+                      cardText="Aqui podra consultar las diferentes bolsas de empleo, ya sean las plataformas nacionales, populares, etc."
+                      secondarycardText=""
+                      smallText="/Jobs"
+                    />
+                  </div>
+                  <hr />

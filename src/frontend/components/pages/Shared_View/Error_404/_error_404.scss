@@ -21,7 +21,7 @@
         @include padding(padding.$Padding1);
         text-align: center;
     }
-}
+} 
 
 .error-right {
     @include width_height(width_height.$w50, width_height.$vh100);
@@ -35,11 +35,10 @@
 @media only screen and (max-width: 600px) {
 
     .error-left {
-        @include width_height(width_height.$w100, width_height.$vh40);
+        @include width_height(width_height.$w100, width_height.$vh30);
         background-color: color.$Inmersive_Blue_Black;
-        @include padding(padding.$Padding1);
         border-bottom-left-radius: 2em;
-        border-bottom-right-radius: 2em;
+        border-bottom-right-radius: 2em; 
 
         h1 {
             @include text(font.$Montserrat, font_size.$Medium, color.$White);
