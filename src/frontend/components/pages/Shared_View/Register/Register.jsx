@@ -12,7 +12,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [repeatpassword, setRepeatPassword] = useState("");
   const [rol, setRol] = useState("");
-  const [setError] = useState("");
+  // eslint-disable-next-line
+  const [error, setError] = useState("");
   const { signUp } = UserAuth();
   let navigate = useNavigate();
   const firestore = getFirestore(app);
