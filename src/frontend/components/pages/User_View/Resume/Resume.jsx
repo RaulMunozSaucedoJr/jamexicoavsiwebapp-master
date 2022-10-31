@@ -3,15 +3,13 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import ReactPaginate from "react-paginate";
 import { Button, Input, TextArea } from "../../../Indexes/AtomsIndexes";
-import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import * as Regex from "../../../../assets/javascript/regexs/regexs";
-import EditResume from "./EditResume";
 import {
   collection,
   getDocs,
   addDoc,
-  deleteDoc,
-  doc,
+  //deleteDoc,
+  //doc,
   orderBy,
   query,
   serverTimestamp,
@@ -105,8 +103,8 @@ const Resume = () => {
     }
   };
 
-  //Delete Handler
-  const deleteTask = async (id) => {
+  // eslint-disable-next-line
+  {/*const deleteTask = async (id) => {
     try {
       const documentRef = doc(db, "platforms", id);
       await deleteDoc(documentRef);
@@ -132,7 +130,7 @@ const Resume = () => {
       });
       console.log(err);
     }
-  };
+  };*/}
 
   //Query the collection
   useEffect(() => {
