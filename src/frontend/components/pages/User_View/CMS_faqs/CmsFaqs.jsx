@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import { Input, Button } from "../../../Indexes/AtomsIndexes";
 import EditFaqs from "./EditFaqs";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import {
   collection,
   getDocs,
@@ -34,8 +35,7 @@ const CmsFaqs = () => {
   //Add Task Handler
   const submitTask = async (e) => {
     // eslint-disable-next-line
-    const regexQuestion = /^\¿.*?\?$/;
-    const regexAnswer = /^[a-zA-ZÀ-ÿ\0-9\u00f1\u00d1\s]/;
+
     e.preventDefault();
     try {
       if (!createTask || !createAnswer) {
@@ -47,7 +47,7 @@ const CmsFaqs = () => {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if (!createTask.match(regexQuestion)) {
+      } else if (!createTask.match(Regex.Question)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -56,7 +56,7 @@ const CmsFaqs = () => {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if (!createAnswer.match(regexAnswer)) {
+      } else if (!createAnswer.match(Regex.Answer)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -108,10 +108,7 @@ const CmsFaqs = () => {
       Swal.fire({
         title: "¡Atención!",
         icon: "warning",
-        // eslint-disable-next-line
-        text:
-          "La pregunta frecuente no se ha podido eliminar.\n" +
-          `Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
+        text: `La pregunta frecuente no se ha podido eliminar.\n Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
         showCancelButton: false,
         showConfirmButton: false,
         timer: 1500,
@@ -171,43 +168,65 @@ const CmsFaqs = () => {
               </div>
 
               <div className="col-12 d-sm-block d-md-none pt-2">
-                {tasks
-                  .slice(pagesVisited, pagesVisited + usersPerPage)
-                  .map(({ task, answer, id, timestamp }) => (
-                    <div className="col-12 pt-2" key={id}>
-                      <div className="card">
-                        <div className="card-header">
-                          <h1 className="text-center">{task}</h1>
-                        </div>
-                        <div className="card-body">
-                          <p>{task}</p>
-                          <p>{answer}</p>
-                          <div className="row">
-                            <div className="col-6">
-                              <button
-                                type="button"
-                                className="btn btn-delete"
-                                onClick={() => deleteTask(id)}
-                              >
-                                <box-icon
-                                  name="message-square-x"
-                                  type="solid"
-                                  color="white"
-                                  size="sm"
-                                />
-                              </button>
+                {tasks.length === 0 ? (
+                  <div className="alert alert-warning text-center" role="alert">
+                    <h4>
+                      <strong>
+                        ¡No hay preguntas frecuentes registradas!.
+                      </strong>
+                    </h4>
+                    <p>
+                      <strong>
+                        Registre las preguntas frecuentes que considere
+                        necesarias.
+                      </strong>
+                    </p>
+                  </div>
+                ) : (
+                  tasks
+                    .slice(pagesVisited, pagesVisited + usersPerPage)
+                    .map(({ task, answer, id, timestamp }) => (
+                      <div className="col-12" key={id}>
+                        <div className="card">
+                          <div className="card-body">
+                            <div className="card-header">
+                              <h1 className="text-center">{task}</h1>
                             </div>
-                            <div className="col-6">
-                              <EditFaqs task={task} answer={answer} id={id} />
+                            <h3>Respuesta</h3>
+                            <p>{answer}</p>
+                            <div className="row">
+                              <div className="col-6">
+                                <button
+                                  type="button"
+                                  className="btn btn-delete"
+                                  onClick={() => deleteTask(id)}
+                                >
+                                  <box-icon
+                                    name="message-square-x"
+                                    type="solid"
+                                    color="white"
+                                    size="sm"
+                                  />
+                                </button>
+                              </div>
+                              <div className="col-6">
+                                <EditFaqs task={task} answer={answer} id={id} />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="card-footer">
-                          {new Date(timestamp.seconds * 1000).toLocaleString()}
+                          <div className="card-footer">
+                            <small>
+                              Fecha de creación/modificaciòn:
+                              <br />
+                              {new Date(
+                                timestamp.seconds * 1000
+                              ).toLocaleString()}
+                            </small>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                )}
               </div>
 
               <div className="col-12 pt-2 d-none d-md-block">
@@ -262,10 +281,10 @@ const CmsFaqs = () => {
                 <ReactPaginate
                   breakLabel="..."
                   previousLabel={
-                    <box-icon name="skip-previous" color="black" size="xs" />
+                    <box-icon name="skip-previous" color="white" size="sm" />
                   }
                   nextLabel={
-                    <box-icon name="skip-next" color="black" size="xs" />
+                    <box-icon name="skip-next" color="white" size="sm" />
                   }
                   pageCount={pageCount}
                   onPageChange={changePage}

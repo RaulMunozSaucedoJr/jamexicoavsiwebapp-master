@@ -139,23 +139,11 @@ const BottomNavbar = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Crear
+                  Acciones
                 </button>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu center">
                   <li>
-                    <Link to="/CV">CV</Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link to="/Interview">Simulador</Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link to="/Profile">Perfil</Link>
+                    <Link to="/ResumeSS">Crear C.V.´s</Link>
                   </li>
                 </ul>
               </>

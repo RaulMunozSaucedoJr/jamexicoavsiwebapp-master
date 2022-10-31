@@ -17,8 +17,8 @@ const Input = ({
   onBlur,
   pattern,
   title,
-  accept,
-  defaultValue
+  defaultValue,
+  accept
 }) => {
   return (
     <>

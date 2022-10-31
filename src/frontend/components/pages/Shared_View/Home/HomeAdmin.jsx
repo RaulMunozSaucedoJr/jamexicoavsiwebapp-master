@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../../../User_Interface/Organisms/Card/Card";
 
-const HomeAdmins = ({ user }) => {
+const HomeAdmin = ({ user }) => {
   return (
     <>
       <div className="container-fluid">
@@ -36,7 +36,7 @@ const HomeAdmins = ({ user }) => {
           {user.rol === "superadmin" ? (
             <>
               <div className="col-sm-12 col-md-6 admin-tools-left center">
-                <h1>Herramientas para administradores</h1>
+                <h1>Herramientas para super-administradores</h1>
                 <p>
                   A continuación se muestran las herramientas con las que
                   contarán los administradores
@@ -47,6 +47,22 @@ const HomeAdmins = ({ user }) => {
                 <div className="row">
                   <div className="col-sm-12 col-md-12 pt-2">
                     <h1>Manejadores de contenido</h1>
+                    <div className="alert alert-primary" role="alert">
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                      <small className="text-black">
+                        <strong>
+                          NOTA:
+                          <br /> Únicamente usted podrá crear más usuarios con
+                          rol de administradores así como los usuarios
+                          genericos.
+                        </strong>
+                      </small>
+                    </div>
                   </div>
                   <div className="col-sm-12 col-md-3 pt-2">
                     <Card
@@ -87,8 +103,8 @@ const HomeAdmins = ({ user }) => {
                   <div className="col-sm-12 col-md-3 pt-2">
                     <Card
                       alternativeTExt="Imagen de Card"
-                      title="CMS Informaciòn personal"
-                      cardText="Aqui podras registrar, consultar, eliminar la información personal de cada uno de los usuarios, independientemente de su email y/o contraseña"
+                      title="CMS Perfiles"
+                      cardText="Aqui podras registrar, consultar, eliminar la información personal y laboral de cada uno de los usuarios."
                       secondarycardText=""
                       smallText="/CmsUserProfile"
                     />
@@ -102,20 +118,11 @@ const HomeAdmins = ({ user }) => {
                       smallText="/CmsTips"
                     />
                   </div>
-                  <div className="col-sm-12 col-md-3 pt-2">
-                    <Card
-                      alternativeTExt="Imagen de Card"
-                      title="CMS Informaciòn laboral"
-                      cardText="Aqui podras registrar, consultar, eliminar la información laboral de los distintos usuarios."
-                      secondarycardText=""
-                      smallText="/CmsProfessionalData"
-                    />
-                  </div>
                   <div className="col-sm-12 col-md-12 pt-4">
                     <p className="text-white">
                       <strong>
                         Aparte de poder hacer uso de todas estas herramientas,
-                        tú como administrador podrás hacer uso de las
+                        tú como super(administrador) podrás hacer uso de las
                         secciones/herramientas del usuario general.
                       </strong>
                     </p>
@@ -393,4 +400,4 @@ const HomeAdmins = ({ user }) => {
   );
 };
 
-export default HomeAdmins;
+export default HomeAdmin;

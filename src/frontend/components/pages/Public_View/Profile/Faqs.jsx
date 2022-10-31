@@ -66,44 +66,43 @@ const Faqs = () => {
             </div>
 
             <div className="accordion pt-2" id="accordionPanelsStayOpenExample">
-              {tasks
-                .slice(pagesVisited, pagesVisited + usersPerPage)
-                .map(({ task, answer, id, timestamp }) => (
-                  <div className="accordion-item" key={id}>
-                    <h1
-                      className="accordion-header"
-                      id="panelsStayOpen-headingOne"
-                    >
-                      <button
-                        className="accordion-button"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseOne"
-                        aria-expanded="true"
-                        aria-controls="panelsStayOpen-collapseOne"
-                      >
-                        <strong>{task}</strong>
-                      </button>
-                    </h1>
-                    <div
-                      id="panelsStayOpen-collapseOne"
-                      className="accordion-collapse collapse show"
-                      aria-labelledby="panelsStayOpen-headingOne"
-                    >
-                      <div className="accordion-body">
-                        <strong>
+              {tasks.length === 0 ? (
+                <div className="alert alert-warning text-center" role="alert">
+                  <h4>
+                    <strong>¡No hay preguntas frecuentes registradas!.</strong>
+                  </h4>
+                  <p>
+                    <strong>
+                      Favor de comunicar este inconveniente al equipo de TI.
+                    </strong>
+                  </p>
+                </div>
+              ) : (
+                tasks
+                  .slice(pagesVisited, pagesVisited + usersPerPage)
+                  .map(({ task, answer, id, timestamp }) => (
+                    <div className="col-12" key={id}>
+                      <div className="card">
+                        <div className="card-body">
+                          <div className="card-header">
+                            <h1 className="text-center">{task}</h1>
+                          </div>
+                          <h3>Respuesta</h3>
                           <p>{answer}</p>
-                        </strong>
-                      </div>
-                      <div className="accordion-footer p-2">
-                        Fecha de creación:<br/>
-                        <strong>
-                          {new Date(timestamp.seconds * 1000).toLocaleString()}
-                        </strong>
+                        </div>
+                        <div className="card-footer">
+                          <small>
+                            Fecha de creación/modificaciòn:
+                            <br />
+                            {new Date(
+                              timestamp.seconds * 1000
+                            ).toLocaleString()}
+                          </small>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+              )}
             </div>
 
             <div className="col-12 pt-4">

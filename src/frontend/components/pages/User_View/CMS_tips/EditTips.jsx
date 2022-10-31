@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
@@ -9,7 +10,6 @@ const EditTips = ({ task, category, content, id }) => {
   const [contents, setContent] = useState([content]);
 
   const updateTask = async (e) => {
-    const regexLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]/;
     e.preventDefault();
     try {
       if (!tasks || !categorys || !contents) {
@@ -22,9 +22,9 @@ const EditTips = ({ task, category, content, id }) => {
           timer: 1000,
         });
       } else if (
-        !tasks.match(regexLetter) ||
-        !categorys.match(regexLetter) ||
-        !contents.match(regexLetter)
+        !tasks.match(Regex.Letters) ||
+        !categorys.match(Regex.Letters) ||
+        !contents.match(Regex.Letters)
       ) {
         Swal.fire({
           title: "¡Atención!",

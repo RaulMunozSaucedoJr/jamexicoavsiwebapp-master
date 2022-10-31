@@ -10,7 +10,7 @@
 
 @use '../../../../assets/Scss/Utilities/Mixins/Mixins'as *;
 
-.create-resume-left {
+.resume-left {
     @include width_height(width_height.$w50, width_height.$vh100);
     background-color: color.$Inmersive_Blue_Black;
 
@@ -22,23 +22,25 @@
     }
 }
 
-.create-resume-right {
+.resume-right {
     @include width_height(width_height.$w50, width_height.$vh100);
-    background-image: url('/src/frontend/assets/images/jpg/creadorcv.jpg');
+    background-image: url('/src/frontend/assets/images/jpg/cv.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.create-resume-bottom {
+.resume-bottom {
     @include width_height(width_height.$w100, width_height.$vh100);
     background-color: color.$White;
 }
 
 
 @media only screen and (max-width: 600px) {
-    .create-resume-left {
-        @include width_height(width_height.$w100, width_height.$vh30);
+    .resume-left {
+        @include width_height(width_height.$w100, width_height.$vh20);
+        border-bottom-left-radius: 1em;
+        border-bottom-right-radius: 1em;
 
         h1 {
             @include text(font.$Montserrat, font_size.$Medium, color.$White);
@@ -48,17 +50,20 @@
         }
     }
 
-    .create-resume-right {
-        @include width_height(width_height.$w100, width_height.$vh30);
-        background-image: url('/src/frontend/assets/images/jpg/creadorcv.jpg');
+    .resume-right {
+        @include width_height(width_height.$w100, width_height.$vh20);
+        background-image: url('/src/frontend/assets/images/jpg/cv.jpg');
         background-position: center;
-        background-size: cover;
+        background-size: contain;
         background-repeat: no-repeat;
     }
 
-    .create-resume-bottom {
+    .resume-bottom {
         @include width_height(width_height.$w100, width_height.$vh100);
-        margin-bottom: 700px;
+        background-color: color.$Boundles_Blue;
+        border-top-left-radius: 1em;
+        border-top-right-radius: 1em;
+        overflow-y: hidden;
 
         h1 {
             @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
@@ -66,13 +71,6 @@
             font-weight: bolder;
             letter-spacing: 0;
             padding: 0
-        }
-
-        small {
-            @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Red);
-            text-align: justify;
-            letter-spacing: 0;
-            font-weight: bold;
         }
     }
 }

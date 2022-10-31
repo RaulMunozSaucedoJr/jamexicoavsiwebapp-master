@@ -50,7 +50,7 @@
 
     }
     .tips-right {
-        @include width_height(width_height.$w100, width_height.$vh30);
+        @include width_height(width_height.$w100, width_height.$vh20);
         background-image: url('/src/frontend/assets/images/jpg/Tips.jpg');
         background-position: center;
         background-repeat: no-repeat;

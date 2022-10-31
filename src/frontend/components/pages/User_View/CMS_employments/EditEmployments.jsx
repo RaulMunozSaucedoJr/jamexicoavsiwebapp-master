@@ -3,17 +3,18 @@ import Swal from "sweetalert2";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
-const EditEmployments = ({ task, platform, description, id }) => {
+const EditEmployments = ({ task, platform, description, ubication, id }) => {
   const [tasks, setTasks] = useState([task]);
   const [platforms, setPlatforms] = useState([platform]);
   const [descriptions, setDescriptions] = useState([description]);
-
+  const[ubications, setUbications] = useState([ubication]);
   const updateTask = async (e) => {
     const regexLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]/;
-    const regexLinks =/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+    const regexLinks =
+      /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
     e.preventDefault();
     try {
-      if (!tasks || !platforms || !descriptions) {
+      if (!tasks || !platforms || !descriptions || !ubications) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -22,7 +23,10 @@ const EditEmployments = ({ task, platform, description, id }) => {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if (!tasks.match(regexLetter) || !descriptions.match(regexLetter)) {
+      } else if (
+        !tasks.match(regexLetter) ||
+        !descriptions.match(regexLetter)
+      ) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -45,6 +49,8 @@ const EditEmployments = ({ task, platform, description, id }) => {
         await updateDoc(taskDocument, {
           task: tasks,
           platform: platforms,
+          description: descriptions,
+          ubication: ubications
         });
         Swal.fire({
           title: "Éxito",
@@ -106,7 +112,7 @@ const EditEmployments = ({ task, platform, description, id }) => {
                     className="form-label label-inmersive-blue"
                     htmlFor="Title"
                   >
-                    Titulo
+                    Nombre:
                   </label>
                   <input
                     type="text"
@@ -122,7 +128,7 @@ const EditEmployments = ({ task, platform, description, id }) => {
                     className="form-label label-inmersive-blue"
                     htmlFor="Title"
                   >
-                    Titulo
+                    Descripcion
                   </label>
                   <textarea
                     type="text"
@@ -148,6 +154,52 @@ const EditEmployments = ({ task, platform, description, id }) => {
                     defaultValue={platforms}
                     onChange={(e) => setPlatforms(e.target.value)}
                   />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="ubication">Ubicación</label>
+                  <select
+                    name="ubication"
+                    id="ubication"
+                    className="form-select"
+                    defaultValue={ubications}
+                    onChange={(e) => setUbications(e.target.value)}
+                  >
+                    <option value="">Seleccione una ubicación</option>
+                    <option value="Aguascalientes">Aguascalientes</option>
+                    <option value="BajaCalifornia">Baja California</option>
+                    <option value="BajaCaliforniaSur">
+                      Baja California Sur
+                    </option>
+                    <option value="Campeche">Campeche</option>
+                    <option value="Chiapas">Chiapas</option>
+                    <option value="Chihuahua">Chihuahua</option>
+                    <option value="Coahuila">Coahuila</option>
+                    <option value="Colima">Colima</option>
+                    <option value="CDMX">Ciudad de Mexico</option>
+                    <option value="Durango">Durango</option>
+                    <option value="EstadoDeMexico">Estado de Mexico</option>
+                    <option value="Guanajuato">Guanajuato</option>
+                    <option value="Guerrero">Guerrero</option>
+                    <option value="Hidalgo">Hidalgo</option>
+                    <option value="Jalisco">Jalisco</option>
+                    <option value="Michoacan">Michoacan</option>
+                    <option value="Morelos">Morelos</option>
+                    <option value="Nayarit">Nayarit</option>
+                    <option value="NuevoLeon">Nuevo Leon</option>
+                    <option value="Oaxaca">Oaxaca</option>
+                    <option value="Puebla">Puebla</option>
+                    <option value="Queretaro">Queretaro</option>
+                    <option value="QuintanaRoo">Quintana Roo</option>
+                    <option value="SanLuisPotosi">San Luis Potosi</option>
+                    <option value="Sinaloa">Sinaloa</option>
+                    <option value="Sonora">Sonora</option>
+                    <option value="Tabasco">Tabasco</option>
+                    <option value="Tamaulipas">Tamaulipas</option>
+                    <option value="Tlaxcala">Tlaxcala</option>
+                    <option value="Veracruz">Veracruz</option>
+                    <option value="Yucatan">Yucatan</option>
+                    <option value="Zacatecas">Zacatecas</option>
+                  </select>
                 </div>
                 <div className="form-group pt-2">
                   <button

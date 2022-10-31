@@ -65,32 +65,47 @@ const Tips = () => {
                   className="form-control"
                 />
               </div>
-
+             
               <div className="col-12 pt-2 d-sm-block d-md-none">
-                {tasks
-                  .slice(pagesVisited, pagesVisited + usersPerPage)
-                  .map(({ task, category, content, id, timestamp }) => (
-                    <div className="col-12 pt-2" key={id}>
-                      <div className="card">
-                        <div className="card-body">
-                          <div className="card-header">
-                            <h1 className="text-center">{task}</h1>
+              {tasks.length === 0 ? (
+                  <div className="alert alert-warning text-center" role="alert">
+                    <h4>
+                      <strong>¡No hay tips registrados!.</strong>
+                    </h4>
+                    <p>
+                      <strong>
+                        Favor de comunicar este inconveniente al equipo de TI.
+                      </strong>
+                    </p>
+                  </div>
+                ) : (
+                  tasks
+                    .slice(pagesVisited, pagesVisited + usersPerPage)
+                    .map(({ task, category, content, id, timestamp }) => (
+                      <div className="col-12" key={id}>
+                        <div className="card">
+                          <div className="card-body">
+                            <div className="card-header">
+                              <h1 className="text-center">{task}</h1>
+                            </div>
+                            <h3>Categoría:</h3>
+                            <p>{category}</p>
+                            <h3>Contenido:</h3>
+                            <p>{content}</p>
                           </div>
-                          <p className="card-text">{category}</p>
-                          <p className="card-text">{content}</p>
-                        </div>
-                        <div className="card-footer">
-                          <small>
-                            Fecha de creación:
-                            <br />
-                            {new Date(
-                              timestamp.seconds * 1000
-                            ).toLocaleString()}
-                          </small>
+                          <div className="card-footer">
+                            <small>
+                              Fecha de creación/modificaciòn:
+                              <br />
+                              {new Date(
+                                timestamp.seconds * 1000
+                              ).toLocaleString()}
+                            </small>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                )}
               </div>
               <div className="col-12 pt-4">
                 <ReactPaginate

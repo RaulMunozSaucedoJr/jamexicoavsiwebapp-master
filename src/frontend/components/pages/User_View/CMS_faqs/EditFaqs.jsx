@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
@@ -7,9 +8,6 @@ const EditFaqs = ({ task, answer, id }) => {
   const [tasks, setTasks] = useState([task]);
   const [answers, setAnswers] = useState([answer]);
   const updateTask = async (e) => {
-    // eslint-disable-next-line
-    const regexQuestion = /^\¿.*?\?$/;
-    const regexAnswer = /^[a-zA-ZÀ-ÿ\0-9\u00f1\u00d1\s]/;
     e.preventDefault();
     try {
       if (!tasks || !answers) {
@@ -21,7 +19,7 @@ const EditFaqs = ({ task, answer, id }) => {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if (!tasks.match(regexQuestion)) {
+      } else if (!tasks.match(Regex.Question)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -30,7 +28,7 @@ const EditFaqs = ({ task, answer, id }) => {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if (!answers.match(regexAnswer)) {
+      } else if (!answers.match(Regex.Answer)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",

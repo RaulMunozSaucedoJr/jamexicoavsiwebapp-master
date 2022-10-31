@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config";
 
@@ -9,9 +10,6 @@ const EditCmsUsers = ({ email, password, rol, id }) => {
   const [rols, setRoles] = useState([rol]);
 
   const updateUser = async (e) => {
-    const regexEmail =
-      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
-    let regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
     e.preventDefault();
     try {
       if (!emails || !passwords || !rols) {
@@ -23,7 +21,7 @@ const EditCmsUsers = ({ email, password, rol, id }) => {
           showConfirmButton: false,
           timer: 5000,
         });
-      } else if (!email.match(regexEmail)) {
+      } else if (!email.match(Regex.Email)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -32,7 +30,7 @@ const EditCmsUsers = ({ email, password, rol, id }) => {
           showConfirmButton: false,
           timer: 3000,
         });
-      } else if (!password.match(regexPassword)) {
+      } else if (!password.match(Regex.Password)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -44,7 +42,7 @@ const EditCmsUsers = ({ email, password, rol, id }) => {
       } else {
         const taskDocument = doc(db, "users", id);
         await updateDoc(taskDocument, {
-          correo: emails,
+          correo: emails, 
           password: passwords,
           rol: rols,
         });

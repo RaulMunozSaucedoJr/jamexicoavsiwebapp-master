@@ -53,7 +53,7 @@
     }
 
     .faqs-right {
-        @include width_height(width_height.$w100, width_height.$vh30);
+        @include width_height(width_height.$w100, width_height.$vh20);
         background-image: url('/src/frontend/assets/images/jpg/Faqs.jpg');
         background-position: center;
         background-repeat: no-repeat;
@@ -62,6 +62,9 @@
 
     .faqs-bottom {
         @include width_height(width_height.$w100, width_height.$vh100);
+        background-color: color.$Inmersive_Blue_Black;
+        border-top-left-radius: 1em;
+        border-top-right-radius: 1em;
     }
 
 

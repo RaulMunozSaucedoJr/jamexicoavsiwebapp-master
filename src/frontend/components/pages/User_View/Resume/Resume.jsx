@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 import { Button, Input, TextArea } from "../../../Indexes/AtomsIndexes";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import * as Regex from "../../../../assets/javascript/regexs/regexs";
-import EditEmployments from "./EditEmployments";
+import EditResume from "./EditResume";
 import {
   collection,
   getDocs,
@@ -16,14 +16,14 @@ import {
   query,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "../../../../../backend/Firebase/Firebase-config.js";
+import { db } from "../../../../../backend/Firebase/Firebase-config";
 
-const CmsEmployments = () => {
+const Resume = () => {
   const [tasks, setTasks] = useState([]);
-  const [createTask, setCreateTask] = useState("");
-  const [createLink, setCreateLink] = useState("");
-  const [createDescription, setCreateDescription] = useState("");
-  const [createUbication, setCreateUbication] = useState("");
+  const [createName, setCreateName] = useState("");
+  const [createAddress, setCreateLink] = useState("");
+  const [createMobile, setCreateDescription] = useState("");
+  const [createEmail, setCreateUbication] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = 1;
   const pagesVisited = pageNumber * usersPerPage;
@@ -38,10 +38,10 @@ const CmsEmployments = () => {
     e.preventDefault();
     try {
       if (
-        !createTask ||
-        !createLink ||
-        !createDescription ||
-        !createUbication
+        !createName ||
+        !createAddress ||
+        !createMobile ||
+        !createEmail
       ) {
         Swal.fire({
           title: "¡Atención!",
@@ -52,8 +52,8 @@ const CmsEmployments = () => {
           timer: 1000,
         });
       } else if (
-        !createTask.match(Regex.Letters) ||
-        !createDescription.match(Regex.Letters)
+        !createName.match(Regex.Letters) ||
+        !createMobile.match(Regex.Letters)
       ) {
         Swal.fire({
           title: "¡Atención!",
@@ -63,7 +63,7 @@ const CmsEmployments = () => {
           showConfirmButton: false,
           timer: 2000,
         });
-      } else if (!createLink.match(Regex.Links)) {
+      } else if (!createAddress.match(Regex.Links)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -74,10 +74,10 @@ const CmsEmployments = () => {
         });
       } else {
         await addDoc(collectionRef, {
-          task: createTask,
-          platform: createLink,
-          description: createDescription,
-          ubication: createUbication,
+          task: createName,
+          platform: createAddress,
+          description: createMobile,
+          ubication: createEmail,
           timestamp: serverTimestamp(),
         });
         Swal.fire({
@@ -158,31 +158,28 @@ const CmsEmployments = () => {
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-sm-12 col-md-6 employments-left center">
-            <h1>Manejador de empleos</h1>
-            <Link to={Routing.Home}>
+          <div className="col-12 resume-left center">
+            <h1>Creador de C.V</h1>
+            <Link to="">
               <Button
-                id="button"
-                text="Volver al inicio"
-                className="btn btn-open"
                 type="button"
+                text="Regresar al inicio"
+                className="btn btn-open"
               />
             </Link>
           </div>
-
-          <div className="col-sm-12 col-md-6 employments-right"></div>
-
-          <div className="col-sm-12 col-md-12 employments-bottom">
+          <div className="col-12 resume-right"></div>
+          <div className="col-12 resume-bottom">
             <div className="row">
-              <div className="col-md-4 offset-md-4 pt-2">
+              <div className="col-12 pt-4">
                 <button
-                  className="btn btn-open"
-                  id="button"
                   type="button"
+                  text="Registrar informacion"
+                  className="btn btn-open"
                   data-bs-toggle="modal"
                   data-bs-target="#addModal"
                 >
-                  Agregar bolsa de empleo
+                  Registrar información
                 </button>
               </div>
 
@@ -190,11 +187,11 @@ const CmsEmployments = () => {
                 {tasks.length === 0 ? (
                   <div className="alert alert-warning text-center" role="alert">
                     <h4>
-                      <strong>¡No hay bolsas de empleo registradas!.</strong>
+                      <strong>¡No hay CV´s registrados!.</strong>
                     </h4>
                     <p>
                       <strong>
-                        Registre las bolsas de empleo que considere necesarias.
+                        Registre su C.V.
                       </strong>
                     </p>
                   </div>
@@ -229,36 +226,6 @@ const CmsEmployments = () => {
                               </a>
                               <h3>Ubicacion</h3>
                               <p>{ubication}</p>
-                              <div className="row">
-                                <div className="col-6">
-                                  <button
-                                    type="button"
-                                    className="btn btn-edit"
-                                  >
-                                    <EditEmployments
-                                      task={task}
-                                      platform={platform}
-                                      description={description}
-                                      ubication={ubication}
-                                      id={id}
-                                    />
-                                  </button>
-                                </div>
-                                <div className="col-6">
-                                  <button
-                                    type="button"
-                                    className="btn btn-delete"
-                                    onClick={() => deleteTask(id)}
-                                  >
-                                    <box-icon
-                                      name="message-square-x"
-                                      type="solid"
-                                      color="white"
-                                      size="md"
-                                    />
-                                  </button>
-                                </div>
-                              </div>
                             </div>
                             <div className="card-footer">
                               <small>
@@ -274,84 +241,6 @@ const CmsEmployments = () => {
                       )
                     )
                 )}
-              </div>
-
-              <div className="col-12 pt-2 d-none d-md-block">
-                <div className="table-responsive">
-                  <table className="table table-hover table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Titulo</th>
-                        <th>Plataforma</th>
-                        <th>Descripcion</th>
-                        <th>Fecha de Creacion</th>
-                        <th>Ubicación</th>
-                        <th>Accion 1</th>
-                        <th>Accion 2</th>
-                      </tr>
-                    </thead>
-                    <tbody className="table-group-divider">
-                      {tasks
-                        .slice(pagesVisited, pagesVisited + usersPerPage)
-                        .map(
-                          ({
-                            task,
-                            platform,
-                            description,
-                            ubication,
-                            id,
-                            timestamp,
-                          }) => (
-                            <tr key={id}>
-                              <td>{task}</td>
-                              <td className="center">
-                                <h4>
-                                  <a
-                                    rel="nofollow noopener noreferrer"
-                                    href={platform}
-                                  >
-                                    <span className="badge bg-success">
-                                      {platform}
-                                    </span>
-                                  </a>
-                                </h4>
-                              </td>
-                              <td>{description}</td>
-                              <td>{ubication}</td>
-                              <td>
-                                {new Date(
-                                  timestamp.seconds * 1000
-                                ).toLocaleString()}
-                              </td>
-                              <td>
-                                <EditEmployments
-                                  task={task}
-                                  platform={platform}
-                                  description={description}
-                                  ubication={ubication}
-                                  id={id}
-                                />
-                              </td>
-                              <td>
-                                <button
-                                  type="button"
-                                  className="btn btn-delete"
-                                  onClick={() => deleteTask(id)}
-                                >
-                                  <box-icon
-                                    name="message-square-x"
-                                    type="solid"
-                                    color="white"
-                                    size="sm"
-                                  />
-                                </button>
-                              </td>
-                            </tr>
-                          )
-                        )}
-                    </tbody>
-                  </table>
-                </div>
               </div>
 
               <div className="col-12 pt-4">
@@ -384,7 +273,7 @@ const CmsEmployments = () => {
         aria-labelledby="addModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-dialog modal-fullscreen">
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title" id="addModalLabel">
@@ -408,7 +297,7 @@ const CmsEmployments = () => {
                     name="title"
                     id="title"
                     placeholder="Titulo"
-                    onChange={(e) => setCreateTask(e.target.value)}
+                    onChange={(e) => setCreateName(e.target.value)}
                     required
                   />
                 </div>
@@ -490,14 +379,23 @@ const CmsEmployments = () => {
                     className="btn btn-submit"
                     text="Agregar bolsa de empleo"
                     disabled={
-                      !createTask ||
-                      !createDescription ||
-                      !createLink ||
-                      !createUbication
+                      !createName ||
+                      !createMobile ||
+                      !createAddress ||
+                      !createEmail
                     }
                   />
                 </div>
               </form>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cerrar
+              </button>
             </div>
           </div>
         </div>
@@ -506,4 +404,4 @@ const CmsEmployments = () => {
   );
 };
 
-export default CmsEmployments;
+export default Resume;

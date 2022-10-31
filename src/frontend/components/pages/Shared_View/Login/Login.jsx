@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { Button } from "../../../Indexes/AtomsIndexes";
-import app from "../../../../../backend/Firebase/Firebase-config.js";
-import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 import { UserAuth } from "../../../../context/AuthContext.js";
-const auth = getAuth(app);
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  // eslint-disable-next-line
   const [rol] = useState("");
   const { logIn } = UserAuth();
   const navigate = useNavigate();
-
   const [isLogin] = useState(false);
 
   const handleSubmit = async (e) => {
-    const regexEmail =
-      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
     e.preventDefault();
     setError("");
     try {
@@ -33,7 +27,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 2500,
         });
-      } else if (!email.match(regexEmail)) {
+      } else if (!email.match(Regex.Email)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -47,9 +41,9 @@ const Login = () => {
           await logIn(email, password, rol);
           Swal.fire({
             icon: "success",
-            // eslint-disable-next-line
-            title: "¡Bienvenido!\n" + `${email}\n`,
-            text: "Se le recuerda que tiene que completar su perfil",
+            title: `¡Bienvenido: ${email}`,
+            text: "Se le recuerda que tiene que completar su perfil.",
+            footer:"En caso de que ya lo haya completado, favor de ignorar este mensaje",
             showCancelButton: false,
             showConfirmButton: false,
             timer: 2500,
@@ -62,7 +56,7 @@ const Login = () => {
         Swal.fire({
           title: "Error",
           icon: "error",
-          text: "Ha ocurrido un error en el servidor. Favor de comunicarlo al personal de TI mediante correo electrónico.",
+          text: "Ha ocurrido un error en el servidor. \n Favor de comunicarlo al personal de TI mediante correo electrónico.",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 2500,
@@ -89,79 +83,56 @@ const Login = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          // eslint-disable-next-line
-          text:
-            "El correo:\n" +
-            `${email}\n` +
-            "\nse encuentra inactivo por el momento. Favor de contactar al servicio de ayuda para habilitar nuevamente su usuario",
+          text: `El correo: ${email} se encuentra inactivo por el momento. \n Favor de contactar al servicio de ayuda para habilitar nuevamente su usuario`,
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 5000,
+          timer: 2500,
         });
       } else if (err.code === "auth/user-not-found") {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
           // eslint-disable-next-line
-          text:
-            "El correo:\n" +
-            `${email}` +
-            "electrónico NO se encuentra registrado. Favor de dirigirse a la secciòn de registro.",
+          text: `El correo: ${email} electrónico NO se encuentra registrado. Favor de dirigirse a la secciòn de registro.`,
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 5000,
+          timer: 2500,
         });
       } else if (err.code === "auth/wrong-password") {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          text: "Correo electrónico y/o contraseña incorrecto(s). Favor de verificar",
+          text: "Correo electrónico y/o contraseña incorrecto(s). Favor de verificar sus credenciales.",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 5000,
+          timer: 2500,
         });
       }
       setError(err.message);
     }
   };
 
-  const { googleSignIn, user } = UserAuth();
+  const { googleSignIn, facebookSignIn, user } = UserAuth();
 
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
-    } catch (error) {
-      console.clear();
-      console.log(error);
-      console.clear();
-    }
+    } finally {}
   };
+
+  const handleFacebookSignIn = async () =>{
+    try {
+      await facebookSignIn();
+    } finally {}
+  }
 
   useEffect(() => {
     if (user != null) {
-      navigate("/Login");
+      navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  const signInWithFacebook = () => {
-    const provider = new FacebookAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(
-        (re) => {
-          if (user != null) {
-            navigate("/Login");
-          }
-          console.clear();
-          console.log(re);
-          console.clear();
-        },
-        [user]
-      )
-      .catch((err) => {
-        console.log(err.message);
-      });
-  };
 
   const togglePassword = () => {
     const x = document.getElementById("password");
@@ -268,7 +239,7 @@ const Login = () => {
                   text="Facebook"
                   className="btn btn-facebook mt-2"
                   type="button"
-                  onClick={signInWithFacebook}
+                  onClick={handleFacebookSignIn }
                 />
               </div>
             </div>

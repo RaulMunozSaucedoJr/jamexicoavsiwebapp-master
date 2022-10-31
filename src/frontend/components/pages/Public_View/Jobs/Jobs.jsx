@@ -8,16 +8,18 @@ import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
 const Jobs = () => {
   const [tasks, setTasks] = useState([]);
+
   const [pageNumber, setPageNumber] = useState(0);
-  const usersPerPage = 2;
+  const usersPerPage = 1;
   const pagesVisited = pageNumber * usersPerPage;
 
   const pageCount = Math.ceil(tasks.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-  const collectionRef = collection(db, "platforms");
+
   useEffect(() => {
+    const collectionRef = collection(db, "platforms");
     const getTasks = async () => {
       const q = query(collectionRef, orderBy("timestamp"));
       await getDocs(q)
@@ -54,10 +56,7 @@ const Jobs = () => {
           <div className="col-sm-12 col-md-6 jobs-right"></div>
           <div className="col-sm-12 col-md-12 jobs-bottom">
             <div className="form-group pt-2 mb-2 text-center">
-              <label
-                htmlFor="search"
-                className="form-label label-inmersive-blue"
-              >
+              <label htmlFor="search" className="form-label label-white">
                 Filtrar bolsas de empleo...
               </label>
               <input
@@ -70,32 +69,67 @@ const Jobs = () => {
             </div>
             <div className="row">
               <div className="col-12 pt-2 d-sm-block d-md-none">
-                {tasks
-                  .slice(pagesVisited, pagesVisited + usersPerPage)
-                  .map(({ task, platform, description, id, timestamp }) => (
-                    <div className="col-12 pt-2" key={id}>
-                      <div className="card">
-                        <div className="card-body">
-                          <div className="card-header">
-                            <h1 className="text-center">{task}</h1>
+                {tasks.length === 0 ? (
+                  <div className="alert alert-warning text-center" role="alert">
+                    <h4>
+                      <strong>
+                        ¡No hay bolsas de empleo registradas!.
+                      </strong>
+                    </h4>
+                    <p>
+                      <strong>
+                        Favor de comunicar este inconveniente al equipo de TI.
+                      </strong>
+                    </p>
+                  </div>
+                ) : (
+                  tasks
+                    .slice(pagesVisited, pagesVisited + usersPerPage)
+                    .map(
+                      ({
+                        task,
+                        platform,
+                        description,
+                        ubication,
+                        id,
+                        timestamp,
+                      }) => (
+                        <div className="col-12" key={id}>
+                          <div className="card">
+                            <div className="card-body">
+                              <div className="card-header">
+                                <h1 className="text-center">{task}</h1>
+                              </div>
+                              <h3>Descripción:</h3>
+                              <p>{description}</p>
+                              <h3>Link:</h3>
+                              <a
+                                rel="nofollow noopener noreferrer"
+                                href={platform}
+                              >
+                                <span className="badge badge-link">
+                                  {platform}
+                                </span>
+                              </a>
+                              <h3>Ubicacion</h3>
+                              <p>{ubication}</p>
+                            </div>
+                            <div className="card-footer">
+                              <small>
+                                Fecha de creación/modificaciòn:
+                                <br />
+                                {new Date(
+                                  timestamp.seconds * 1000
+                                ).toLocaleString()}
+                              </small>
+                            </div>
                           </div>
-                          <p className="card-text">{platform}</p>
-                          <p className="card-text">{description}</p>
                         </div>
-                        <div className="card-footer">
-                          <small>
-                            Fecha de creación:
-                            <br />
-                            {new Date(
-                              timestamp.seconds * 1000
-                            ).toLocaleString()}
-                          </small>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                      )
+                    )
+                )}
               </div>
-              <div className="col-12 pt-4">
+              <div className="col-12 pt-4 center">
                 <ReactPaginate
                   breakLabel="..."
                   previousLabel={

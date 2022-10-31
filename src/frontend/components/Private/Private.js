@@ -16,7 +16,7 @@ const Protected = ({ children }) => {
       text: "Para hacer uso de las distintas herramientas necesita registrarse y/o ingresar con sus credenciales.",
       showCancelButton: false,
       showConfirmButton: false,
-      timer: 4000,
+      timer: 3000,
     });
     return <Navigate to="/Login" />;
   }

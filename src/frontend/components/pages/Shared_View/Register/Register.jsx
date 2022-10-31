@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Button } from "../../../Indexes/AtomsIndexes";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { UserAuth } from "../../../../context/AuthContext.js";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import app from "../../../../../backend/Firebase/Firebase-config";
@@ -19,9 +20,6 @@ const Register = () => {
   const firestore = getFirestore(app);
 
   const handleSubmitRegister = async (e) => {
-    const regexEmail =
-      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
-    let regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
     e.preventDefault();
     setError("");
     try {
@@ -34,7 +32,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 5000,
         });
-      } else if (!email.match(regexEmail)) {
+      } else if (!email.match(Regex.Email)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -44,16 +42,16 @@ const Register = () => {
           timer: 3000,
         });
       } else if (
-        !password.match(regexPassword) ||
-        !repeatpassword.match(regexPassword)
+        !password.match(Regex.Password) ||
+        !repeatpassword.match(Regex.Password)
       ) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          text: "La contraseña deberá de tener: Mayúsculas, minúsculas, números y carácteres especiales con una longitud minima de 8. Favor de verificarlos",
+          text: "La contraseña deberá de tener: \n Mayúsculas, minúsculas, números y carácteres especiales con una longitud minima de 8. Favor de verificarlos",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 7000,
+          timer: 3000,
         });
       } else if (password !== repeatpassword) {
         Swal.fire({
@@ -62,23 +60,24 @@ const Register = () => {
           text: "Ambas contraseñas deben de coincidir. Favor de verificarlo",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 7000,
+          timer: 3000,
         });
       } else {
         const infoUsuario = await signUp(email, password, repeatpassword, rol);
         const docuRef = doc(firestore, `users/${infoUsuario.user.uid}`);
-        setDoc(docuRef, { correo: email, password: password, repeatpassword:repeatpassword,  rol: rol });
+        setDoc(docuRef, {
+          correo: email,
+          password: password,
+          repeatpassword: repeatpassword,
+          rol: rol,
+        });
         Swal.fire({
           title: "Éxito",
           icon: "success",
-          // eslint-disable-next-line
-          text:
-            "Bienvenido:\n" +
-            `${email}\n` +
-            "Se le recuerda que tiene que completar su perfil de usuario.",
+          text: `Bienvenido: ${email}. Se le recuerda que tiene que completar su perfil de usuario en el menu Crear.`,
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 4000,
+          timer: 3000,
         });
         navigate("/HomeAdmins");
       }
@@ -87,24 +86,19 @@ const Register = () => {
         Swal.fire({
           title: "Error",
           icon: "error",
-          // eslint-disable-next-line
-          text:
-            "El correo" +
-            `${email}\n` +
-            "ya se encuentra en uso.\n" +
-            "Registrese ó reestablezca su contraseña.",
+          text: `El correo ${email} ya se encuentra en uso. \n Registrese ó reestablezca su contraseña.`,
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 5000,
+          timer: 3000,
         });
       } else if (err.code === "auth/invalid-email") {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          text: "El formato del correo electrónico es incorrecto. Favor de verificarlo",
+          text: "El formato del correo electrónico es incorrecto. \n Favor de verificarlo",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 5000,
+          timer: 3000,
         });
       } else if (err.code === "auth/weak-password") {
         Swal.fire({
@@ -113,7 +107,7 @@ const Register = () => {
           text: "El formato de la contraseña deberá de tener: Mayúsculas, minúsculas, números y carácteres especiales con una longitud de 6. Favor de verificarlo",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 5000,
+          timer: 3000,
         });
       }
       setError(err.message);
@@ -134,11 +128,11 @@ const Register = () => {
         <div className="row">
           <div className="col-sm-12 col-md-6 register-left center">
             <h1>Registro</h1>
-            <Link to={Routing.Login}>
+            <Link to={Routing.Home}>
               <Button
                 type="button"
-                text="Regresar al login"
-                className="btn btn-submit"
+                text="Regresar al inicio"
+                className="btn btn-open"
               />
             </Link>
           </div>
@@ -211,7 +205,7 @@ const Register = () => {
                   id="rol"
                   onChange={(e) => setRol(e.target.value)}
                 >
-                  <option value="">Seleccione su rol</option>
+                  <option value="">Seleccione su usuario</option>
                   <option value="user">Usuario</option>
                 </select>
               </div>
@@ -231,7 +225,7 @@ const Register = () => {
                 text="Registrarse"
                 className="btn btn-submit mt-4"
                 type="submit"
-                disabled={!email || !password}
+                disabled={!email || !password || !repeatpassword || !rol}
               />
             </form>
             <div className="form-group pt-3">

@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import { Button, Input } from "../../../Indexes/AtomsIndexes";
 import EditTips from "./EditTips";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import {
   collection,
   getDocs,
@@ -33,7 +34,6 @@ const CmsTips = () => {
   const collectionRef = collection(db, "tips");
 
   const submitTask = async (e) => {
-    const regexLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]/;
     e.preventDefault();
     try {
       if (!createTask || !createCategory || !createContent) {
@@ -46,9 +46,9 @@ const CmsTips = () => {
           timer: 1000,
         });
       } else if (
-        !createTask.match(regexLetter) ||
-        !createCategory.match(regexLetter) ||
-        !createContent.match(regexLetter)
+        !createTask.match(Regex.Letters) ||
+        !createCategory.match(Regex.Letters) ||
+        !createContent.match(Regex.Letters)
       ) {
         Swal.fire({
           title: "¡Atención!",
@@ -56,7 +56,7 @@ const CmsTips = () => {
           text: "Ninguno de estos campos acepta carácteres especiales y/o números.",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 7000,
+          timer: 2500,
         });
       } else {
         await addDoc(collectionRef, {
@@ -81,11 +81,7 @@ const CmsTips = () => {
       Swal.fire({
         title: "¡Atención!",
         icon: "error",
-        // eslint-disable-next-line
-        text:
-          "El tip no se ha podido registrar\n" +
-          "Favor de enviar el error:" +
-          `${err} al equipo de soporte`,
+        text: `El tip no se ha podido registrar \n Favor de enviar el error: ${err} al equipo de soporte`,
         showCancelButton: false,
         showConfirmButton: false,
         timer: 1500,
@@ -114,10 +110,7 @@ const CmsTips = () => {
       Swal.fire({
         title: "¡Atención!",
         icon: "warning",
-        // eslint-disable-next-line
-        text:
-          "El post no se ha podido eliminar.\n" +
-          `Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
+        text: `El post no se ha podido eliminar.\n Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
         showCancelButton: false,
         showConfirmButton: false,
         timer: 1500,
@@ -176,54 +169,70 @@ const CmsTips = () => {
                 </button>
               </div>
               <div className="col-12 pt-2 d-sm-block d-md-none">
-                {tasks
-                  .slice(pagesVisited, pagesVisited + usersPerPage)
-                  .map(({ task, category, content, id, timestamp }) => (
-                    <div className="col-12 pt-2" key={id}>
-                      <div className="card">
-                        <div className="card-body">
-                          <div className="card-header">
-                            <h1 className="text-center">{task}</h1>
-                          </div>
-                          <p className="card-text">{category}</p>
-                          <p className="card-text">{content}</p>
-                          <div className="row">
-                            <div className="col-6">
-                              <button
-                                type="button"
-                                className="btn btn-delete"
-                                onClick={() => deleteTask(id)}
-                              >
-                                <box-icon
-                                  name="message-square-x"
-                                  type="solid"
-                                  color="white"
-                                  size="sm"
+                {tasks.length === 0 ? (
+                  <div className="alert alert-warning text-center" role="alert">
+                    <h4>
+                      <strong>¡No hay tips registrados!.</strong>
+                    </h4>
+                    <p>
+                      <strong>
+                        Favor de registrar los tips para tu primer empleo que
+                        considere necesarios
+                      </strong>
+                    </p>
+                  </div>
+                ) : (
+                  tasks
+                    .slice(pagesVisited, pagesVisited + usersPerPage)
+                    .map(({ task, category, content, id, timestamp }) => (
+                      <div className="col-12" key={id}>
+                        <div className="card">
+                          <div className="card-body">
+                            <div className="card-header">
+                              <h1 className="text-center">{task}</h1>
+                            </div>
+                            <h3>Categoría:</h3>
+                            <p>{category}</p>
+                            <h3>Contenido:</h3>
+                            <p>{content}</p>
+                            <div className="row">
+                              <div className="col-6">
+                                <button
+                                  type="button"
+                                  className="btn btn-delete"
+                                  onClick={() => deleteTask(id)}
+                                >
+                                  <box-icon
+                                    name="message-square-x"
+                                    type="solid"
+                                    color="white"
+                                    size="sm"
+                                  />
+                                </button>
+                              </div>
+                              <div className="col-6">
+                                <EditTips
+                                  task={task}
+                                  category={category}
+                                  content={content}
+                                  id={id}
                                 />
-                              </button>
-                            </div>
-                            <div className="col-6">
-                              <EditTips
-                                task={task}
-                                category={category}
-                                content={content}
-                                id={id}
-                              />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="card-footer">
-                          <small>
-                            Fecha de creación:
-                            <br />
-                            {new Date(
-                              timestamp.seconds * 1000
-                            ).toLocaleString()}
-                          </small>
+                          <div className="card-footer">
+                            <small>
+                              Fecha de creación/modificaciòn:
+                              <br />
+                              {new Date(
+                                timestamp.seconds * 1000
+                              ).toLocaleString()}
+                            </small>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                )}
               </div>
 
               <div className="col-12 pt-2 d-none d-md-block">
@@ -284,8 +293,12 @@ const CmsTips = () => {
               <div className="col-12 pt-4">
                 <ReactPaginate
                   breakLabel="..."
-                  previousLabel={"<-"}
-                  nextLabel={"->"}
+                  previousLabel={
+                    <box-icon name="skip-previous" color="white" size="sm" />
+                  }
+                  nextLabel={
+                    <box-icon name="skip-next" color="white" size="sm" />
+                  }
                   pageCount={pageCount}
                   onPageChange={changePage}
                   containerClassName={"paginationBttns"}

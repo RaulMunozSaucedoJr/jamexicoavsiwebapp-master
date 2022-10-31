@@ -3,20 +3,19 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Button, Input } from "../../../Indexes/AtomsIndexes.jsx";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { useForm } from "../../../../assets/javascript/hooks/useForm.js";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const initialForm = {
   email: "",
 };
-let regexEmail =
-  /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])$/;
 
 const validationsForm = (form) => {
   let errors = {};
   if (!form.email.trim()) {
     errors.email = "¡Este campo es OBLIGATORIO!";
-  } else if (!regexEmail.test(form.email.trim())) {
+  } else if (!Regex.Email.test(form.email.trim())) {
     errors.email =
       "¡Favor de ingresar un formato de correo electronico valido!";
   }
@@ -30,25 +29,26 @@ const RecoverPassword = () => {
   );
 
   const auth = getAuth();
+  
   const triggerResetEmail = async () => {
     try {
       if (!form.email) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          text: "Este campo NO debe de estar vacio\n. Favor de verificarlo",
+          text: "Este campo NO debe de estar vacio. \n Favor de verificarlo",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 5000,
+          timer: 300,
         });
-      } else if (!form.email.match(regexEmail)) {
+      } else if (!form.email.match(Regex.Email)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
           text: "El formato del correo electrónico es incorrecto. Favor de verificarlo.",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 7000,
+          timer: 3000,
         });
       } else {
         console.log(form.email);
@@ -56,13 +56,11 @@ const RecoverPassword = () => {
         Swal.fire({
           title: "¡Éxito!",
           icon: "success",
-          // eslint-disable-next-line
-          text: "Se ha enviado el link para recuperación de contraseña al siguiente correo:\n"+`${form.email}`,
+          text: `Se ha enviado el link para recuperación de contraseña al siguiente correo: ${form.email}`,
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,
         });
-        console.log("Password reset email sent");
         console.clear();
       }
     } catch (err) {
@@ -70,8 +68,7 @@ const RecoverPassword = () => {
         Swal.fire({
           title: "¡Atención!",
           icon: "warning",
-          // eslint-disable-next-line
-          text: "El correo:\n"+`${form.email}\n`+"NO se encuentra registrado, por lo que no se podrá reestablecer la contraseña.\n Favor de registrarse para poder ingresar a la plataforma",
+          text: `El correo: ${form.email}\n NO se encuentra registrado, por lo que no se podrá reestablecer la contraseña.\n Favor de registrarse para poder ingresar a la plataforma`,
           showCancelButton: false,
           showConfirmButton: false,
           timer: 5000,

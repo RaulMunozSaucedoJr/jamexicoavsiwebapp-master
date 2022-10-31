@@ -16,22 +16,13 @@
 
     img {
         width: 100%;
-        height: auto;
+        height: 150px;
         object-fit: contain;
-        border-radius: .5em;
-    }
-
-    &-header {
-        h4 {
-            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
-            text-align: left;
-            font-weight: bold;
-        }
     }
 
     &-body {
-        @include width_height(width_height.$w100, width_height.$h100);
-        border-radius: 0;
+        @include width_height(width_height.$w100, width_height.$hauto);
+        border-radius: .5em;
         border-left-color: color.$Inmersive_Blue_Black;
 
         a {
@@ -42,7 +33,12 @@
             text-decoration: underline;
         }
 
-        p,
+        p {
+            @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);
+            text-align: left;
+            font-weight: bold;
+        }
+
         small {
             @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);
             text-align: left;
@@ -53,15 +49,19 @@
     @media only screen and (max-width: 600px) {
         .card {
             @include width_height(width_height.$w100, width_height.$hauto);
+            border-radius: .5em;
 
-            &-header {
-                @include width_height(width_height.$w100, width_height.$hauto);
-                background-color: color.$White;
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                border-radius: .5em;
             }
 
             &-body {
-                @include width_height(width_height.$w100, width_height.$h100);
+                @include width_height(width_height.$w100, width_height.$hauto);
                 background-color: color.$White;
+                border-radius: .5em;
 
                 h1 {
                     @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
@@ -79,6 +79,7 @@
             &-footer {
                 @include width_height(width_height.$w100, width_height.$hauto);
                 background-color: color.$White;
+                border-radius: .5em;
 
                 small {
                     @include text(font.$Montserrat, font_size.$Extra_Small, color.$Inmersive_Blue_Black);

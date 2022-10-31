@@ -2,107 +2,169 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Button } from "../../../Indexes/AtomsIndexes";
-import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { db } from "../../../../../backend/Firebase/Firebase-config.js";
+import AddPost from "./AddPosts";
+import DeleteArticle from "./DeletePost";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../../../../../backend/Firebase/Firebase-config";
 
 const Posts = () => {
-  const [tasks, setTasks] = useState([]);
+  const [user] = useAuthState(auth);
+  const [articles, setArticles] = useState([]);
+
   const [pageNumber, setPageNumber] = useState(0);
-  const usersPerPage = 2;
+  const usersPerPage = 1;
   const pagesVisited = pageNumber * usersPerPage;
 
-  const pageCount = Math.ceil(tasks.length / usersPerPage);
+  const pageCount = Math.ceil(articles.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-  const collectionRef = collection(db, "tasks");
   useEffect(() => {
-    const getTasks = async () => {
-      const q = query(collectionRef, orderBy("timestamp"));
-      await getDocs(q)
-        .then((tasks) => {
-          let tasksData = tasks.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
-          setTasks(tasksData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const articleRef = collection(db, "tasks");
+    const q = query(articleRef, orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      const articles = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setArticles(articles);
+      console.log(articles);
+    });
   }, []);
-
-  const [filter, setFilter] = useState("");
-  const searchText = (event) => {
-    setFilter(event.target.value);
-  };
-
   return (
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-sm-12 col-md-6 posts-left center">
-            <h1>BLOG</h1>
-            <Link to={Routing.Home}>
+          <div className="col-12 posts-left center">
+            <h1>Blog</h1>
+            <Link to="/">
               <Button
-                id="button"
-                text="Volver al inicio"
-                className="btn btn-open"
                 type="button"
+                text="Regresar al inicio"
+                className="btn btn-open"
               />
             </Link>
           </div>
-          <div className="col-sm-12 col-md-6 posts-right"></div>
-          <div className="col-sm-12 col-md-12 posts-bottom">
-            <div className="form-group pt-2 mb-2 text-center">
-              <label
-                htmlFor="search"
-                className="form-label label-white"
-              >
-                Filtrar posts...
-              </label>
-              <input
-                type="text"
-                name="search"
-                value={filter}
-                id="search"
-                placeholder="Filtre aquí..."
-                className="form-control"
-                onChange={searchText.bind(this)}
-              />
-            </div>
+          <div className="col-12 posts-right"></div>
+          <div className="col-12 posts-bottom">
             <div className="row">
-              <div className="col-12 pt-2 d-sm-block d-md-none">
-                {tasks
-                  .slice(pagesVisited, pagesVisited + usersPerPage)
-                  .map(({ task, category, content, id, timestamp }) => (
-                    <div className="col-12 pt-2" key={id}>
-                      <div className="card">
-                        <div className="card-body">
-                          <div className="card-header">
-                            <h1 className="text-center">{task}</h1>
-                          </div>
-                          <p className="card-text">{category}</p>
-                          <p className="card-text">{content}</p>
-                        </div>
-                        <div className="card-footer">
-                          <small>
-                            Fecha de creación:
-                            <br />
-                            {new Date(
-                              timestamp.seconds * 1000
-                            ).toLocaleString()}
-                          </small>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+              <div className="col-md-4 offset-md-4 col pt-2">
+                <button
+                  className="btn btn-open"
+                  id="button"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addModal"
+                >
+                  Agregar post
+                </button>
               </div>
-              <div className="col-12 pt-4">
+              <div className="col-12 pt-2">
+                {articles.length === 0 ? (
+                  <div className="alert alert-warning text-center" role="alert">
+                    <h4>
+                      <strong>¡No hay posts registrados!.</strong>
+                    </h4>
+                    <p>
+                      <strong>
+                        En caso de NO poder registrar un post, favor de
+                        comunicarlo al equipo de TI.
+                      </strong>
+                    </p>
+                  </div>
+                ) : (
+                  articles
+                    .slice(pagesVisited, pagesVisited + usersPerPage)
+                    .map(
+                      ({
+                        id,
+                        title,
+                        description,
+                        imageUrl,
+                        category,
+                        createdAt,
+                        createdBy,
+                        userId,
+                        comments,
+                      }) => (
+                        <div className="card">
+                          <div className="card-body">
+                            <div className="card-header center">
+                              <Link to={`/Post/${id}`}>
+                                <img
+                                  src={imageUrl}
+                                  alt="title"
+                                  className="img-thumbnail"
+                                />
+                              </Link>
+                            </div>
+                            <div className="card-body">
+                              <div className="accordion" id="accordionExample">
+                                <div className="accordion-item">
+                                  <h1
+                                    className="accordion-header"
+                                    id="headingOne"
+                                  >
+                                    <button
+                                      className="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#collapseOne"
+                                      aria-expanded="true"
+                                      aria-controls="collapseOne"
+                                    >
+                                      <h5>{title}</h5>
+                                    </button>
+                                  </h1>
+                                  <div
+                                    id="collapseOne"
+                                    className="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne"
+                                    data-bs-parent="#accordionExample"
+                                  >
+                                    <div className="accordion-body">
+                                      <h5>Categoría</h5>
+                                      <p className="card-text">{category}</p>
+                                      <h5>Descripción:</h5>
+                                      <p className="card-text">{description}</p>
+                                      <h5>Creador por:</h5>
+                                      <p className="card-text">{createdBy}</p>
+                                      <h5>Total comentarios:</h5>
+                                      <p className="card-text">
+                                        {comments && comments.length > 0 && (
+                                          <div className="pe-2">
+                                            <p>
+                                              {comments?.length} Comentario(s)
+                                            </p>
+                                          </div>
+                                        )}
+                                      </p>
+                                      {user && user.uid === userId && (
+                                        <DeleteArticle
+                                          id={id}
+                                          imageUrl={imageUrl}
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="card-footer">
+                              <p>
+                                Fecha de creacion:
+                                <br />
+                                {createdAt.toDate().toDateString()}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    )
+                )}
+              </div>
+              <div className="col-12 pt-3">
                 <ReactPaginate
                   breakLabel="..."
                   previousLabel={
@@ -120,6 +182,33 @@ const Posts = () => {
                   activeClassName={"paginationActive"}
                 />
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="addModal"
+        tabIndex="-1"
+        aria-labelledby="addModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title" id="addModalLabel">
+                Añadir post
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+            </div>
+            <div className="modal-body">
+              <AddPost />
             </div>
           </div>
         </div>

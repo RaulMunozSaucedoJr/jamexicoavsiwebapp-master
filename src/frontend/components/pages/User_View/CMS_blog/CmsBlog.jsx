@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import { Button, Input } from "../../../Indexes/AtomsIndexes";
 import EditBlog from "./EditBlog";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
+import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import {
   collection,
   getDocs,
@@ -18,25 +19,37 @@ import {
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
 const CmsBlog = () => {
+  /* The above code is using the useState hook to create a stateful component. */
   const [tasks, setTasks] = useState([]);
   const [createTask, setCreateTask] = useState("");
   const [createCategory, setCategory] = useState("");
   const [createContent, setContent] = useState("");
 
+  /* The above code is using the useState hook to set the pageNumber to 0. Then it is setting the
+  usersPerPage to 2. Then it is setting the pagesVisited to the pageNumber * usersPerPage. Then it
+  is setting the pageCount to the Math.ceil of the tasks.length / usersPerPage. Then it is setting
+  the changePage to the selected. */
   const [pageNumber, setPageNumber] = useState(0);
-  const usersPerPage = 2;
+  const usersPerPage = 1;
   const pagesVisited = pageNumber * usersPerPage;
-
   const pageCount = Math.ceil(tasks.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
 
+  /* Creating a reference to the collection "tasks" in the database "db". */
   const collectionRef = collection(db, "tasks");
 
-  //Add Task Handler
+  /**
+   * It's a function that creates a new document in the database
+   */
   const submitTask = async (e) => {
-    const regexLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]/;
+    /* The above code is a function that is called when the user clicks the submit button. The function
+   is called "handleSubmit". The function is using the "e.preventDefault()" to prevent the page from
+   reloading. The function is using the "try" and "catch" to catch any errors that may occur. The
+   function is using the "if" and "else if" statements to check if the user has entered any data
+   into the input fields. If the user has not entered any data into the input fields, the user will
+   receive a message that says "Ningún */
     e.preventDefault();
     try {
       if (!createTask || !createCategory || !createContent) {
@@ -46,12 +59,12 @@ const CmsBlog = () => {
           text: "Ningún campo debe estar vacio",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 1000,
+          timer: 2500,
         });
       } else if (
-        !createTask.match(regexLetter) ||
-        !createCategory.match(regexLetter) ||
-        !createContent.match(regexLetter)
+        !createTask.match(Regex.Letters) ||
+        !createCategory.match(Regex.Letters) ||
+        !createContent.match(Regex.Letters)
       ) {
         Swal.fire({
           title: "¡Atención!",
@@ -59,7 +72,7 @@ const CmsBlog = () => {
           text: "Ninguno de estos campos acepta carácteres especiales y/o números.",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 7000,
+          timer: 2500,
         });
       } else {
         await addDoc(collectionRef, {
@@ -74,7 +87,7 @@ const CmsBlog = () => {
           text: "El post se registró exitosamente",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2500,
         });
         setTimeout(() => {
           window.location.reload();
@@ -84,20 +97,18 @@ const CmsBlog = () => {
       Swal.fire({
         title: "¡Atención!",
         icon: "error",
-        // eslint-disable-next-line
-        text:
-          "El post no se ha podido registrar\n" +
-          "Favor de enviar el error:" +
-          `${err} al equipo de soporte`,
+        text: `El post no se ha podido registrar. \n Favor de enviar el error: ${err} al equipo de soporte.`,
         showCancelButton: false,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2500,
       });
       console.log(err);
     }
   };
 
-  //Delete Handler
+  /**
+   * It deletes a task from the database
+   */
   const deleteTask = async (id) => {
     try {
       const documentRef = doc(db, "tasks", id);
@@ -108,7 +119,7 @@ const CmsBlog = () => {
         text: "El post se eliminó exitosamente",
         showCancelButton: false,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1000,
       });
       setTimeout(() => {
         window.location.reload();
@@ -117,19 +128,16 @@ const CmsBlog = () => {
       Swal.fire({
         title: "¡Atención!",
         icon: "warning",
-        // eslint-disable-next-line
-        text:
-          "El post no se ha podido eliminar.\n" +
-          `Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
+        text: `El post no se ha podido eliminar.\n Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
         showCancelButton: false,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1000,
       });
       console.log(err);
     }
   };
 
-  //Query the collection
+  /* The above code is using the useEffect hook to fetch the tasks from the database. */
   useEffect(() => {
     const getTasks = async () => {
       const q = query(collectionRef, orderBy("timestamp"));
@@ -181,18 +189,43 @@ const CmsBlog = () => {
               </div>
 
               <div className="col-12 pt-2 d-sm-block d-md-none">
-                {tasks
-                  .slice(pagesVisited, pagesVisited + usersPerPage)
-                  .map(({ task, category, content, id, timestamp }) => (
-                    <div className="col-12 pt-2" key={id}>
-                      <div className="card">
-                        <div className="card-body">
-                          <div className="card-header">
-                            <h1 className="text-center">{task}</h1>
+                {tasks.length === 0 ? (
+                  <div className="alert alert-warning text-center" role="alert">
+                    <h4>
+                      <strong>¡No hay posts registrados!.</strong>
+                    </h4>
+                    <p>
+                      <strong>
+                        Favor de registrar los posts que considere necesarios.
+                      </strong>
+                    </p>
+                  </div>
+                ) : (
+                  tasks
+                    .slice(pagesVisited, pagesVisited + usersPerPage)
+                    .map(({ task, category, content, id, timestamp }) => (
+                      <div className="col-12" key={id}>
+                        <div className="card">
+                          <div className="card-body">
+                            <div className="card-header">
+                              <Link to={`/CmsPosts/${id}`}>
+                                <h1 className="text-center">{task}</h1>
+                              </Link>
+                            </div>
+                            <h3>Categoría:</h3>
+                            <p>{category}</p>
+                            <h3>Contenido:</h3>
+                            <p>{content}</p>
                           </div>
-                          <p className="card-text">{category}</p>
-                          <p className="card-text">{content}</p>
                           <div className="row">
+                            <div className="col-6">
+                              <EditBlog
+                                task={task}
+                                category={category}
+                                content={content}
+                                id={id}
+                              />
+                            </div>
                             <div className="col-6">
                               <button
                                 type="button"
@@ -207,28 +240,20 @@ const CmsBlog = () => {
                                 />
                               </button>
                             </div>
-                            <div className="col-6">
-                              <EditBlog
-                                task={task}
-                                category={category}
-                                content={content}
-                                id={id}
-                              />
-                            </div>
+                          </div>
+                          <div className="card-footer">
+                            <small>
+                              Fecha de creación/modificaciòn:
+                              <br />
+                              {new Date(
+                                timestamp.seconds * 1000
+                              ).toLocaleString()}
+                            </small>
                           </div>
                         </div>
-                        <div className="card-footer">
-                          <small>
-                            Fecha de creación:
-                            <br />
-                            {new Date(
-                              timestamp.seconds * 1000
-                            ).toLocaleString()}
-                          </small>
-                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                )}
               </div>
 
               <div className="col-12 pt-2 d-none d-md-block">
@@ -289,8 +314,12 @@ const CmsBlog = () => {
               <div className="col-12 pt-4">
                 <ReactPaginate
                   breakLabel="..."
-                  previousLabel={"<-"}
-                  nextLabel={"->"}
+                  previousLabel={
+                    <box-icon name="skip-previous" color="white" size="sm" />
+                  }
+                  nextLabel={
+                    <box-icon name="skip-next" color="white" size="sm" />
+                  }
                   pageCount={pageCount}
                   onPageChange={changePage}
                   containerClassName={"paginationBttns"}
