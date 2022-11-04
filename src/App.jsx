@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./frontend/assets/Scss/Styles.css";
 import {
   BottomNavbar,
@@ -21,7 +22,9 @@ import {
   Faqs,
   PantallaChat,
   Interview,
+  //Current user only pages
   Resume,
+  Profile,
   //Admin pages
   CmsBlog,
   CmsFaqs,
@@ -83,7 +86,16 @@ const App = () => {
           {/*LOGIN, REGISTER, RECOVER PAGES*/}
           <Route exact path={Routing.Login} element={<Login />} />
           <Route exact path={Routing.Register} element={<Register />} />
-          
+          <Route
+            exact
+            path={Routing.Profile}
+            element={
+              <Private>
+                <Profile />
+              </Private>
+            }
+          />
+
           <Route
             exact
             path={Routing.RecoverPassword}
@@ -91,6 +103,7 @@ const App = () => {
           />
 
           <Route
+            eact
             path={Routing.Post}
             element={
               <Private>
@@ -99,6 +112,7 @@ const App = () => {
             }
           />
           <Route
+            exact
             path={Routing.Posts}
             element={
               <Private>
@@ -124,15 +138,7 @@ const App = () => {
               </Private>
             }
           />
-          <Route
-            exact
-            path={Routing.Faqs}
-            element={
-              <Private>
-                <Faqs />
-              </Private>
-            }
-          />
+          <Route exact path={Routing.Faqs} element={<Faqs />} />
           {/*CONTENT MANAGMENT PAGES BASED ON SUPERADMIN-ADMIN ROLE AUTH*/}
           <Route
             exact

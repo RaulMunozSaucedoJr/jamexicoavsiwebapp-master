@@ -1,4 +1,18 @@
 import React from "react";
+/**
+ * This function returns a button element with the following attributes: type, id, className, value,
+ * onClick, onSubmit, data-bs-toggle, data-bs-target, and disabled
+ * @returns A button with the following properties:
+ * - type
+ * - id
+ * - className
+ * - value
+ * - onClick
+ * - onSubmit
+ * - data-bs-toggle
+ * - data-bs-target
+ * - disabled
+ */
 const Button = ({
   id,
   text,
@@ -9,7 +23,7 @@ const Button = ({
   onSubmit,
   databstoggle,
   databstarget,
-  disabled
+  disabled,
 }) => {
   return (
     <>

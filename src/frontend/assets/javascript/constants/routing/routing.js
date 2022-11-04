@@ -1,3 +1,4 @@
+/* A list of routes. */
 export const NotFound = '*';
 export const Home = '/';
 export const HomeAdmins = '/HomeAdmins';

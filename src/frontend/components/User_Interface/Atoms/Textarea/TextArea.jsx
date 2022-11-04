@@ -16,7 +16,7 @@ const TextArea = ({
   onBlur,
   pattern,
   title,
-  defaultValue,
+  defaultValue, 
   onKeyDown,
 }) => {
   return (

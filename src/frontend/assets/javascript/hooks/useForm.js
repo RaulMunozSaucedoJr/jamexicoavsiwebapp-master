@@ -1,15 +1,27 @@
+/**
+ * It returns an object with the form, errors, handleChange, handleBlur, and handleSubmit functions
+ * @param initialForm - This is the initial state of the form.
+ * @param validateForm - This is a function that takes in the form object and returns an object with
+ * the errors.
+ * @returns An object with the following properties:
+ * form: The current state of the form
+ * errors: The current state of the errors
+ * handleChange: A function that updates the form state
+ * handleBlur: A function that updates the form state and the errors state
+ * handleSubmit: A function that updates the errors state and resets the form state
+ */
 import {
     useState
 } from 'react'
 
 export const useForm = (initialForm, validateForm) => {
-    /* Setting the state of the form and errors to the initial form and an empty object. */
+    /* Creating two state variables. One for the form and one for the errors. */
     const [form, setForm] = useState(initialForm)
     const [errors, setErrors] = useState({})
 
     /**
-     * It takes the name and value of the input field and sets the state of the form to the name and value
-     * of the input field.
+     * When the user types in the input field, the handleChange function will update the state of the
+     * form with the value of the input field.
      * @param e - the event object
      */
     const handleChange = (e) => {
@@ -22,7 +34,7 @@ export const useForm = (initialForm, validateForm) => {
         })
     }
     /**
-     * When the user clicks out of the input field, the handleChange function is called, and then the
+     * When the user clicks out of the input field, the handleChange function is called, and the
      * validateForm function is called, and the errors object is set to the result of the validateForm
      * function.
      * @param e - the event object
@@ -32,8 +44,8 @@ export const useForm = (initialForm, validateForm) => {
         setErrors(validateForm(form))
     }
     /**
-     * If there are no errors, show a success message and reset the form after 2 seconds.
-     * @param e - event
+     * If there are no errors, set the form to the initial form after 2 seconds.
+     * @param e - the event object
      */
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,7 +58,7 @@ export const useForm = (initialForm, validateForm) => {
         }
     }
 
-    /* Returning the form, errors, handleChange, handleBlur, and handleSubmit functions. */
+    /* Returning an object with the form, errors, handleChange, handleBlur, and handleSubmit functions. */
     return {
         form,
         errors,

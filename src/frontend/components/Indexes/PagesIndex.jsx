@@ -1,3 +1,4 @@
+/* Exporting the components to be used in the routes.*/
 export {default as Jobs} from '../pages/Public_View/Jobs/Jobs';
 export {default as Posts} from '../pages/Public_View/Posts/Posts';
 export {default as Post} from '../pages/Public_View/Posts/Post';
@@ -17,3 +18,4 @@ export {default as CmsUsers} from '../pages/User_View/CMS_Users/CmsUsers';
 export {default as Interview} from '../pages/User_View/Interview/Interview';
 export {default as PantallaChat} from '../pages/User_View/Chat/PantallaChat';
 export {default as Resume} from '../pages/User_View/Resume/Resume';
+export {default as Profile} from '../pages/User_View/Profile/Profile';

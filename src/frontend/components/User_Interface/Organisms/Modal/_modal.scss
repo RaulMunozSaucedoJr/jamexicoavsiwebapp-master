@@ -27,6 +27,7 @@
   &-body {
     background-color: color.$White;
     border-radius: 1em;
+    padding: 2rem;
 
     label {
       @include text(font.$Montserrat, font_size.$Small, color.$Inmersive_Blue_Black);

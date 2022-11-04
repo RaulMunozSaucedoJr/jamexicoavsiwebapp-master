@@ -1,3 +1,7 @@
+/*
+IMPORTANTE: CONFIGURAR LAS NUEVAS CREDENCIALES PARA EL CORRECTOR FUNCIONAMIENTO DE FIREBASE
+*/
+
 /* Importing the initializeApp function from the firebase/app module. */
 import {
   initializeApp
@@ -16,12 +20,12 @@ import {
 } from "firebase/storage";
 /* The configuration for the firebase app. */
 const firebaseConfig = {
-  apiKey: "AIzaSyByqSXELcISr_8W1JNaipazzEcjjYMhsNU",
-  authDomain: "jamexicoavsi-c7768.firebaseapp.com",
-  projectId: "jamexicoavsi-c7768",
-  storageBucket: "jamexicoavsi-c7768.appspot.com",
-  messagingSenderId: "129841723417",
-  appId: "1:129841723417:web:34604a746391eb7d8d5288"
+  apiKey: "AIzaSyBg5RcR-5Tn_4A_557wDT0uXae1DNUzn74",
+  authDomain: "webapp-d94e1.firebaseapp.com",
+  projectId: "webapp-d94e1",
+  storageBucket: "webapp-d94e1.appspot.com",
+  messagingSenderId: "794721777604",
+  appId: "1:794721777604:web:40c75a3d0e5c1feea75691"
 };
 /* Initializing the firebase app with the configuration and exporting the auth, db, and storage
 modules. */

@@ -8,10 +8,14 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../../../../backend/Firebase/Firebase-config";
 
+/* The above code is a React component that is rendering a list of articles from a Firestore database. */
 const Posts = () => {
+  /* A React Hook that is used to get the current user from the Firebase authentication. */
   const [user] = useAuthState(auth);
   const [articles, setArticles] = useState([]);
 
+  /* This is a React Hook that is used to set the state of the page number and the number of users per
+  page. */
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = 1;
   const pagesVisited = pageNumber * usersPerPage;
@@ -20,6 +24,7 @@ const Posts = () => {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+  /* This is a React Hook that is used to get the articles from the Firestore database. */
   useEffect(() => {
     const articleRef = collection(db, "tasks");
     const q = query(articleRef, orderBy("createdAt", "desc"));

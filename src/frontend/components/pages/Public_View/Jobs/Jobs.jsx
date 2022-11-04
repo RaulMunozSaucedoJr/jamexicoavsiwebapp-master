@@ -6,18 +6,21 @@ import * as Routing from "../../../../assets/javascript/constants/routing/routin
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
+/* A React component that is using the React Hooks API to manage the state of the component. */
 const Jobs = () => {
+  /* A React Hook that is used to manage the state of the component. */
   const [tasks, setTasks] = useState([]);
 
+  /* A pagination system. */
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = 1;
   const pagesVisited = pageNumber * usersPerPage;
-
   const pageCount = Math.ceil(tasks.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
 
+  /* This is a React Hook that is used to manage the state of the component. */
   useEffect(() => {
     const collectionRef = collection(db, "platforms");
     const getTasks = async () => {
@@ -69,12 +72,13 @@ const Jobs = () => {
             </div>
             <div className="row">
               <div className="col-12 pt-2 d-sm-block d-md-none">
+                {/* A ternary operator that is used to check if the length of the tasks array is equal to zero. If it
+                is, then it will display a message that says that there are no tasks registered. If it is not, then
+                it will display the tasks that are registered. */}
                 {tasks.length === 0 ? (
                   <div className="alert alert-warning text-center" role="alert">
                     <h4>
-                      <strong>
-                        ¡No hay bolsas de empleo registradas!.
-                      </strong>
+                      <strong>¡No hay bolsas de empleo registradas!.</strong>
                     </h4>
                     <p>
                       <strong>

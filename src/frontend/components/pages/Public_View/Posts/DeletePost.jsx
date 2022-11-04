@@ -4,7 +4,16 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../../../../backend/Firebase/Firebase-config";
 import { deleteObject, ref } from "firebase/storage";
 
+/**
+ * It's a function that deletes a document from a firestore database and an image from a firebase
+ * storage.
+ * @returns The DeleteArticle component is being returned.
+ */
 const DeleteArticle = ({ id, imageUrl }) => {
+/**
+ * When the user clicks the delete button, a confirmation dialog appears, and if the user confirms, the
+ * document is deleted from the database and the image is deleted from the storage.
+ */
   const handleDelete = async () => {
     await Swal.fire({
       title: "¿Esta seguro de esto?",
@@ -28,7 +37,7 @@ const DeleteArticle = ({ id, imageUrl }) => {
   return (
     <div>
       <button className="btn btn-delete" type="button" onClick={handleDelete}>
-        Borar post
+        Borrar post
       </button>
     </div>
   );

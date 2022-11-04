@@ -11,11 +11,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { v4 as uuidv4 } from "uuid";
 import { auth } from "../../../../../backend/Firebase/Firebase-config";
 
+/* A React component that is used to add comments to a task. */
 const Comment = ({ id }) => {
+  /* A React Hook that is used to store the state of the component. */
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [currentlyLoggedinUser] = useAuthState(auth);
+  /* A function that is used to get a reference to a document. */
   const commentRef = doc(db, "tasks", id);
+  /* A React Hook that is used to get a reference to a document. */
   useEffect(() => {
     const docRef = doc(db, "tasks", id);
     onSnapshot(docRef, (snapshot) => {
@@ -24,7 +28,11 @@ const Comment = ({ id }) => {
     // eslint-disable-next-line
   }, []);
 
+  /**
+   * When the user presses the enter key, the comment is added to the database.
+   */
   const handleChangeComment = (e) => {
+    /* Adding a comment to the database. */
     if (e.key === "Enter") {
       updateDoc(commentRef, {
         comments: arrayUnion({
@@ -40,9 +48,11 @@ const Comment = ({ id }) => {
     }
   };
 
-  // delete comment function
+  /**
+   * When the user clicks the delete button, the comment is removed from the database.
+   */
   const handleDeleteComment = (comment) => {
-    console.log(comment);
+    /* Removing the comment from the database. */
     updateDoc(commentRef, {
       comments: arrayRemove(comment),
     })
@@ -55,8 +65,9 @@ const Comment = ({ id }) => {
   };
   return (
     <div>
-     <h3> Comentarios:</h3>
+      <h3> Comentarios:</h3>
       <div className="container">
+        {/* A React component that is used to add comments to a task. */}
         {comments !== null &&
           comments.map(({ commentId, user, comment, userName, createdAt }) => (
             <div key={commentId}>

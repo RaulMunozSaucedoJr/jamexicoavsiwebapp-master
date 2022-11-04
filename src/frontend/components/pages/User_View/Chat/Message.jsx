@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "../../../../../backend/Firebase/Firebase-config.js";
 
 const Message = ({ message }) => {
+/* Checking if the message is from the current user. */
   const messageClass = message.uid === auth.currentUser.uid;
   return (
     <div className="container-fluid">

@@ -6,11 +6,16 @@ import * as Routing from "../../../../assets/javascript/constants/routing/routin
 import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { useForm } from "../../../../assets/javascript/hooks/useForm.js";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+/* Setting the initial state of the form. */
 
 const initialForm = {
   email: "",
 };
 
+/**
+ * It takes a form object as an argument and returns an object with errors
+ * @returns An object with the key of email and the value of the error message.
+ */
 const validationsForm = (form) => {
   let errors = {};
   if (!form.email.trim()) {
@@ -23,14 +28,21 @@ const validationsForm = (form) => {
 };
 
 const RecoverPassword = () => {
+  /* Destructuring the object returned by the useForm hook. */
   const { form, errors, handleChange, handleBlur, handleSubmit } = useForm(
     initialForm,
     validationsForm
   );
 
+  /* Getting the authentication from firebase. */
   const auth = getAuth();
-  
+
+  /**
+   * It sends a password reset email to the user's email address
+   */
   const triggerResetEmail = async () => {
+    /* A try catch block that is used to catch errors that may occur when the user tries to reset their
+password. */
     try {
       if (!form.email) {
         Swal.fire({

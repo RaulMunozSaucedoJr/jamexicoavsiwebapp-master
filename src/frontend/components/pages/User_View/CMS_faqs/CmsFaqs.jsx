@@ -34,7 +34,7 @@ const CmsFaqs = () => {
 
   //Add Task Handler
   const submitTask = async (e) => {
-    // eslint-disable-next-line
+    
 
     e.preventDefault();
     try {

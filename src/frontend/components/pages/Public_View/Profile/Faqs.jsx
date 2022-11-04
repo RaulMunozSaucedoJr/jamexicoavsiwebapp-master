@@ -7,6 +7,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config.js";
 
 const Faqs = () => {
+  /* Setting the state of the tasks and the page number. */
   const [tasks, setTasks] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = 2;
@@ -16,7 +17,9 @@ const Faqs = () => {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+  /* Creating a reference to the collection "faqs" in the database. */
   const collectionRef = collection(db, "faqs");
+  /* A hook that is used to fetch data from the database. */
   useEffect(() => {
     const getTasks = async () => {
       const q = query(collectionRef, orderBy("timestamp"));

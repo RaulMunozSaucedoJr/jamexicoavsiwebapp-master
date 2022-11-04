@@ -105,7 +105,9 @@ const CmsEmployments = () => {
     }
   };
 
-  //Delete Handler
+  /**
+   * It deletes a document from the database
+   */
   const deleteTask = async (id) => {
     try {
       const documentRef = doc(db, "platforms", id);
@@ -134,7 +136,7 @@ const CmsEmployments = () => {
     }
   };
 
-  //Query the collection
+  /* The above code is using the useEffect hook to fetch the tasks from the database. */
   useEffect(() => {
     const getTasks = async () => {
       const q = query(collectionRef, orderBy("timestamp"));

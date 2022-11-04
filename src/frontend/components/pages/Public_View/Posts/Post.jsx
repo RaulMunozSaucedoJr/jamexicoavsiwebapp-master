@@ -6,10 +6,13 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../../../backend/Firebase/Firebase-config";
 import Comment from "./Comment";
 
+/* A function that is being exported. */
 export default function Article() {
+  /* A hook that is being used to get the id of the article that is being clicked on. */
   const { id } = useParams();
   const [article, setArticle] = useState(null);
 
+  /* Getting the id of the article that is being clicked on. */
   useEffect(() => {
     const docRef = doc(db, "tasks", id);
     onSnapshot(docRef, (snapshot) => {

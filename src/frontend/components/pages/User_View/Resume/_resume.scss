@@ -48,6 +48,7 @@
             letter-spacing: 0;
             padding: 0
         }
+
     }
 
     .resume-right {
@@ -59,16 +60,15 @@
     }
 
     .resume-bottom {
-        @include width_height(width_height.$w100, width_height.$vh100);
+        @include width_height(width_height.$w100, width_height.$vh50);
         background-color: color.$Boundles_Blue;
         border-top-left-radius: 1em;
         border-top-right-radius: 1em;
         overflow-y: hidden;
 
-        h1 {
-            @include text(font.$Montserrat, font_size.$Medium, color.$Inmersive_Blue_Black);
+        h2 {
+            @include text(font.$Montserrat, font_size.$Medium, color.$White);
             text-align: center;
-            font-weight: bolder;
             letter-spacing: 0;
             padding: 0
         }

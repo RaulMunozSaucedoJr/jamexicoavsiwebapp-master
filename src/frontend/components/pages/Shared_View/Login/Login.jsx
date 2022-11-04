@@ -3,17 +3,24 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { Button } from "../../../Indexes/AtomsIndexes";
-import { UserAuth } from "../../../../context/AuthContext.js";
+import { UserAuth } from "../../../../context/AuthContext";
 
 const Login = () => {
+  /* A way to declare a state variable in React. */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [rol] = useState("");
-  const { logIn } = UserAuth();
+  const [rol] = useState("user");
+  /* Destructuring the object UserAuth() and assigning it to the variables logIn, googleSignIn,
+ facebookSignIn, user, navigate and isLogin. */
+  const { logIn, googleSignIn, facebookSignIn, user } = UserAuth();
   const navigate = useNavigate();
   const [isLogin] = useState(false);
 
+  /**
+   * It's a function that handles the login of the user, it also has a try/catch block that handles the
+   * errors that may occur during the login process
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -43,7 +50,8 @@ const Login = () => {
             icon: "success",
             title: `¡Bienvenido: ${email}`,
             text: "Se le recuerda que tiene que completar su perfil.",
-            footer:"En caso de que ya lo haya completado, favor de ignorar este mensaje",
+            footer:
+              "En caso de que ya lo haya completado, favor de ignorar este mensaje",
             showCancelButton: false,
             showConfirmButton: false,
             timer: 2500,
@@ -60,15 +68,6 @@ const Login = () => {
           showCancelButton: false,
           showConfirmButton: false,
           timer: 2500,
-        });
-      } else if (err.code === "auth/email-already-in-use") {
-        Swal.fire({
-          title: "Error",
-          icon: "error",
-          text: "El correo electrónico ya se encuentra en uso. \n Favor de ingresar las credenciales correctas o reestablezca su contraseña",
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 5000,
         });
       } else if (err.code === "auth/invalid-email") {
         Swal.fire({
@@ -111,20 +110,9 @@ const Login = () => {
       setError(err.message);
     }
   };
-
-  const { googleSignIn, facebookSignIn, user } = UserAuth();
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleSignIn();
-    } finally {}
-  };
-
-  const handleFacebookSignIn = async () =>{
-    try {
-      await facebookSignIn();
-    } finally {}
-  }
+  /* It's a hook that is used to perform side effects in function components. It serves the same purpose
+as componentDidMount, componentDidUpdate, and componentWillUnmount in React classes, but unified
+into a single API. */
 
   useEffect(() => {
     if (user != null) {
@@ -133,10 +121,14 @@ const Login = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-
+  /**
+   * If the input type is password, change it to email, otherwise change it to password
+   */
   const togglePassword = () => {
-    const x = document.getElementById("password");
-    x.type === "password" ? (x.type = "email") : (x.type = "password");
+    const input = document.getElementById("password");
+    input.type === "password"
+      ? (input.type = "email")
+      : (input.type = "password");
   };
 
   return (
@@ -230,7 +222,7 @@ const Login = () => {
                   text="Google"
                   className="btn btn-google mt-2"
                   type="button"
-                  onClick={handleGoogleSignIn}
+                  onClick={googleSignIn}
                 />
               </div>
               <div className="col-sm-12 col-md-6 pt-2">
@@ -239,7 +231,7 @@ const Login = () => {
                   text="Facebook"
                   className="btn btn-facebook mt-2"
                   type="button"
-                  onClick={handleFacebookSignIn }
+                  onClick={facebookSignIn}
                 />
               </div>
             </div>

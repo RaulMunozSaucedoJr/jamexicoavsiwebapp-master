@@ -1,3 +1,4 @@
+/* Importing the necessary libraries to use the functions. */
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import * as Regex from "../../../../assets/javascript/regexs/regexs";
@@ -9,10 +10,14 @@ import {
   auth,
 } from "../../../../../backend/Firebase/Firebase-config";
 
+/* A hook that allows you to use the state of the user. */
 import { useAuthState } from "react-firebase-hooks/auth";
 
+/* A function that allows you to add a post to the database. */
 const AddPosts = () => {
+  /* A hook that allows you to use the state of the user. */
   const [user] = useAuthState(auth);
+  /* A hook that allows you to use the state of the user. */
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -21,16 +26,30 @@ const AddPosts = () => {
     createdAt: Timestamp.now().toDate(),
   });
 
+  /* A hook that allows you to use the state of the user. */
   const [progress, setProgress] = useState(0);
 
+  /**
+   * When the user types in the input field, the handleChange function is called, which updates the
+   * formData state with the new value of the input field.
+   */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  /**
+   * When the user selects an image, set the image property of the formData object to the image the user
+   * selected.
+   */
   const handleImageChange = (e) => {
     setFormData({ ...formData, image: e.target.files[0] });
   };
 
+  /**
+   * It uploads an image to firebase storage and then uploads the image url to firestore.
+   * </code>
+   * @returns the following:
+   */
   const handlePublish = () => {
     if (
       !formData.title ||

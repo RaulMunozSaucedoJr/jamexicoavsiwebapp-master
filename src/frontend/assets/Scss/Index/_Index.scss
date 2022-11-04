@@ -23,15 +23,9 @@
 @use '../Utilities/Width_Height/Width_Height';
 /* Components stylesheets */
 /* //!Atoms folder */
-@use '../../../components/User_Interface/Atoms/Icon/Icon';
 @use '../../../components/User_Interface/Atoms/Button/Button';
-@use '../../../components/User_Interface/Atoms/Dropzone/Dropzone';
 @use '../../../components/User_Interface/Atoms/Input/Input';
-@use '../../../components/User_Interface/Atoms/Link/Link';
-@use '../../../components/User_Interface/Atoms/Spinner/Spinner';
-@use '../../../components/User_Interface/Atoms/Subtitle/Subtitle';
 @use '../../../components/User_Interface/Atoms/Textarea/Text_Area';
-@use '../../../components/User_Interface/Atoms/Tags/tags';
 /* //!Moleculs folder */
 
 /* //!Organisms */
@@ -56,9 +50,9 @@
 @use '../../../components/pages/Public_View/Posts/posts';
 @use '../../../components/pages/Public_View/Jobs/jobs';
 @use '../../../components/pages/Public_View/Tips/tips';
-@use '../../../components/pages/Public_View/Profile/profile';
 @use '../../../components/pages/User_View/Chat/chat';
 @use '../../../components/pages/Shared_View/Recover_Password/recoverpassword';
 @use '../../../components/pages/User_View/CMS_Users/cmsUsers'; 
 @use '../../../components/pages/User_View/Interview/interview';
 @use '../../../components/pages/User_View/Resume/resume';
+@use '../../../components/pages/User_View/Profile/profile';

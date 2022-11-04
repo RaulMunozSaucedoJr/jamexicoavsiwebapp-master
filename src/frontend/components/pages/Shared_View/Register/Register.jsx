@@ -5,25 +5,31 @@ import { Button } from "../../../Indexes/AtomsIndexes";
 import * as Routing from "../../../../assets/javascript/constants/routing/routing.js";
 import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import { UserAuth } from "../../../../context/AuthContext.js";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import app from "../../../../../backend/Firebase/Firebase-config";
 
 const Register = () => {
+  /* A hook that allows us to use state in functional components. */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatpassword, setRepeatPassword] = useState("");
-  const [rol, setRol] = useState("");
+  const [rol, setRol] = useState("user"); 
+  /* A hook that allows us to use state in functional components. */
   // eslint-disable-next-line
   const [error, setError] = useState("");
   const { signUp } = UserAuth();
   let navigate = useNavigate();
   const firestore = getFirestore(app);
 
+  /**
+   * A function that is responsible for validating the data entered by the user in the form, and if it
+   * is correct, it will be registered in the database.
+   */
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      if (!email || !password || !rol || !repeatpassword) {
+      if (!email || !password || !repeatpassword) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
@@ -66,10 +72,12 @@ const Register = () => {
         const infoUsuario = await signUp(email, password, repeatpassword, rol);
         const docuRef = doc(firestore, `users/${infoUsuario.user.uid}`);
         setDoc(docuRef, {
+          uid: infoUsuario.user.uid,
           correo: email,
           password: password,
           repeatpassword: repeatpassword,
           rol: rol,
+          timestamp: serverTimestamp(),
         });
         Swal.fire({
           title: "Éxito",
@@ -77,9 +85,9 @@ const Register = () => {
           text: `Bienvenido: ${email}. Se le recuerda que tiene que completar su perfil de usuario en el menu Crear.`,
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 3000,
+          timer: 8000,
         });
-        navigate("/HomeAdmins");
+        navigate("/Resume");
       }
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
@@ -115,6 +123,9 @@ const Register = () => {
     console.clear();
   };
 
+  /**
+   * If the input type is password, change it to text, otherwise change it to password
+   */
   const togglePassword = () => {
     const inputType = document.querySelector("#password");
     inputType.type === "password"
@@ -187,27 +198,26 @@ const Register = () => {
                   inputMode="text"
                   name="repeatpassword"
                   id="repeatpassword"
-                  placeholder="Contraseña"
+                  placeholder="Repetir contraseña"
                   autoComplete="off"
                   onChange={(e) => setRepeatPassword(e.target.value)}
                 />
               </div>
-              <div className="form-group pt-1">
+              <div className="form-group pt-1 d-none" id="divrolregistro">
                 <label
-                  htmlFor="rol"
-                  className="form-label label-inmersive-blue"
+                  htmlFor="rolregistro"
+                  className="form-label label-inmersive-blue d-none"
                 >
                   Rol
                 </label>
-                <select
+                <input
                   className="form-select"
-                  name="rol"
-                  id="rol"
+                  name="rolregistro"
+                  id="rolregistro"
+                  value={rol}
+                  readOnly
                   onChange={(e) => setRol(e.target.value)}
-                >
-                  <option value="">Seleccione su usuario</option>
-                  <option value="user">Usuario</option>
-                </select>
+                />
               </div>
               <div className="form-group pt-3">
                 <label>
@@ -223,16 +233,14 @@ const Register = () => {
                 id="submit"
                 name="submit"
                 text="Registrarse"
-                className="btn btn-submit mt-4"
+                className="btn btn-submit mt-2"
                 type="submit"
-                disabled={!email || !password || !repeatpassword || !rol}
+                disabled={!email || !password || !repeatpassword}
               />
             </form>
             <div className="form-group pt-3">
               <Link to="/Login">
-                ¿Ya tiene una cuenta con nosotros?
-                <br />
-                Inicie sesión aquí.
+                ¿Ya tiene una cuenta con nosotros? Inicie sesión aquí.
               </Link>
             </div>
           </div>

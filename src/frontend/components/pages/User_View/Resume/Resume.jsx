@@ -1,45 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import ReactPaginate from "react-paginate";
-import { Button, Input, TextArea } from "../../../Indexes/AtomsIndexes";
+import { Button, Input, TextArea } from "../../.../../../Indexes/AtomsIndexes";
 import * as Regex from "../../../../assets/javascript/regexs/regexs";
 import {
   collection,
-  getDocs,
-  addDoc,
-  //deleteDoc,
-  //doc,
-  orderBy,
-  query,
   serverTimestamp,
+  updateDoc,
+  where,
 } from "firebase/firestore";
-import { db } from "../../../../../backend/Firebase/Firebase-config";
+import {
+  signInWithPopup,
+  GoogleAuthProvider
+} from "firebase/auth";
+import { auth, db } from "../../../../../backend/Firebase/Firebase-config";
 
 const Resume = () => {
-  const [tasks, setTasks] = useState([]);
-  const [createName, setCreateName] = useState("");
-  const [createAddress, setCreateLink] = useState("");
-  const [createMobile, setCreateDescription] = useState("");
-  const [createEmail, setCreateUbication] = useState("");
-  const [pageNumber, setPageNumber] = useState(0);
-  const usersPerPage = 1;
-  const pagesVisited = pageNumber * usersPerPage;
-  const pageCount = Math.ceil(tasks.length / usersPerPage);
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
-  };
-  const collectionRef = collection(db, "platforms");
+  const [user] = useState({});
+  const [fullname, setFullName] = useState("");
+  const [address, setAddress] = useState("");
+  const [correoelectronico, setCorreoElectronico] = useState("");
+  const [jobactivities, setJobActivities] = useState("");
+  const [jobplaces, setJobPlaces] = useState("");
+  const [lastschoolgrade, setLastSchoolGrade] = useState("");
+  const [mobilephone, setMobilePhone] = useState("");
+  const [sociallinks, setSocialLinks] = useState("");
+  const [usedtools, setUsedTools] = useState("");
 
-  //Add Task Handler
-  const submitTask = async (e) => {
+  const googleProvider = new GoogleAuthProvider();
+
+  const collectionRef = (collection(db, "users"), where("uid", "==", user.uid));
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (
-        !createName ||
-        !createAddress ||
-        !createMobile ||
-        !createEmail
+        !fullname ||
+        !address ||
+        !correoelectronico ||
+        !jobactivities ||
+        !jobplaces ||
+        !lastschoolgrade ||
+        !mobilephone ||
+        !sociallinks ||
+        !usedtools
       ) {
         Swal.fire({
           title: "¡Atención!",
@@ -47,117 +51,88 @@ const Resume = () => {
           text: "Ningún campo debe estar vacio",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 1000,
+          timer: 1800,
         });
       } else if (
-        !createName.match(Regex.Letters) ||
-        !createMobile.match(Regex.Letters)
+        !fullname.match(Regex.Letters) ||
+        !address.match(Regex.Letters) ||
+        !jobactivities.match(Regex.Letters) ||
+        !jobplaces.match(Regex.Letters) ||
+        !lastschoolgrade.match(Regex.Letters) ||
+        !usedtools.match(Regex.Letters)
       ) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          text: "El campo nombre y des",
+          text: "Ninguno de estos campos:\n Nombre, Direccion, ",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 2000,
+          timer: 2500,
         });
-      } else if (!createAddress.match(Regex.Links)) {
+      } else if (!correoelectronico.match(Regex.Email)) {
         Swal.fire({
           title: "¡Atención!",
           icon: "info",
-          text: "La dirección web de la plataforma de empleo tiene un formato incorrecto. Favor de verificarla",
+          text: "El correo electrónico tiene un formato invalido.",
           showCancelButton: false,
           showConfirmButton: false,
-          timer: 2000,
+          timer: 2500,
+        });
+      } else if (!mobilephone.match(Regex.Phones)) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "El campo de número celular únicamente acepta número/digitos",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      } else if (!sociallinks.match(Regex.Links)) {
+        Swal.fire({
+          title: "¡Atención!",
+          icon: "info",
+          text: "El formato de las redes sociales son incorrectos. Favor de verificarlo.",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 2500,
         });
       } else {
-        await addDoc(collectionRef, {
-          task: createName,
-          platform: createAddress,
-          description: createMobile,
-          ubication: createEmail,
+        const res = await signInWithPopup(auth, googleProvider);
+        // eslint-disable-next-line
+        const user = res.user;
+        await updateDoc(collectionRef, {
+          fullname: fullname,
+          address: address,
+          correoelectronico: correoelectronico,
+          jobactivities: jobactivities,
+          jobplaces: jobplaces,
+          lastschoolgrade: lastschoolgrade,
+          mobilephone: mobilephone,
+          sociallinks: sociallinks,
+          usedtools: usedtools,
+          lastconnection: serverTimestamp(),
           timestamp: serverTimestamp(),
         });
         Swal.fire({
-          icon: "success",
           title: "Éxito",
-          text: "La bolsa de empleo se registró exitosamente",
+          icon: "success",
+          text: "El tip se registró exitosamente",
           showCancelButton: false,
           showConfirmButton: false,
           timer: 1500,
         });
         setTimeout(() => {
           window.location.reload();
-        }, 500);
+        }, 700);
       }
-    } catch (err) {
-      Swal.fire({
-        icon: "warning",
-        title: "¡Atención!",
-        text: `La bolsa de empleo NO se ha podido registrar. \n Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
-        showCancelButton: false,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      console.log(err);
-    }
+    } catch (err) {}
   };
-
-  // eslint-disable-next-line
-  {/*const deleteTask = async (id) => {
-    try {
-      const documentRef = doc(db, "platforms", id);
-      await deleteDoc(documentRef);
-      Swal.fire({
-        title: "Éxito",
-        icon: "success",
-        text: "La bolsa de empleo se eliminó exitosamente",
-        showCancelButton: false,
-        showConfirmButton: false,
-        timer: 1000,
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    } catch (err) {
-      Swal.fire({
-        title: "¡Atención!",
-        icon: "warning",
-        text: `La bolsa de empleo no se ha podido eliminar.\n Favor de mencionar el siguiente error: ${err} al equipo de TI.`,
-        showCancelButton: false,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      console.log(err);
-    }
-  };*/}
-
-  //Query the collection
-  useEffect(() => {
-    const getTasks = async () => {
-      const q = query(collectionRef, orderBy("timestamp"));
-      await getDocs(q)
-        .then((tasks) => {
-          let tasksData = tasks.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
-          setTasks(tasksData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12 resume-left center">
-            <h1>Creador de C.V</h1>
+          <div className="col-sm-12 col-md-6 resume-left center">
+            <h1>Creador de C.V.´s</h1>
             <Link to="">
               <Button
                 type="button"
@@ -166,222 +141,196 @@ const Resume = () => {
               />
             </Link>
           </div>
-          <div className="col-12 resume-right"></div>
-          <div className="col-12 resume-bottom">
-            <div className="row">
-              <div className="col-12 pt-4">
-                <button
-                  type="button"
-                  text="Registrar informacion"
-                  className="btn btn-open"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addModal"
-                >
-                  Registrar información
-                </button>
-              </div>
-
-              <div className="col-12 d-sm-block d-md-none pt-2">
-                {tasks.length === 0 ? (
-                  <div className="alert alert-warning text-center" role="alert">
-                    <h4>
-                      <strong>¡No hay CV´s registrados!.</strong>
-                    </h4>
-                    <p>
-                      <strong>
-                        Registre su C.V.
-                      </strong>
-                    </p>
-                  </div>
-                ) : (
-                  tasks
-                    .slice(pagesVisited, pagesVisited + usersPerPage)
-                    .map(
-                      ({
-                        task,
-                        platform,
-                        description,
-                        ubication,
-                        id,
-                        timestamp,
-                      }) => (
-                        <div className="col-12" key={id}>
-                          <div className="card">
-                            <div className="card-body">
-                              <div className="card-header">
-                                <h1 className="text-center">{task}</h1>
-                              </div>
-                              <h3>Descripción:</h3>
-                              <p>{description}</p>
-                              <h3>Link:</h3>
-                              <a
-                                rel="nofollow noopener noreferrer"
-                                href={platform}
-                              >
-                                <span className="badge badge-link">
-                                  {platform}
-                                </span>
-                              </a>
-                              <h3>Ubicacion</h3>
-                              <p>{ubication}</p>
-                            </div>
-                            <div className="card-footer">
-                              <small>
-                                Fecha de creación/modificaciòn:
-                                <br />
-                                {new Date(
-                                  timestamp.seconds * 1000
-                                ).toLocaleString()}
-                              </small>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    )
-                )}
-              </div>
-
-              <div className="col-12 pt-4">
-                <ReactPaginate
-                  breakLabel="..."
-                  previousLabel={
-                    <box-icon name="skip-previous" color="white" size="sm" />
-                  }
-                  nextLabel={
-                    <box-icon name="skip-next" color="white" size="sm" />
-                  }
-                  pageCount={pageCount}
-                  onPageChange={changePage}
-                  containerClassName={"paginationBttns"}
-                  previousLinkClassName={"previousBttn"}
-                  nextLinkClassName={"nextBttn"}
-                  disabledClassName={"paginationDisabled"}
-                  activeClassName={"paginationActive"}
-                />
-              </div>
+          <div className="col-sm-12 col-md-6 resume-right"></div>
+          <div className="col-sm-12 col-md-12 resume-bottom pt-5">
+            <div
+              className="alert alert-info alert-dismissible fade show text-center"
+              role="alert"
+            >
+              <strong>
+                Se le recomienda completar la información de su perfil para
+                poder hacer uso de la plataforma.
+              </strong>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
             </div>
+            <button
+              type="button"
+              className="btn btn-open"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Completar Perfil
+            </button>
           </div>
         </div>
       </div>
 
       <div
         className="modal fade"
-        id="addModal"
+        id="exampleModal"
         tabIndex="-1"
-        aria-labelledby="addModalLabel"
+        aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-fullscreen">
+        <div className="modal-dialog modal-fullscreen-sm-down modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title" id="addModalLabel">
-                Añadir plataformas
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Crea tu C.V.
               </h1>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              />
+              ></button>
             </div>
             <div className="modal-body">
-              <form onSubmit={submitTask}>
-                <div className="form-group">
-                  <Input
-                    titleLabel="form-label label-inmersive-blue"
-                    label="Titulo"
-                    type="text"
-                    className="form-control"
-                    name="title"
-                    id="title"
-                    placeholder="Titulo"
-                    onChange={(e) => setCreateName(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <TextArea
-                    titleLabel="form-label label-inmersive-blue"
-                    label="Descripción"
-                    type="text"
-                    className="form-control"
-                    name="description"
-                    id="description"
-                    placeholder="Maximo 250 caracteres"
-                    onChange={(e) => setCreateDescription(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <Input
-                    titleLabel="form-label label-inmersive-blue"
-                    label="Link"
-                    type="text"
-                    className="form-control"
-                    name="url"
-                    id="url"
-                    placeholder="Link"
-                    onChange={(e) => setCreateLink(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="ubication">Ubicación</label>
-                  <select
-                    name="ubication"
-                    id="ubication"
-                    className="form-select"
-                    onChange={(e) => setCreateUbication(e.target.value)}
-                  >
-                    <option value="">Seleccione una ubicación</option>
-                    <option value="Online">Online</option>
-                    <option value="Aguascalientes">Aguascalientes</option>
-                    <option value="BajaCalifornia">Baja California</option>
-                    <option value="BajaCaliforniaSur">
-                      Baja California Sur
-                    </option>
-                    <option value="Campeche">Campeche</option>
-                    <option value="Chiapas">Chiapas</option>
-                    <option value="Chihuahua">Chihuahua</option>
-                    <option value="Coahuila">Coahuila</option>
-                    <option value="Colima">Colima</option>
-                    <option value="CDMX">Ciudad de Mexico</option>
-                    <option value="Durango">Durango</option>
-                    <option value="EstadoDeMexico">Estado de Mexico</option>
-                    <option value="Guanajuato">Guanajuato</option>
-                    <option value="Guerrero">Guerrero</option>
-                    <option value="Hidalgo">Hidalgo</option>
-                    <option value="Jalisco">Jalisco</option>
-                    <option value="Michoacan">Michoacan</option>
-                    <option value="Morelos">Morelos</option>
-                    <option value="Nayarit">Nayarit</option>
-                    <option value="NuevoLeon">Nuevo Leon</option>
-                    <option value="Oaxaca">Oaxaca</option>
-                    <option value="Puebla">Puebla</option>
-                    <option value="Queretaro">Queretaro</option>
-                    <option value="QuintanaRoo">Quintana Roo</option>
-                    <option value="SanLuisPotosi">San Luis Potosi</option>
-                    <option value="Sinaloa">Sinaloa</option>
-                    <option value="Sonora">Sonora</option>
-                    <option value="Tabasco">Tabasco</option>
-                    <option value="Tamaulipas">Tamaulipas</option>
-                    <option value="Tlaxcala">Tlaxcala</option>
-                    <option value="Veracruz">Veracruz</option>
-                    <option value="Yucatan">Yucatan</option>
-                    <option value="Zacatecas">Zacatecas</option>
-                  </select>
-                </div>
-                <div className="form-group pt-2">
+              <form onSubmit={handleSubmit}>
+                <fieldset className="mb-2">
+                  <legend>Información de contacto</legend>
+                  <div className="form-group pt-3">
+                    <Input
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Nombre completo"
+                      type="text"
+                      inputMode="text"
+                      className="form-control"
+                      name="fullname"
+                      id="fullname"
+                      placeholder="Ejemplo: Rodrigo Miguel Cervantez"
+                      required
+                      onChange={(e) => setFullName(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <Input
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Dirección completa"
+                      type="text"
+                      className="form-control"
+                      name="address"
+                      id="address"
+                      placeholder="Ejemplo: Calle siempre viva #123"
+                      required
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <Input
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Número celular"
+                      type="text"
+                      inputmode="tel"
+                      className="form-control"
+                      name="mobilephone"
+                      id="mobilephone"
+                      placeholder="Ejemplo: 5545222062"
+                      required
+                      onChange={(e) => setMobilePhone(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <Input
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Correo electrónico"
+                      type="text"
+                      inputMode="email"
+                      className="form-control"
+                      name="correoelectronico"
+                      id="correoelectronico"
+                      placeholder="Ejemplo: rodrigomiguel@gmail.com"
+                      required
+                      onChange={(e) => setCorreoElectronico(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <TextArea
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Redes sociales"
+                      type="text"
+                      inputmode="url"
+                      className="form-control"
+                      name="sociallinks"
+                      id="sociallinks"
+                      placeholder="Ejemplo: www.facebook.com/user , www.github.com/user"
+                      required
+                      onChange={(e) => setSocialLinks(e.target.value)}
+                    />
+                  </div>
+                </fieldset>
+
+                <fieldset className="mb-2">
+                  <legend>Información escolar</legend>
+                  <div className="form-group pt-3">
+                    <TextArea
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Ultimo grado de estudios"
+                      type="text"
+                      inputMode="text"
+                      className="form-control"
+                      name="lastschoolargrade"
+                      id="lastschoolargrade"
+                      placeholder="Ejemplo: Ingeniero de software en la UACM"
+                      required
+                      onChange={(e) => setLastSchoolGrade(e.target.value)}
+                    />
+                  </div>
+                </fieldset>
+
+                <fieldset className="mb-2">
+                  <legend>Experiencia laboral</legend>
+                  <div className="form-group pt-3">
+                    <TextArea
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Lugares en los que ha trabajado"
+                      type="text"
+                      className="form-control"
+                      name="jobplaces"
+                      id="jobplaces"
+                      placeholder="Ejemplo: Pepsico, Femsa, JaMexico"
+                      required
+                      onChange={(e) => setJobPlaces(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <TextArea
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Actividades desarrolladas"
+                      type="text"
+                      className="form-control"
+                      name="jobactivities"
+                      id="jobactivities"
+                      placeholder="Ejemplo: Testing, Programación, Levantamiento de requisitos"
+                      required
+                      onChange={(e) => setJobActivities(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group pt-3">
+                    <TextArea
+                      titleLabel="form-label label-inmersive-blue"
+                      label="Herramientas utilizadas"
+                      type="text"
+                      className="form-control"
+                      name="usedtools"
+                      id="usedtools"
+                      placeholder="Ejemplo: Bootstrap, Cypress, React, MySQL, PHP"
+                      required
+                      onChange={(e) => setUsedTools(e.target.value)}
+                    />
+                  </div>
+                </fieldset>
+
+                <div className="form-group pt-3">
                   <Button
                     type="submit"
+                    text="Imprimir C.V."
                     className="btn btn-submit"
-                    text="Agregar bolsa de empleo"
-                    disabled={
-                      !createName ||
-                      !createMobile ||
-                      !createAddress ||
-                      !createEmail
-                    }
                   />
                 </div>
               </form>
@@ -389,7 +338,7 @@ const Resume = () => {
             <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Cerrar

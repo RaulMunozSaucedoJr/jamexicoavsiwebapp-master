@@ -143,7 +143,10 @@ const BottomNavbar = () => {
                 </button>
                 <ul className="dropdown-menu center">
                   <li>
-                    <Link to="/ResumeSS">Crear C.V.´s</Link>
+                    <Link to="/Resume">Crear C.V.´s</Link>
+                  </li>
+                  <li>
+                    <Link to={Routing.Profile}>Perfil</Link>
                   </li>
                 </ul>
               </>

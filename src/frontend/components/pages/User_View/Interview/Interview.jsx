@@ -20,10 +20,12 @@ const Interview = ({ user }) => {
           <div className="col-12 interview-bottom">
             <div className="row">
               <div className="col-12 pt-4">
-                <div className="alert alert-success" role="alert">
-                  <h6>
+                <div className="alert alert-info" role="alert">
+                  <h6 className="text-center">
                     <strong>
-                      Se le recuerda que tiene que regresar a esta plataforma y cerrar sesión.
+                      ¡Atención!. <br /> Se le recomienda abrir el link en otra
+                      pestaña, para cuando termine la simulación de entrevista,
+                      pueda salir de la plataforma.
                     </strong>
                   </h6>
                 </div>
@@ -66,6 +68,24 @@ const Interview = ({ user }) => {
               </div>
               <div className="col-12 pt-2">
                 {user.rol === "user" ? (
+                  <>
+                    <a
+                      rel="nofollow noopener noreferrer"
+                      href="https://app.videosdk.live/rooms/JAMEXICOAVSI/Guest_635f7e477d2bdd7bd77d630e/ade9-6id7-x5wt"
+                    >
+                      <Button
+                        type="button"
+                        className="btn btn-open"
+                        text="Ingresar como estudiante"
+                      />
+                    </a>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+              <div className="col-12 pt-2">
+                {user.rol === "" ? (
                   <>
                     <a
                       rel="nofollow noopener noreferrer"
