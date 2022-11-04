@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'boxicons'
 import "./frontend/assets/Scss/Styles.css";
 import {
   BottomNavbar,
